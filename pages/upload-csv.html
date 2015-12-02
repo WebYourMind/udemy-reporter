@@ -1,0 +1,90 @@
+<div class="row text-center">
+	<p style="float: left; margin-top: 8px;"><strong>Seleziona il file CSV: </strong></p>
+
+	<ng-csv-import 
+		style="float: left;"
+		content="CsvFileCtrl.csvcontent"
+	    header="CsvFileCtrl.csvheader"
+	    headerVisible="CsvFileCtrl.csvheaderVisible" 
+	    separator="CsvFileCtrl.csvseparator"
+	    result="CsvFileCtrl.csvresult"
+	    accept="CsvFileCtrl.csvaccept"
+	    separatorVisible="CsvFileCtrl.csvseparatorVisible">
+	</ng-csv-import>
+
+	<button type="button" 
+			class="btn btn-danger" 
+			ng-disabled="!CsvFileCtrl.enableSaveBtn"
+			ng-click="CsvFileCtrl.save()">
+			<i class="fa fa-floppy-o"></i>
+			Save
+	</button>
+
+    <div style="float: left; margin-top: 8px;">Record caricati: {{CsvFileCtrl.savedRecords}}</div>
+</div>
+<hr class="separator" />
+
+<table ng-show="CsvFileCtrl.showPreviewTable"
+	   ng-table="CsvFileCtrl.tableParams" 
+	   class="table table-bordered table-striped table-condensed table-hover csv-file-table" 
+	   style="font-size: 1.1rem;"
+	   show-filter="true">
+    <tr ng-repeat="sale in $data">
+        <td title="'Transaction Id'">
+        	{{sale['"Transaction Id"']}}
+        </td>
+        <td title="'Date'">
+        	{{sale.Date}}
+        </td>  
+        <td title="'Customer Name'">
+        	{{sale['"Customer Name"']}}
+        </td> 
+        <td title="'Course'">
+        	{{sale.Course}}
+        </td>  
+        <td title="'Coupon Code'">
+        	{{sale['"Coupon Code"']}}
+        </td>                     
+        <td title="'Channel'">
+        	{{sale.Channel}}
+        </td>   
+        <td title="'Platform'">
+        	{{sale.Platform}}
+        </td> 
+        <td title="'Price Paid'">
+        	{{sale['"Price Paid"']}}
+        </td>                     
+        <td title="'Currency'">
+        	{{sale.Currency}}
+        </td>   
+        <td title="'Tax Amount'">
+        	{{sale['"Tax Amount"']}}
+        </td>   
+        <!--   
+        <td title="'Google Store/iTunes Fee(USD)'">
+        	{{sale['"Google Store/iTunes Fee(USD)"']}}
+        </td>      
+        -->
+        <td title="'Net Amount(USD)'">
+        	{{sale['"Net Amount(USD)"']}}
+        </td>      
+        <td title="'Your Revenue'">
+        	{{sale['"Your Revenue"']}}
+        </td>      
+        <td title="'Tax Rate'">
+        	{{sale['"Tax Rate"']}}
+        </td>      
+        <td title="'Exchange Rate'">
+        	{{sale['"Exchange Rate"']}}
+        </td>                                                            
+     </tr>
+</table>	    
+
+
+
+
+
+
+<!--
+<pre>{{CsvFileCtrl.csvresult | json}}</pre>
+-->
