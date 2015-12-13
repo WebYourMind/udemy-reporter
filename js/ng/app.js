@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ui.router', 'ngTable', 'ngCsvImport',  'nvd3']);
 
-angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
+angular.module('myApp').constant("FBEndPoint", "https://<YOUR FIREBASE APP>.firebaseio.com/");
 
 angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
