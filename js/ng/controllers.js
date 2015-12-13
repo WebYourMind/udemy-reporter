@@ -1,8 +1,21 @@
 angular.module('myApp')
-.controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', function($scope, $http, $log, NgTableParams, FirebaseService){
+
+.controller('LoginController', ['$log', 'UserAuthentication', 'currentAuth', function($log, UserAuthentication, currentAuth){
+    $log.debug("LoginController creato");
+    var LoginCtrl = this;
+
+    LoginCtrl.login = function(){        
+        UserAuthentication.login(LoginCtrl.email, LoginCtrl.password, LoginCtrl.rememberme);
+    }
+}])
+
+.controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth ){
 	$log.debug("CsvFileController creato");
+    $log.debug("CsvFileController currentAuth: ", currentAuth);
 
 	var CsvFileCtrl = this;
+
+    CsvFileCtrl.currentAuth = currentAuth;
 
 	CsvFileCtrl.csvcontent = "";
 	CsvFileCtrl.csvheader = true;
@@ -21,11 +34,13 @@ angular.module('myApp')
 		'CsvFileCtrl.csvresult',
 	    function(newValue, oldValue) {
 	        if (newValue){
-	        	$log.debug("CsvFileCtrl.watch - CSV changed");            			        	
+	        	$log.debug("CsvFileCtrl.watch - CSV changed:", newValue);   
+                CsvFileCtrl.csvresult = newValue;         			        	
 	    		CsvFileCtrl.tableParams = new NgTableParams(
 	    			{},
 	    			{dataset: CsvFileCtrl.csvresult}
-	    		);   
+	    		); 
+                CsvFileCtrl.tableParams.reload();
 	    		CsvFileCtrl.showPreviewTable = true; 		               	
 	    		CsvFileCtrl.enableSaveBtn = true; 
 	        }else{
@@ -40,7 +55,7 @@ angular.module('myApp')
     }	 	
 }])
 
-.controller('ReportSaleByDayController', function($scope, $log, ReportService, items){
+.controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){
 	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
@@ -110,7 +125,7 @@ angular.module('myApp')
 })
 
 
-.controller('ReportSaleByHourOfDayController', function($scope, $log, ReportService, items){
+.controller('ReportSaleByHourOfDayController', function($scope, $log, ReportService, items, currentAuth){
 	$log.debug("ReportSaleByHourOfDayController creato. Items: ", items);
 	var ReportSaleByHourOfDayCtrl = this;
 	ReportSaleByHourOfDayCtrl.items = items;
@@ -167,7 +182,7 @@ angular.module('myApp')
                 		}];	
 })
 
-.controller('ReportSaleByPromotionController', function($scope, $log, ReportService, items){
+.controller('ReportSaleByPromotionController', function($scope, $log, ReportService, items, currentAuth){
 	$log.debug("ReportSaleByPromotionController creato. Items: ", items);
 	var ReportSaleByPromotionCtrl = this;
 	ReportSaleByPromotionCtrl.items = items;

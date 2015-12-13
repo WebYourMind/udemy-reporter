@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ui.router', 'ngTable', 'ngCsvImport',  'nvd3']);
 
-angular.module('myApp').constant("FBEndPoint", "https://<FIREBASE_URL>.firebaseio.com");
+angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
 
 angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
@@ -19,11 +19,31 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
       .state('main.splash', {
         url: "", // URL e' vuoto perche' questa route e' il default per il parent state main
         templateUrl: "pages/splash.html"
-      })      
+      })   
+      .state('main.login', {
+        url: "login.html", 
+        templateUrl: "pages/login.html",
+        controller: 'LoginController as LoginCtrl',
+        resolve: {
+          // controller will not be loaded until $waitForAuth resolves
+          "currentAuth": ["Auth", function(Auth) {
+            // $waitForAuth returns a promise so the resolve waits for it to complete
+            return Auth.$waitForAuth();
+          }]
+        }        
+      })         
       .state('main.load-csv-file', {
         url: "load-csv.html", 
         templateUrl: "pages/upload-csv.html",
-        controller: 'CsvFileController as CsvFileCtrl'
+        controller: 'CsvFileController as CsvFileCtrl',
+        resolve: {
+          // controller will not be loaded until $requireAuth resolves
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError
+            return Auth.$requireAuth();
+          }]
+        }        
       })
       .state('main.show-total-by-day-report', {
         url: "show-total-by-day-report.html", 
@@ -32,7 +52,12 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         resolve: {
           items : function(ReportService){
             return ReportService.getTotalsByDay();
-          }
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError
+            return Auth.$requireAuth();
+          }]          
         }
       })   
       .state('main.show-total-by-hour-of-day-report', {
@@ -42,7 +67,12 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         resolve: {
           items : function(ReportService){
             return ReportService.getTotalsByHourOfDay();
-          }
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError
+            return Auth.$requireAuth();
+          }]          
         }
       })   
       .state('main.report-by-promotion', {
@@ -52,7 +82,12 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         resolve: {
           items : function(ReportService){
             return ReportService.getTotalsByPromotion();
-          }
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+          }]          
         }
       })   
       .state('main.help', {
@@ -62,8 +97,17 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
       })  
 });
 
-angular.module('myApp').run(function($log, FirebaseService){
-  $log.debug("App run!!!");
+angular.module('myApp').run(function($log, $rootScope, $state, FirebaseService){
+
+  $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+    // We can catch the error thrown when the $requireAuth promise is rejected
+    // and redirect the user back to the home page
+    if (error === "AUTH_REQUIRED") {
+      $state.go("main.login");
+    }
+  });
+  
   var records = FirebaseService.get();
   $log.debug("App run records: ", records);
+  $log.debug("App run!!!");
 });
