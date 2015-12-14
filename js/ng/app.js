@@ -1,6 +1,8 @@
 var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ui.router', 'ngTable', 'ngCsvImport',  'nvd3']);
 
-angular.module('myApp').constant("FBEndPoint", "https://<YOUR FIREBASE APP>.firebaseio.com/");
+angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
+/*https://<YOUR FIREBASE APP>.firebaseio.com/ */
+
 
 angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
@@ -59,7 +61,22 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
             return Auth.$requireAuth();
           }]          
         }
-      })   
+      }) 
+      .state('main.show-total-by-day-of-week-report', {
+        url: "show-total-by-day-of-week-report.html", 
+        templateUrl: "pages/show-total-by-day-of-week-report.html",
+        controller: 'ReportSaleByDayOfWeekController as ReportSaleByDayOfWeekCtrl',
+        resolve: {
+          items : function(ReportService){
+            return ReportService.getTotalsByDayOfWeek();
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError
+            return Auth.$requireAuth();
+          }]          
+        }
+      })         
       .state('main.show-total-by-hour-of-day-report', {
         url: "show-total-by-hour-of-day-report.html", 
         templateUrl: "pages/show-total-by-hour-of-day-report.html",

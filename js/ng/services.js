@@ -126,6 +126,29 @@ angular.module('myApp')
 		return results;
 	}
 	
+	self.getTotalsByDayOfWeek = function(){
+		var results = [];
+		var records = FirebaseService.get();	
+		_.each(records, function(element, index, list){
+			// trovo record con ora uguale a element.Date
+			var hourToAdd = $filter('date')(new Date(element.Date), 'EEEE');			
+			var day = undefined;
+			_.each(results, function(elem, idx, lst){
+				if (elem.hour == hourToAdd ){
+					day = elem;
+				}
+			});
+			if (day){
+				// se esiste sommo valore
+				day.total = day.total + parseFloat(element.YourRevenue);
+			}else{
+				// se non esiste inserisco il nuovo valore
+				results.push({"hour" : hourToAdd, "total" : parseFloat(element.YourRevenue)});
+			}
+		});
+		return _.sortBy(results, "hour");
+	};
+
 	self.getTotalsByHourOfDay = function(){
 		var results = [];
 		var records = FirebaseService.get();	
