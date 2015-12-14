@@ -139,7 +139,7 @@ angular.module('myApp')
                     left: 55
                 },
                 x: function(d){                        
-                    return d.hour;                
+                    return d.day;                
                 },
                 y: function(d){ 
                     return d.total; 

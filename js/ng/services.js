@@ -134,7 +134,7 @@ angular.module('myApp')
 			var hourToAdd = $filter('date')(new Date(element.Date), 'EEEE');			
 			var day = undefined;
 			_.each(results, function(elem, idx, lst){
-				if (elem.hour == hourToAdd ){
+				if (elem.day == hourToAdd ){
 					day = elem;
 				}
 			});
@@ -143,10 +143,10 @@ angular.module('myApp')
 				day.total = day.total + parseFloat(element.YourRevenue);
 			}else{
 				// se non esiste inserisco il nuovo valore
-				results.push({"hour" : hourToAdd, "total" : parseFloat(element.YourRevenue)});
+				results.push({"day" : hourToAdd, "total" : parseFloat(element.YourRevenue)});
 			}
 		});
-		return _.sortBy(results, "hour");
+		return _.sortBy(results, "total");
 	};
 
 	self.getTotalsByHourOfDay = function(){
