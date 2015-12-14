@@ -36,8 +36,9 @@ angular.module('myApp')
 	        if (newValue){
 	        	$log.debug("CsvFileCtrl.watch - CSV changed:", newValue);                   
 	    		CsvFileCtrl.tableParams = new NgTableParams(
-	    			{},
-	    			{dataset: CsvFileCtrl.csvresult}
+	    			{page:1,
+                     count: 100},
+	    			{data: CsvFileCtrl.csvresult}
 	    		); 
 	    		CsvFileCtrl.showPreviewTable = true;              	
 	    		CsvFileCtrl.enableSaveBtn = true;
