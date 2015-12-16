@@ -54,11 +54,11 @@ angular.module('myApp')
     }	 	
 }])
 
-.controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){
+.controller('ReportSaleByDayController', function($log, ReportService, items, currentAuth){
 	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
-    ReportSaleByDayCtrl.selectedValue = {"name" : "pippo", "value" : "pippo"};
+    ReportSaleByDayCtrl.selectedCourse = {};
 
     /* Chart options */
     ReportSaleByDayCtrl.options = { 
@@ -125,7 +125,7 @@ angular.module('myApp')
 })
 
 .controller('ReportSaleByDayOfWeekController', function($scope, $log, ReportService, items, currentAuth){
-    $log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
+    //$log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
     var ReportSaleByDayOfWeekCtrl = this;
     ReportSaleByDayOfWeekCtrl.items = items;
 

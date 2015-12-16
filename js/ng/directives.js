@@ -35,15 +35,13 @@ angular.module('myApp')
 	var directive = this;
 	directive = {
 		restrict:'AE',
-		//replace:true,
-		template: "<select ng-model='selectedValue' ng-options='c.name for c in courses'></select>",
-		//template: "<input ng-model='selectedValue' type='text'>",
+		template: "<select ng-model='selectedCourse' ng-options='c.name for c in courses'></select>",
         scope: {
-            selectedValue: '='
+            selectedCourse: '=selectedCourse'
         },
         link: function (scope, elem, attrs) {
         	scope.courses = FirebaseService.getCourseList();
-            //scope.selectedValue = scope.courses[0];
+            scope.selectedCourse = scope.courses[0];
         }
 	}
 
