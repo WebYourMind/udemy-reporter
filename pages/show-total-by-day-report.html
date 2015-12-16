@@ -1,4 +1,18 @@
+<!--
+      <div class="row">
+        <div class="span8">
+          <div id="date-range">
+            <div id="date-range-field">
+              <span></span>
+              <a href="#">&#9660;</a>
+            </div>
+            <div my-datepicker></div>
+          </div>
+        </div>
+      </div>
+-->
 
-<div my-datepicker></div>
+<div course-picker selectedValue="ReportSaleByDayCtrl.selectedValue"></div>          
+      <pre>{{ReportSaleByDayCtrl.selectedValue|json}}</pre>
 
 <nvd3 options="ReportSaleByDayCtrl.options" data="ReportSaleByDayCtrl.data" config="{deepWatchData: false}"></nvd3>

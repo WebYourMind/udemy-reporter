@@ -58,6 +58,7 @@ angular.module('myApp')
 	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
+    ReportSaleByDayCtrl.selectedValue = {"name" : "pippo", "value" : "pippo"};
 
     /* Chart options */
     ReportSaleByDayCtrl.options = { 
@@ -87,8 +88,8 @@ angular.module('myApp')
                 xAxis: {
                     axisLabel: 'Date',
                     tickFormat: function(d){
-                    	console.log("This is the date: ", d);
-                    	console.log("This is the date type: ", typeof(d));
+                    	//console.log("This is the date: ", d);
+                    	//console.log("This is the date type: ", typeof(d));
                     	if (typeof(d) == 'number'){                    		
                     		var retVal = d3.time.format('%d/%m/%y')(new Date(d))
 							//console.log("Entering the number option ", retVal);

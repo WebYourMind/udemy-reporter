@@ -56,7 +56,8 @@ angular.module('myApp')
 					"Currency"		: element.Currency.replace(/"/g,""),
 					"TaxAmount"		: element['"Tax Amount"'].replace(/"/g,""),
 					"NetAmount"		: element['"Net Amount(USD)"'].replace(/"/g,""),
-					"YourRevenue"	: element['"Your Revenue"'].replace(/"/g,""),
+					/* ATTENTION: at the moment UDEMY's CSV has some issue and to temporary fix the problem we use the Net Amout as Revenue */
+					"YourRevenue"	: element['"Net Amount(USD)"'].replace(/"/g,""), //element['"Your Revenue"'].replace(/"/g,""),
 					"TaxRate"		: element['"Tax Rate"'].replace(/"/g,""),
 					"ExchangeRate"	: element['"Exchange Rate"'].replace(/"/g,"")
 				});
@@ -89,6 +90,20 @@ angular.module('myApp')
 		});
 		return lastTr;
 	}
+
+	self.getCourseList = function(){
+		var records = self.get(),	
+			courses = [],
+			finalCourses = [];
+		finalCourses.push({"name": 'All', "value" : 'All'});
+		_.each(records, function(element, index, list){
+			if (_.indexOf(courses, element.Course)<0){
+				courses.push(element.Course);				
+				finalCourses.push({"name": element.Course, "value" : element.Course});
+			}
+		});
+		return finalCourses;
+	}	
 	// Fine FACTORY
 	return self;	
 }]);	
@@ -145,7 +160,7 @@ angular.module('myApp')
 				// se non esiste inserisco il nuovo valore
 				results.push({"day" : hourToAdd, "total" : parseFloat(element.YourRevenue)});
 			}
-		});
+		});	
 		return _.sortBy(results, "total");
 	};
 

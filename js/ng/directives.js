@@ -12,7 +12,7 @@ angular.module('myApp')
 			angular.element(elem).DatePicker({				
 			  	inline: true,
 			  	date: [from, to],
-			  	calendars: 2,
+			  	calendars: 3,
 			  	mode: 'range',
 			  	current: new Date(to.getFullYear(), to.getMonth() - 1, 1),
 			  	onChange: function(dates,el) {
@@ -30,3 +30,22 @@ angular.module('myApp')
 
 	return directive;
 })
+
+.directive('coursePicker', ['FirebaseService', '$log', function(FirebaseService, $log) {
+	var directive = this;
+	directive = {
+		restrict:'AE',
+		//replace:true,
+		template: "<select ng-model='selectedValue' ng-options='c.name for c in courses'></select>",
+		//template: "<input ng-model='selectedValue' type='text'>",
+        scope: {
+            selectedValue: '='
+        },
+        link: function (scope, elem, attrs) {
+        	scope.courses = FirebaseService.getCourseList();
+            //scope.selectedValue = scope.courses[0];
+        }
+	}
+
+	return directive;
+}]);
