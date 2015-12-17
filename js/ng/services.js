@@ -115,9 +115,14 @@ angular.module('myApp')
 	var self = {};	
 
 	// Sum all sales group by DATE
-	self.getTotalsByDay = function(){
+	self.getTotalsByDay = function(courseName){
 		var results = [];
-		var records = FirebaseService.get();	
+		var records = FirebaseService.get();
+		if(courseName && courseName != 'All'){
+			$log.debug("Filter by ["+results.length+"] courses by name: " + courseName);
+			records = _.filter(records, function(elem){ return elem.Course == courseName});
+			$log.debug("Filteed courses are: ["+results.length+"] ");
+		}
 		_.each(records, function(element, index, list){
 			// trovo record con data uguale a element.Date
 			var dayToAdd = $filter('date')(new Date(element.Date), 'yyyy/MM/dd');
