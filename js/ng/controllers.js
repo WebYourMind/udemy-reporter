@@ -30,7 +30,7 @@ angular.module('myApp')
 	CsvFileCtrl.savedRecords = 0;
 
 	// Watch su caricamento file CSV (innesca il reload automatico della pagina) 
-    $scope.$watch(
+    var listener = $scope.$watch(
 		'CsvFileCtrl.csvresult',
 	    function(newValue, oldValue) {
 	        if (newValue){
@@ -48,17 +48,49 @@ angular.module('myApp')
 	    }
     );
 
+    $scope.$on("$destroy", function() {
+        if (listener) {
+            listener();
+        }
+    });
+
     CsvFileCtrl.save = function(){
     	CsvFileCtrl.enableSaveBtn = false;
 		CsvFileCtrl.savedRecords = FirebaseService.save(CsvFileCtrl.csvresult);
     }	 	
 }])
 
-.controller('ReportSaleByDayController', function($log, ReportService, items, currentAuth){
+.controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){
 	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
     ReportSaleByDayCtrl.selectedCourse = {};
+
+    var listener = $scope.$watch(
+        'ReportSaleByDayCtrl.selectedCourse',
+        function(newValue, oldValue) {
+            if (newValue){
+                $log.debug("ReportSaleByDayCtrl.watch - selectedCourse changed:", newValue);   
+
+                ReportSaleByDayCtrl.data = [{
+                                    values: ReportService.getTotalsByDay(newValue.value),                     
+                                    key: 'Revenue', //key  - the name of the series.
+                                    color: '#ff7f0e',  //color - optional: choose your own line color.
+                                    strokeWidth: 2//,
+                                    //classed: 'dashed'
+                                    }];
+
+            }else{
+                $log.debug("ReportSaleByDayCtrl.watch - no newval");                                 
+            }
+        }
+    );
+
+    $scope.$on("$destroy", function() {
+        if (listener) {
+            listener();
+        }
+    });
 
     /* Chart options */
     ReportSaleByDayCtrl.options = { 

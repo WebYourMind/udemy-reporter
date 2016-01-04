@@ -35,8 +35,7 @@ angular.module('myApp')
 .factory('FirebaseService', ['$http', '$q', '$log', '$firebaseArray', 'FBEndPoint', function($http, $q, $log, $firebaseArray, FBEndPoint){
 	var self = {};
 	self.records = undefined;
-	
-	// Funzione di esempio: viene richiamata dal menu custom della GRID
+		
 	self.save = function(recs){	
 		var addedRecords = 0;
 		var records = self.get();		
