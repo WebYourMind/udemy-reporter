@@ -5,7 +5,7 @@ angular.module('myApp')
     var ref = new Firebase(FBEndPoint);
     return $firebaseAuth(ref);
   }
-])
+]) 
 
 .factory("UserAuthentication", ['$log', '$firebaseAuth', 'FBEndPoint', '$state', function($log, $firebaseAuth, FBEndPoint, $state) {
 	var self = {};

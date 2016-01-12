@@ -103,3 +103,7 @@ table.csv-files-table tbody{
     margin-top: 10px;
 }
 /* LOGIN FORM END */
+
+.accordion-toggle {
+    cursor: pointer;
+}

@@ -1,0 +1,15 @@
+<uib-accordion close-others="oneAtATime">
+    <uib-accordion-group is-open="status.open">
+      <uib-accordion-heading>
+        Select courses <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
+      	<!-- Accordion content -->
+	    <span ng-repeat="course in courses track by course.value"  class="checkbox">
+	      <label for="{{course.value}}">
+	        <input type="checkbox" ng-model="selection.ids[course.value]" name="group" id="{{course.value}}" />
+	        {{course.name}}
+	      </label>
+	    </span>
+
+    </uib-accordion-group>
+</uib-accordion>

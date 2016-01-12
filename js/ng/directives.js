@@ -1,4 +1,3 @@
-
 angular.module('myApp')
 .directive('myDatepicker', function() {
 	var directive = this;
@@ -41,9 +40,27 @@ angular.module('myApp')
         },
         link: function (scope, elem, attrs) {
         	scope.courses = FirebaseService.getCourseList();
+            scope.selectedCourse = scope.courses[0];            
+        }
+	}
+
+	return directive;
+}])
+
+.directive('coursePickerDue', ['FirebaseService', '$log', function(FirebaseService, $log) {
+	var directive = this;
+	directive = {
+		restrict:'AE',
+		templateUrl: "pages/course-picker.tpl.html",
+        scope: {
+            selectedCourse: '=selectedCourse',
+            selection: '=selection'
+        },
+        link: function (scope, elem, attrs) {
+        	scope.courses = FirebaseService.getCourseList();
             scope.selectedCourse = scope.courses[0];
         }
 	}
 
 	return directive;
-}]);
+}]);	

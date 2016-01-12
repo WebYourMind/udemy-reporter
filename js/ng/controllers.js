@@ -65,27 +65,34 @@ angular.module('myApp')
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
     ReportSaleByDayCtrl.selectedCourse = {};
+    ReportSaleByDayCtrl.selection = {};
 
-    var listener = $scope.$watch(
-        'ReportSaleByDayCtrl.selectedCourse',
-        function(newValue, oldValue) {
-            if (newValue){
-                $log.debug("ReportSaleByDayCtrl.watch - selectedCourse changed:", newValue);   
+    var listener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
+        if (newValue){
+        	ReportSaleByDayCtrl.data = [];
+        	var newData = [];
+            _.each(ReportSaleByDayCtrl.selection.ids, function(value, key, list){
+				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+		    	if (value){
+		    		newData.push({
+	    					values: ReportService.getTotalsByDay(key),                     
+			                key: key//, //key  - the name of the series.
+			                //strokeWidth: 2//,
+	            	}); 
+		    	}else{
+		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayCtrl.data);
+		    		//ReportSaleByDayCtrl.data.splice(, 1);
+		    	}		    	
+            });
 
-                ReportSaleByDayCtrl.data = [{
-                                    values: ReportService.getTotalsByDay(newValue.value),                     
-                                    key: 'Revenue', //key  - the name of the series.
-                                    color: '#ff7f0e',  //color - optional: choose your own line color.
-                                    strokeWidth: 2//,
-                                    //classed: 'dashed'
-                                    }];
+	    	ReportSaleByDayCtrl.data = newData;
 
-            }else{
-                $log.debug("ReportSaleByDayCtrl.watch - no newval");                                 
-            }
+        }else{
+            $log.debug("xxxxReportSaleByDayCtrl.selection.ids - selection no newval");                                 
         }
-    );
+    });
 
+    // Clean up on exit
     $scope.$on("$destroy", function() {
         if (listener) {
             listener();
