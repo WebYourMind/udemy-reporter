@@ -1,4 +1,58 @@
 angular.module('myApp')
+
+
+.directive('wymDatepicker', ['FirebaseService', '$log', function(FirebaseService, $log) {
+	var directive = this;
+	directive = {
+		restrict:'AE',
+		templateUrl: "pages/date-picker.tpl.html",
+		scope: {
+			range: 	'=range'
+		},
+		link: function(scope, elem, attrs) {						
+			$log.debug("wymDatepicker link function - range", scope.range);
+
+			scope.dateOptions =	{
+								    formatYear: 'yy',
+									startingDay: 1
+								};        	
+        	
+        	scope.fromDateOpened = false;
+        	scope.toDateOpened = false;
+
+			scope.openFromDate = function() {
+	    		$log.debug("wymDatepicker openFromDate");
+			    scope.fromDateOpened = true;
+			};
+
+			scope.openToDate = function() {
+				$log.debug("wymDatepicker openToDate");
+			    scope.toDateOpened = true;
+			};
+		}
+	}
+
+	return directive;
+}])
+
+.directive('coursePicker', ['FirebaseService', '$log', function(FirebaseService, $log) {
+	var directive = this;
+	directive = {
+		restrict:'AE',
+		templateUrl: "pages/course-picker.tpl.html",
+        scope: {
+            selection: '=selection'
+        },
+        link: function (scope, elem, attrs) {
+        	scope.courses = FirebaseService.getCourseList();
+        }
+	}
+
+	return directive;
+}]);	
+
+
+/*
 .directive('myDatepicker', function() {
 	var directive = this;
 	directive = {
@@ -29,8 +83,10 @@ angular.module('myApp')
 
 	return directive;
 })
+*/
 
-.directive('coursePicker', ['FirebaseService', '$log', function(FirebaseService, $log) {
+/*
+.directive('coursePickerOld', ['FirebaseService', '$log', function(FirebaseService, $log) {
 	var directive = this;
 	directive = {
 		restrict:'AE',
@@ -46,21 +102,4 @@ angular.module('myApp')
 
 	return directive;
 }])
-
-.directive('coursePickerDue', ['FirebaseService', '$log', function(FirebaseService, $log) {
-	var directive = this;
-	directive = {
-		restrict:'AE',
-		templateUrl: "pages/course-picker.tpl.html",
-        scope: {
-            selectedCourse: '=selectedCourse',
-            selection: '=selection'
-        },
-        link: function (scope, elem, attrs) {
-        	scope.courses = FirebaseService.getCourseList();
-            scope.selectedCourse = scope.courses[0];
-        }
-	}
-
-	return directive;
-}]);	
+*/

@@ -64,8 +64,12 @@ angular.module('myApp')
 	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
-    ReportSaleByDayCtrl.selectedCourse = {};
+
     ReportSaleByDayCtrl.selection = {};
+	ReportSaleByDayCtrl.range = { 	fromDate: 	"09/09/2015",
+									toDate: 	"01/12/2016"
+								};
+
 
     var listener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
@@ -76,19 +80,25 @@ angular.module('myApp')
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getTotalsByDay(key),                     
-			                key: key//, //key  - the name of the series.
-			                //strokeWidth: 2//,
+			                key: key
 	            	}); 
 		    	}else{
 		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayCtrl.data);
-		    		//ReportSaleByDayCtrl.data.splice(, 1);
 		    	}		    	
             });
 
 	    	ReportSaleByDayCtrl.data = newData;
 
         }else{
-            $log.debug("xxxxReportSaleByDayCtrl.selection.ids - selection no newval");                                 
+            //$log.debug("ReportSaleByDayCtrl.selection.ids - selection no newval");                                 
+        }
+    });
+
+    var listener2 = $scope.$watchCollection('ReportSaleByDayCtrl.range', function(newValue, oldValue) {
+        if (newValue){      
+			$log.debug("ReportSaleByDayCtrl.range watch: ", newValue); 
+        }else{
+            $log.debug("ReportSaleByDayCtrl.range watch- no newval");                                 
         }
     });
 
@@ -97,6 +107,9 @@ angular.module('myApp')
         if (listener) {
             listener();
         }
+        if (listener2) {
+            listener2();
+        }        
     });
 
     /* Chart options */

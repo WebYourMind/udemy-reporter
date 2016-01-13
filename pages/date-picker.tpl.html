@@ -1,0 +1,41 @@
+<!--
+dateOptions: {{dateOptions | json}}
+range: {{range| json}}
+-->
+<div class="col-md-6">
+    <p class="input-group">
+      <input type="date" 
+        class="form-control" 
+        uib-datepicker-popup
+        ng-model="range.fromDate" 
+        is-open="fromDateOpened" 
+        min-date="minDate" 
+        max-date="maxDate" 
+        datepicker-options="dateOptions" 
+        date-disabled="disabled(date, mode)" 
+        ng-required="true" 
+        close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openFromDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+</div>
+
+<div class="col-md-6">
+    <p class="input-group">
+      <input type="date" 
+        class="form-control" 
+        uib-datepicker-popup 
+        ng-model="range.toDate" 
+        is-open="toDateOpened"
+        min-date="minDate" 
+        max-date="maxDate" 
+        datepicker-options="dateOptions" 
+        date-disabled="disabled(date, mode)" 
+        ng-required="true" 
+        close-text="Close" />
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openToDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </p>
+</div>

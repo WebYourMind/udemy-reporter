@@ -1,20 +1,6 @@
-<!--
-      <div class="row">
-        <div class="span8">
-          <div id="date-range">
-            <div id="date-range-field">
-              <span></span>
-              <a href="#">&#9660;</a>
-            </div>
-            <div my-datepicker></div>
-          </div>
-        </div>
-      </div>
-
-
-<div course-picker selected-course="ReportSaleByDayCtrl.selectedCourse"></div> 
--->
-<div course-picker-due selected-course="ReportSaleByDayCtrl.selectedCourse" selection="ReportSaleByDayCtrl.selection"></div> 
-
+<div class="row">
+  <div class="col col-lg-6" course-picker selection="ReportSaleByDayCtrl.selection"></div> 
+  <div class="col col-lg-6" wym-datepicker from-date="ReportSaleByDayCtrl.range.fromDate" to-date="ReportSaleByDayCtrl.range.toDate"></div> 
+</div>
 
 <nvd3 options="ReportSaleByDayCtrl.options" data="ReportSaleByDayCtrl.data"></nvd3>
