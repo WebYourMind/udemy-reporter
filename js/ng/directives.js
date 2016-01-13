@@ -9,9 +9,7 @@ angular.module('myApp')
 		scope: {
 			range: 	'=range'
 		},
-		link: function(scope, elem, attrs) {						
-			$log.debug("wymDatepicker link function - range", scope.range);
-
+		link: function(scope, elem, attrs) {	
 			scope.dateOptions =	{
 								    formatYear: 'yy',
 									startingDay: 1
@@ -21,14 +19,12 @@ angular.module('myApp')
         	scope.toDateOpened = false;
 
 			scope.openFromDate = function() {
-	    		$log.debug("wymDatepicker openFromDate");
 			    scope.fromDateOpened = true;
 			};
 
 			scope.openToDate = function() {
-				$log.debug("wymDatepicker openToDate");
 			    scope.toDateOpened = true;
-			};
+			};		   
 		}
 	}
 

@@ -66,15 +66,14 @@ angular.module('myApp')
 	ReportSaleByDayCtrl.items = items;
 
     ReportSaleByDayCtrl.selection = {};
-	ReportSaleByDayCtrl.range = { 	fromDate: 	"09/09/2015",
-									toDate: 	"01/12/2016"
-								};
-
+	ReportSaleByDayCtrl.range = {};
+    ReportSaleByDayCtrl.courseList = ['All'];
 
     var listener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
         	ReportSaleByDayCtrl.data = [];
         	var newData = [];
+            ReportSaleByDayCtrl.courseList = [];
             _.each(ReportSaleByDayCtrl.selection.ids, function(value, key, list){
 				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
@@ -82,13 +81,12 @@ angular.module('myApp')
 	    					values: ReportService.getTotalsByDay(key),                     
 			                key: key
 	            	}); 
+                    ReportSaleByDayCtrl.courseList.push(key);
 		    	}else{
 		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayCtrl.data);
 		    	}		    	
             });
-
-	    	ReportSaleByDayCtrl.data = newData;
-
+	    	ReportSaleByDayCtrl.data = newData;            
         }else{
             //$log.debug("ReportSaleByDayCtrl.selection.ids - selection no newval");                                 
         }
@@ -96,7 +94,10 @@ angular.module('myApp')
 
     var listener2 = $scope.$watchCollection('ReportSaleByDayCtrl.range', function(newValue, oldValue) {
         if (newValue){      
-			$log.debug("ReportSaleByDayCtrl.range watch: ", newValue); 
+			$log.debug("ReportSaleByDayCtrl.range watch: ", newValue);
+            _.each(ReportSaleByDayCtrl.courseList, function(value, key, list){
+                $log.debug("ReportSaleByDayCtrl.range watch: ", [value, key]);
+            });
         }else{
             $log.debug("ReportSaleByDayCtrl.range watch- no newval");                                 
         }
