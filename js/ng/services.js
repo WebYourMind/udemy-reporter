@@ -113,15 +113,61 @@ angular.module('myApp')
 .factory('ReportService', ['$log', '$filter', 'FirebaseService', function($log, $filter, FirebaseService){
 	var self = {};	
 
-	// Sum all sales group by DATE
-	self.getTotalsByDay = function(courseName){
-		var results = [];
-		var records = FirebaseService.get();
+	self.filterByCourseName = function(records, courseName){
 		if(courseName && courseName != 'All'){
-			$log.debug("Filter by ["+results.length+"] courses by name: " + courseName);
 			records = _.filter(records, function(elem){ return elem.Course == courseName});
-			$log.debug("Filteed courses are: ["+results.length+"] ");
 		}
+		return records;
+	}
+
+	self.filterByDateRange = function(records, range){
+		$log.debug("ReportService.filterByDateRange range length ["+records.length+"]");
+		
+		var filtered = [],
+			fromDate = $filter('date')(new Date('2010/01/01'), 'yyyyMMdd'),
+			toDate = $filter('date')(new Date(), 'yyyyMMdd');
+
+		//$log.debug("ReportService.filterByDateRange fromDate ["+fromDate+"] toDate ["+toDate+"]");		
+		if (angular.isDefined(range)){
+			$log.debug("ReportService.filterByDateRange range:", range);
+			if (angular.isDefined(range.fromDate)){
+				//$log.debug("ReportService.filterByDateRange range.fromDate ["+range.fromDate+"]");				
+				fromDate = $filter('date')(new Date(range.fromDate), 'yyyyMMdd');
+				$log.debug("ReportService.filterByDateRange fromDate ["+fromDate+"]");
+			}
+			if(range.toDate){
+				//$log.debug("ReportService.filterByDateRange range.toDate ["+range.toDate+"]");
+				toDate = $filter('date')(new Date(range.toDate), 'yyyyMMdd');
+				$log.debug("ReportService.filterByDateRange toDate ["+toDate+"]");
+			}
+			_.each(records, function(elem, idx, lst){
+				var dateToCheck = $filter('date')(new Date(elem.Date), 'yyyyMMdd');
+				$log.debug("ReportService.filterByDateRange checking if ["+dateToCheck+"] is between ["+fromDate+"] and ["+toDate+"]" );
+				if (dateToCheck >= fromDate && dateToCheck <= toDate ){
+					filtered.push(elem);
+				}
+			});
+
+		}else{
+			$log.debug("ReportService.filterByDateRange range not defined");
+			filtered = records;
+		}	
+
+		return filtered;
+	}
+
+	// Sum all sales group by DATE
+	self.getTotalsByDay = function(courseName, range){
+		$log.debug("ReportService.getTotalsByDay Filter by ["+courseName+"] and date range: ", range);
+		var results = [],
+			records = FirebaseService.get();
+
+		records = self.filterByCourseName(angular.copy(records), courseName);
+		$log.debug("ReportService.getTotalsByDay Filter by name ["+courseName+"]: ", records.length);
+
+		records = self.filterByDateRange(angular.copy(records), range);
+		$log.debug("ReportService.getTotalsByDay Filter by range: ", records.length);
+
 		_.each(records, function(element, index, list){
 			// trovo record con data uguale a element.Date
 			var dayToAdd = $filter('date')(new Date(element.Date), 'yyyy/MM/dd');
