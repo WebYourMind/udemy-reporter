@@ -31,49 +31,49 @@
 	   show-filter="true">
     <tr ng-repeat="sale in $data">
         <td title="'Transaction Id'">
-        	{{sale['"Transaction Id"']}}
+        	{{sale['Transaction Id']}}
         </td>
         <td title="'Date'">
-        	{{sale.Date}}
+        	{{sale['Formatted Date']}}
         </td>  
         <td title="'Customer Name'">
-        	{{sale['"Customer Name"']}}
+        	{{sale['User Name']}}
         </td> 
         <td title="'Course'">
-        	{{sale.Course}}
+        	{{sale['Course Name']}}
         </td>  
         <td title="'Coupon Code'">
-        	{{sale['"Coupon Code"']}}
+        	{{sale['Coupon Ode']}}
         </td>                     
         <td title="'Channel'">
-        	{{sale.Channel}}
+        	{{sale['Revenue Channel']}}
         </td>   
         <td title="'Platform'">
-        	{{sale.Platform}}
+        	{{sale.Vendor}}
         </td> 
         <td title="'Price Paid'">
-        	{{sale['"Price Paid"']}}
+        	{{sale['Paid Price']}}
         </td>                     
         <td title="'Currency'">
-        	{{sale.Currency}}
+        	{{sale['Transaction Currency']}}
         </td>   
         <td title="'Tax Amount'">
-        	{{sale['"Tax Amount"']}}
+        	{{sale['Tax Amount']}}
         </td>    
-        <td title="'Google Store/iTunes Fee(USD)'">
-        	{{sale['"Google Store/iTunes Fee(USD)"']}}
+        <td title="'Store Fee'">
+        	{{sale['Store Fee']}}
         </td>      
         <td title="'Net Amount(USD)'">
-        	{{sale['"Net Amount(USD)"']}}
+        	{{sale['Share Price']}}
         </td>      
         <td title="'Your Revenue'">
-        	{{sale['"Your Revenue"']}}
+        	{{sale['Instructor Share']}}
         </td>      
         <td title="'Tax Rate'">
-        	{{sale['"Tax Rate"']}}
+        	{{sale['Tax Rate']}}
         </td>      
         <td title="'Exchange Rate'">
-        	{{sale['"Exchange Rate"']}}
+        	{{sale['Exchange Rate']}}
         </td>                                                            
      </tr>
 </table>	    

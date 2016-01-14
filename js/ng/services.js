@@ -32,49 +32,53 @@ angular.module('myApp')
     return self;
  }])
 
-.factory('FirebaseService', ['$http', '$q', '$log', '$firebaseArray', 'FBEndPoint', function($http, $q, $log, $firebaseArray, FBEndPoint){
+.factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', function($http, $q, $log, $filter, $firebaseArray, FBEndPoint){
 	var self = {};
 	self.records = undefined;
 		
 	self.save = function(recs){	
-		var addedRecords = 0;
-		var records = self.get();		
-		var lastTransactionId = self.getLastTransactionId(records);
+		var addedRecords = 0,
+			alreadyAddedRecords = 0,
+			records = self.get(),		
+			lastTransactionId = self.getLastTransactionId(records);
+
 		recs.reverse();
 		_.each(recs, function(element, index, list){
-			if (element['"Transaction Id"'] > lastTransactionId){
+			var currentTransactionId = element['Transaction Id'];
+			if (currentTransactionId > lastTransactionId){
 				records.$add({
-					"TransactionId" : element['"Transaction Id"'],
-					"Date"			: element.Date.replace(/"/g,""),
-					"CustomerName"	: element['"Customer Name"'].replace(/"/g,""),
-					"Course"		: element.Course.replace(/"/g,""),
-					"CouponCode"	: element['"Coupon Code"'].replace(/"/g,""),
-					"Channel"		: element.Channel.replace(/"/g,""),
-					"Platform"		: element.Platform.replace(/"/g,""),
-					"PricePaid"		: element['"Price Paid"'].replace(/"/g,""),
-					"Currency"		: element.Currency.replace(/"/g,""),
-					"TaxAmount"		: element['"Tax Amount"'].replace(/"/g,""),
-					"NetAmount"		: element['"Net Amount(USD)"'].replace(/"/g,""),
-					/* ATTENTION: at the moment UDEMY's CSV has some issue and to temporary fix the problem we use the Net Amout as Revenue */
-					"YourRevenue"	: element['"Net Amount(USD)"'].replace(/"/g,""), //element['"Your Revenue"'].replace(/"/g,""),
-					"TaxRate"		: element['"Tax Rate"'].replace(/"/g,""),
-					"ExchangeRate"	: element['"Exchange Rate"'].replace(/"/g,"")
+					"TransactionId" : element['Transaction Id'],
+					"Date"			: $filter('date')(new Date(element['Formatted Date'].replace(/"/g,"")), 'MM/dd/yyyy HH:mm:ss'),
+					"CustomerName"	: element['User Name'].replace(/"/g,""),
+					"Course"		: element['Course Name'].replace(/"/g,""),
+					"CouponCode"	: element['Coupon Ode'].replace(/"/g,""),
+					"Channel"		: element['Revenue Channel'].replace(/"/g,""),
+					"Platform"		: element.Vendor.replace(/"/g,""),
+					"PricePaid"		: element['Paid Price'].replace(/"/g,""),
+					"Currency"		: element['Transaction Currency'].replace(/"/g,""),
+					"TaxAmount"		: element['Tax Amount'].replace(/"/g,""),
+					"NetAmount"		: element['Share Price'].replace(/"/g,""),
+					"YourRevenue"	: element['Instructor Share'].replace(/"/g,""), 
+					"TaxRate"		: element['Tax Rate'].replace(/"/g,""),
+					"ExchangeRate"	: element['Exchange Rate'].replace(/"/g,"")
 				});
 				addedRecords++;
+			}else{				
+				alreadyAddedRecords++;
 			}
 		});
-	return addedRecords;
+		$log.debug("FirebaseService.save loaded records ["+addedRecords+"]/discarded records (already processed) ["+alreadyAddedRecords+"]");
+		return addedRecords;
 	}
 
 	self.get = function(){
-		$log.debug("FirebaseService.get called");
 		if (self.records == undefined){
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
 			var ref = new Firebase(FBEndPoint);
 			self.records = $firebaseArray(ref);			
 			return self.records;
 		}else {
-			$log.debug("FirebaseService.get [self.records] is defined: use the values");
+			//$log.debug("FirebaseService.get [self.records] is defined: use the values");
 			return self.records;
 		}
 	}
@@ -159,7 +163,7 @@ angular.module('myApp')
 
 		_.each(records, function(element, index, list){
 			// trovo record con data uguale a element.Date
-			var dayToAdd = $filter('date')(new Date(element.Date), 'yyyy/MM/dd');
+			var dayToAdd = $filter('date')(new Date(element.Date), 'dd/MM/yyyy');			
 			var day = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.date == dayToAdd ){

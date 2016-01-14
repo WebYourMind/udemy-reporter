@@ -91,7 +91,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
             return Auth.$requireAuth();
           }]          
         }
-      })   
+      }) 
       .state('main.report-by-promotion', {
         url: "report-by-promotion.html", 
         templateUrl: "pages/report-by-promotion.html",

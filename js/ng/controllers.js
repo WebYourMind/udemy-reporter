@@ -10,8 +10,8 @@ angular.module('myApp')
 }])
 
 .controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth ){
-	$log.debug("CsvFileController creato");
-    $log.debug("CsvFileController currentAuth: ", currentAuth);
+	//$log.debug("CsvFileController creato");
+    //$log.debug("CsvFileController currentAuth: ", currentAuth);
 
 	var CsvFileCtrl = this;
 
@@ -34,7 +34,7 @@ angular.module('myApp')
 		'CsvFileCtrl.csvresult',
 	    function(newValue, oldValue) {
 	        if (newValue){
-	        	$log.debug("CsvFileCtrl.watch - CSV changed:", newValue);                   
+	        	//$log.debug("CsvFileCtrl.watch - CSV changed (csvresult):", newValue);                                   
 	    		CsvFileCtrl.tableParams = new NgTableParams(
 	    			{page:1,
                      count: 100},
@@ -74,7 +74,7 @@ angular.module('myApp')
         	var newData = [];
             ReportSaleByDayCtrl.courseList = [];
             _.each(ReportSaleByDayCtrl.selection.ids, function(value, key, list){
-				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+				//$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getTotalsByDay(key, ReportSaleByDayCtrl.range),                     
@@ -91,7 +91,7 @@ angular.module('myApp')
 
     var dateRangeListener = $scope.$watchCollection('ReportSaleByDayCtrl.range', function(newValue, oldValue) {
         if (newValue){      
-			$log.debug("ReportSaleByDayCtrl.range watch: ", newValue);
+			//$log.debug("ReportSaleByDayCtrl.range watch: ", newValue);
         	ReportSaleByDayCtrl.data = [];
         	var newData = [];			
             _.each(ReportSaleByDayCtrl.courseList, function(value, key, list){
@@ -103,7 +103,7 @@ angular.module('myApp')
             });
             ReportSaleByDayCtrl.data = newData; 
         }else{
-            $log.debug("ReportSaleByDayCtrl.range watch- no newval");                                 
+            //$log.debug("ReportSaleByDayCtrl.range watch- no newval");                                 
         }
     });
 
@@ -129,8 +129,8 @@ angular.module('myApp')
                     left: 55
                 },
                 x: function(d){        
-                	var parts = d.date.split('/');
-                	return new Date(parts[0], parts[1]-1, parts[2]);                
+                	var parts = d.date.split('/');             
+                    return new Date(parts[2], parts[1]-1, parts[0]);  
                 },
                 y: function(d){ 
                 	return d.total; 
@@ -159,7 +159,7 @@ angular.module('myApp')
                 },
                 yAxis: {
                     axisLabel: 'Sales ($)',
-                   axisLabelDistance: -10
+                    axisLabelDistance: -10
                 },
                 callback: function(chart){
                     console.log("!!! lineChart callback !!!");
