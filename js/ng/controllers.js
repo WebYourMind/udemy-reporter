@@ -61,7 +61,6 @@ angular.module('myApp')
 }])
 
 .controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){
-	//$log.debug("ReportController creato. Items: ", items);
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
 
@@ -69,7 +68,7 @@ angular.module('myApp')
 	ReportSaleByDayCtrl.range = {};
     ReportSaleByDayCtrl.courseList = ['All'];
 
-    var listener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
+    var courseNameListener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
         	ReportSaleByDayCtrl.data = [];
         	var newData = [];
@@ -90,7 +89,7 @@ angular.module('myApp')
         }
     });
 
-    var listener2 = $scope.$watchCollection('ReportSaleByDayCtrl.range', function(newValue, oldValue) {
+    var dateRangeListener = $scope.$watchCollection('ReportSaleByDayCtrl.range', function(newValue, oldValue) {
         if (newValue){      
 			$log.debug("ReportSaleByDayCtrl.range watch: ", newValue);
         	ReportSaleByDayCtrl.data = [];
@@ -110,11 +109,11 @@ angular.module('myApp')
 
     // Clean up on exit
     $scope.$on("$destroy", function() {
-        if (listener) {
-            listener();
+        if (courseNameListener) {
+            courseNameListener();
         }
-        if (listener2) {
-            listener2();
+        if (dateRangeListener) {
+            dateRangeListener();
         }        
     });
 
@@ -187,6 +186,59 @@ angular.module('myApp')
     var ReportSaleByDayOfWeekCtrl = this;
     ReportSaleByDayOfWeekCtrl.items = items;
 
+    ReportSaleByDayOfWeekCtrl.selection = {};
+	ReportSaleByDayOfWeekCtrl.range = {};
+    ReportSaleByDayOfWeekCtrl.courseList = ['All'];
+
+    var courseNameListener = $scope.$watchCollection('ReportSaleByDayOfWeekCtrl.selection.ids', function(newValue, oldValue) {
+        if (newValue){
+        	ReportSaleByDayOfWeekCtrl.data = [];
+        	var newData = [];
+            ReportSaleByDayOfWeekCtrl.courseList = [];
+            _.each(ReportSaleByDayOfWeekCtrl.selection.ids, function(value, key, list){
+				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+		    	if (value){
+		    		newData.push({
+	    					values: ReportService.getTotalsByDayOfWeek(key, ReportSaleByDayOfWeekCtrl.range),                     
+			                key: key
+	            	}); 
+                    ReportSaleByDayOfWeekCtrl.courseList.push(key);
+		    	}else{
+		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayOfWeekCtrl.data);
+		    	}		    	
+            });
+	    	ReportSaleByDayOfWeekCtrl.data = newData;            
+        }
+    });
+
+    var dateRangeListener = $scope.$watchCollection('ReportSaleByDayOfWeekCtrl.range', function(newValue, oldValue) {
+        if (newValue){      
+			$log.debug("ReportSaleByDayOfWeekCtrl.range watch: ", newValue);
+        	ReportSaleByDayOfWeekCtrl.data = [];
+        	var newData = [];			
+            _.each(ReportSaleByDayOfWeekCtrl.courseList, function(value, key, list){
+                $log.debug("ReportSaleByDayOfWeekCtrl.range watch: ", [value, key]);
+	    		newData.push({
+    					values: ReportService.getTotalsByDayOfWeek(value, ReportSaleByDayOfWeekCtrl.range),                     
+		                key: value
+            	});                 
+            });
+            ReportSaleByDayOfWeekCtrl.data = newData; 
+        }else{
+            $log.debug("ReportSaleByDayOfWeekCtrl.range watch- no newval");                                 
+        }
+    });
+
+    // Clean up on exit
+    $scope.$on("$destroy", function() {
+        if (courseNameListener) {
+            courseNameListener();
+        }
+        if (dateRangeListener) {
+            dateRangeListener();
+        }        
+    });
+
     /* Chart options */
     ReportSaleByDayOfWeekCtrl.options = { 
             chart: {
@@ -245,6 +297,59 @@ angular.module('myApp')
 	var ReportSaleByHourOfDayCtrl = this;
 	ReportSaleByHourOfDayCtrl.items = items;
 
+    ReportSaleByHourOfDayCtrl.selection = {};
+	ReportSaleByHourOfDayCtrl.range = {};
+    ReportSaleByHourOfDayCtrl.courseList = ['All'];
+
+    var courseNameListener = $scope.$watchCollection('ReportSaleByHourOfDayCtrl.selection.ids', function(newValue, oldValue) {
+        if (newValue){
+        	ReportSaleByHourOfDayCtrl.data = [];
+        	var newData = [];
+            ReportSaleByHourOfDayCtrl.courseList = [];
+            _.each(ReportSaleByHourOfDayCtrl.selection.ids, function(value, key, list){
+				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+		    	if (value){
+		    		newData.push({
+	    					values: ReportService.getTotalsByHourOfDay(key, ReportSaleByHourOfDayCtrl.range),                     
+			                key: key
+	            	}); 
+                    ReportSaleByHourOfDayCtrl.courseList.push(key);
+		    	}else{
+		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByHourOfDayCtrl.data);
+		    	}		    	
+            });
+	    	ReportSaleByHourOfDayCtrl.data = newData;            
+        }
+    });
+
+    var dateRangeListener = $scope.$watchCollection('ReportSaleByHourOfDayCtrl.range', function(newValue, oldValue) {
+        if (newValue){      
+			$log.debug("ReportSaleByHourOfDayCtrl.range watch: ", newValue);
+        	ReportSaleByHourOfDayCtrl.data = [];
+        	var newData = [];			
+            _.each(ReportSaleByHourOfDayCtrl.courseList, function(value, key, list){
+                $log.debug("ReportSaleByHourOfDayCtrl.range watch: ", [value, key]);
+	    		newData.push({
+    					values: ReportService.getTotalsByHourOfDay(value, ReportSaleByHourOfDayCtrl.range),                     
+		                key: value
+            	});                 
+            });
+            ReportSaleByHourOfDayCtrl.data = newData; 
+        }else{
+            $log.debug("ReportSaleByHourOfDayCtrl.range watch- no newval");                                 
+        }
+    });
+
+    // Clean up on exit
+    $scope.$on("$destroy", function() {
+        if (courseNameListener) {
+            courseNameListener();
+        }
+        if (dateRangeListener) {
+            dateRangeListener();
+        }        
+    });
+
     /* Chart options */
     ReportSaleByHourOfDayCtrl.options = { 
             chart: {
@@ -286,7 +391,6 @@ angular.module('myApp')
             }
     };
 
-
     /* Chart data */
     ReportSaleByHourOfDayCtrl.data = [{
     					values: items,                     
@@ -301,6 +405,61 @@ angular.module('myApp')
 	$log.debug("ReportSaleByPromotionController creato. Items: ", items);
 	var ReportSaleByPromotionCtrl = this;
 	ReportSaleByPromotionCtrl.items = items;
+
+
+    ReportSaleByPromotionCtrl.selection = {};
+	ReportSaleByPromotionCtrl.range = {};
+    ReportSaleByPromotionCtrl.courseList = ['All'];
+
+    var courseNameListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.selection.ids', function(newValue, oldValue) {
+        if (newValue){
+        	ReportSaleByPromotionCtrl.data = [];
+        	var newData = [];
+            ReportSaleByPromotionCtrl.courseList = [];
+            _.each(ReportSaleByPromotionCtrl.selection.ids, function(value, key, list){
+				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+		    	if (value){
+		    		newData.push({
+	    					values: ReportService.getTotalsByPromotion(key, ReportSaleByPromotionCtrl.range),                     
+			                key: key
+	            	}); 
+                    ReportSaleByPromotionCtrl.courseList.push(key);
+		    	}else{
+		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByPromotionCtrl.data);
+		    	}		    	
+            });
+	    	ReportSaleByPromotionCtrl.data = newData;            
+        }
+    });
+
+    var dateRangeListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.range', function(newValue, oldValue) {
+        if (newValue){      
+			$log.debug("ReportSaleByPromotionCtrl.range watch: ", newValue);
+        	ReportSaleByPromotionCtrl.data = [];
+        	var newData = [];			
+            _.each(ReportSaleByPromotionCtrl.courseList, function(value, key, list){
+                $log.debug("ReportSaleByPromotionCtrl.range watch: ", [value, key]);
+	    		newData.push({
+    					values: ReportService.getTotalsByPromotion(value, ReportSaleByPromotionCtrl.range),                     
+		                key: value
+            	});                 
+            });
+            ReportSaleByPromotionCtrl.data = newData; 
+        }else{
+            $log.debug("ReportSaleByPromotionCtrl.range watch- no newval");                                 
+        }
+    });
+
+    // Clean up on exit
+    $scope.$on("$destroy", function() {
+        if (courseNameListener) {
+            courseNameListener();
+        }
+        if (dateRangeListener) {
+            dateRangeListener();
+        }        
+    });
+
 
     /* Chart options */
     ReportSaleByPromotionCtrl.options = { 
