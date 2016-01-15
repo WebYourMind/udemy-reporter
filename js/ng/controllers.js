@@ -191,6 +191,106 @@ angular.module('myApp')
                 		}];
 })
 
+.controller('ReportSaleByWeekController', function($scope, $log, ReportService, items, currentAuth){
+	var ReportSaleByWeekCtrl = this;
+	ReportSaleByWeekCtrl.items = items;
+
+    ReportSaleByWeekCtrl.selection = {};
+	ReportSaleByWeekCtrl.range = {};
+    ReportSaleByWeekCtrl.courseList = ['All'];
+
+    var courseNameListener = $scope.$watchCollection('ReportSaleByWeekCtrl.selection.ids', function(newValue, oldValue) {
+        if (newValue){
+        	ReportSaleByWeekCtrl.data = [];
+        	var newData = [];
+            ReportSaleByWeekCtrl.courseList = [];
+            _.each(ReportSaleByWeekCtrl.selection.ids, function(value, key, list){
+		    	if (value){
+		    		newData.push({
+	    					values: ReportService.getTotalsByDay(key, ReportSaleByWeekCtrl.range),                     
+			                key: key
+	            	}); 
+                    ReportSaleByWeekCtrl.courseList.push(key);
+		    	}	    	
+            });
+	    	ReportSaleByWeekCtrl.data = newData;            
+        }
+    });
+
+    var dateRangeListener = $scope.$watchCollection('ReportSaleByWeekCtrl.range', function(newValue, oldValue) {
+        if (newValue){      
+        	ReportSaleByWeekCtrl.data = [];
+        	var newData = [];			
+            _.each(ReportSaleByWeekCtrl.courseList, function(value, key, list){
+                $log.debug("ReportSaleByWeekCtrl.range watch: ", [value, key]);
+	    		newData.push({
+    					values: ReportService.getTotalsByDay(value, ReportSaleByWeekCtrl.range),                     
+		                key: value
+            	});                 
+            });
+            ReportSaleByWeekCtrl.data = newData; 
+        }
+    });
+
+    // Clean up on exit
+    $scope.$on("$destroy", function() {
+        if (courseNameListener) {
+            courseNameListener();
+        }
+        if (dateRangeListener) {
+            dateRangeListener();
+        }        
+    });
+
+    /* Chart options */
+    ReportSaleByWeekCtrl.options = { 
+            chart: {
+                type: 'lineChart',
+                height: 500,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 40,
+                    left: 55
+                },
+                x: function(d){  
+                	return d.week
+                },
+                y: function(d){ 
+                	return d.total; 
+                },
+                useInteractiveGuideline: true,
+                dispatch: {
+                    stateChange: function(e){ console.log("stateChange"); },
+                    changeState: function(e){ console.log("changeState"); },
+                    tooltipShow: function(e){ console.log("tooltipShow"); },
+                    tooltipHide: function(e){ console.log("tooltipHide"); }
+                },
+                xAxis: {
+                    axisLabel: 'Week'                
+                },
+                yAxis: {
+                    axisLabel: 'Sales ($)'
+                },
+                callback: function(chart){
+                    console.log("!!! lineChart callback !!!");
+                }
+            },
+            title: {
+                enable: true,
+                text: 'Sales by week'
+            }
+    };
+
+    /* Chart data */
+    ReportSaleByWeekCtrl.data = [{
+    					values: items,                     
+		                key: 'Revenue', //key  - the name of the series.
+		                color: '#ff7f0e',  //color - optional: choose your own line color.
+		                strokeWidth: 2
+                		}];
+})
+
 .controller('ReportSaleByDayOfWeekController', function($scope, $log, ReportService, items, currentAuth){
     //$log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
     var ReportSaleByDayOfWeekCtrl = this;

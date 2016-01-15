@@ -62,6 +62,21 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
           }]          
         }
       }) 
+      .state('main.show-total-by-week-report', {
+        url: "show-total-by-week-report.html", 
+        templateUrl: "pages/show-total-by-week-report.html",
+        controller: 'ReportSaleByWeekController as ReportSaleByWeekCtrl',
+        resolve: {
+          items : function(ReportService){
+            return ReportService.getTotalsByWeek();
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError
+            return Auth.$requireAuth();
+          }]          
+        }
+      })       
       .state('main.show-total-by-day-of-week-report', {
         url: "show-total-by-day-of-week-report.html", 
         templateUrl: "pages/show-total-by-day-of-week-report.html",

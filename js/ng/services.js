@@ -151,7 +151,7 @@ angular.module('myApp')
 		return filtered;
 	}
 
-	// Sum all sales group by DATE
+	// Sum all sales group by DAY
 	self.getTotalsByDay = function(courseName, range){
 		var results = [],
 			records = FirebaseService.get();
@@ -181,6 +181,48 @@ angular.module('myApp')
 		return results;
 	}
 	
+	// Sum all sales group by WEEK
+	self.getTotalsByWeek = function(courseName, range){
+
+		$log.debug("Entering the ReportService.getTotalsByWeek");
+
+		var results = [],
+			records = FirebaseService.get();
+
+		// Filter by course name
+		records = self.filterByCourseName(angular.copy(records), courseName);
+		// Filter by date range
+		records = self.filterByDateRange(angular.copy(records), range);
+
+		_.each(records, function(element, index, list){			
+			var weekToAdd = (new Date(element.Date).getWeekNumber()) + "_" + $filter('date')(new Date(element.Date), 'yyyy');						
+			//$log.debug("weekToAdd typeof: " + typeof(weekToAdd) + " - value:", weekToAdd);	
+			var day = undefined;
+			_.each(results, function(elem, idx, lst){
+				//var weekCheck = (new Date(elem.date).getWeekNumber()) + "_" + $filter('date')(new Date(elem.date), 'yyyy');	
+				//$log.debug("weekCheck typeof "+typeof(weekCheck)+" - value:" + weekCheck);	
+				//$log.debug("elem.date typeof "+typeof(elem.date)+" - value:" + elem.date);
+				$log.debug("Check match found for elem.date: "+elem.date+" e weekToAdd:" + weekToAdd);
+				if (elem.date == weekToAdd ){
+					$log.debug("Match found ");
+					day = elem;
+				}else
+					$log.debug("Match not found" );
+			});
+			if (day){
+				// se esiste sommo valore
+				day.total = day.total + parseFloat(element.YourRevenue);
+			}else{
+				// se non esiste inserisco il nuovo valore
+				results.push({"week" : weekToAdd, "total" : parseFloat(element.YourRevenue)});
+			}
+		});
+
+		$log.debug("ReportService.getTotalsByWeek  value:", results);
+		return results;
+	}
+	
+
 	self.getTotalsByDayOfWeek = function(courseName, range){
 		var results = [];
 		var records = FirebaseService.get();	
