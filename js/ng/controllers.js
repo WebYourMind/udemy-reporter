@@ -81,9 +81,9 @@ angular.module('myApp')
 			                key: key
 	            	}); 
                     ReportSaleByDayCtrl.courseList.push(key);
-		    	}else{
-		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayCtrl.data);
-		    	}		    	
+		    	}//else{
+		    		//$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayCtrl.data);
+		    	//}		    	
             });
 	    	ReportSaleByDayCtrl.data = newData;            
         }

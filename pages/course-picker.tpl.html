@@ -6,7 +6,7 @@
       	<!-- Accordion content -->
 	    <span ng-repeat="course in courses track by course.value"  class="checkbox">
 	      <label for="{{course.value}}">
-	        <input type="checkbox" ng-model="selection.ids[course.value]" name="group" id="{{course.value}}" />
+	        <input type="checkbox" ng-model="selection.ids[course.value]" name="group" id="{{course.value}}" ng-checked="course.value=='All'"/>
 	        {{course.name}}
 	      </label>
 	    </span>
