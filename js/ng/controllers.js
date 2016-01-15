@@ -9,6 +9,16 @@ angular.module('myApp')
     }
 }])
 
+.controller('NavigationController', ['$scope','$log', function($scope, $log){
+	$scope.item = 0;
+	$scope.changeTab = function(newItem){
+		$scope.item = newItem;
+	};
+	$scope.isActiveTab = function(item){
+		return $scope.item === item;
+	};
+}])
+
 .controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth ){
 	//$log.debug("CsvFileController creato");
     //$log.debug("CsvFileController currentAuth: ", currentAuth);
@@ -203,9 +213,9 @@ angular.module('myApp')
 			                key: key
 	            	}); 
                     ReportSaleByDayOfWeekCtrl.courseList.push(key);
-		    	}else{
-		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayOfWeekCtrl.data);
-		    	}		    	
+		    	}//else{
+		    	//	$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayOfWeekCtrl.data);
+		    	//}		    	
             });
 	    	ReportSaleByDayOfWeekCtrl.data = newData;            
         }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" ng-controller="NavigationController">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -14,13 +14,19 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a ui-sref="main.splash"><i class="fa fa-home"></i> Splash<span class="sr-only">(current)</span></a></li>
-        <li><a ui-sref="main.load-csv-file"><i class="fa fa-spinner"></i> Load File</a></li>
+        <li ng-class="{'active':isActiveTab(0)}" ng-click="changeTab(0)">
+          <a ui-sref="main.splash"><i class="fa fa-home"></i> Splash<span class="sr-only">(current)</span></a>
+        </li>
+        <li ng-class="{'active':isActiveTab(1)}" ng-click="changeTab(1)">
+          <a ui-sref="main.load-csv-file"><i class="fa fa-spinner"></i> Load File</a>
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-line-chart"></i> Reports<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+            <i class="fa fa-line-chart"></i> Reports<span class="caret"></span>
+          </a>
           <ul class="dropdown-menu">
-            <li><a ui-sref="main.show-total-by-day-report">Total by Day</a></li>
-            <li><a ui-sref="main.show-total-by-day-of-week-report">Total by Day of Week</a></li>
+            <li ng-class="{'active':isActiveTab(2)}" ng-click="changeTab(2)"><a ui-sref="main.show-total-by-day-report">Total by Day</a></li>
+            <li ng-class="{'active':isActiveTab(3)}" ng-click="changeTab(3)"><a ui-sref="main.show-total-by-day-of-week-report">Total by Day of Week</a></li>
             <!--
             <li><a ui-sref="main.show-total-by-hour-of-day-report">Total by Hour of the Day</a></li>
             <li><a ui-sref="main.report-by-promotion">Revenue by Promotion</a></li>
@@ -33,9 +39,9 @@
             -->
           </ul>
         </li>        
-        <li><a ui-sref="main.help"><i class="fa fa-question-circle"></i> Help</a></li>
+        <li ng-class="{'active':isActiveTab(10)}" ng-click="changeTab(10)"><a ui-sref="main.help"><i class="fa fa-question-circle"></i> Help</a></li>
         <li role="separator" class="divider"></li>
-        <li><a ui-sref="main.login"><i class="fa fa-user"></i> Sign in</a></li>
+        <li ng-class="{'active':isActiveTab(11)}" ng-click="changeTab(11)"><a ui-sref="main.login"><i class="fa fa-user"></i> Sign in</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
