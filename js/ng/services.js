@@ -111,8 +111,6 @@ angular.module('myApp')
 	return self;	
 }]);	
 
-
-
 angular.module('myApp')
 .factory('ReportService', ['$log', '$filter', 'FirebaseService', function($log, $filter, FirebaseService){
 	var self = {};	
@@ -195,19 +193,16 @@ angular.module('myApp')
 		records = self.filterByDateRange(angular.copy(records), range);
 
 		_.each(records, function(element, index, list){			
-			var weekToAdd = (new Date(element.Date).getWeekNumber()) + "_" + $filter('date')(new Date(element.Date), 'yyyy');						
+			var weekToAdd = (new Date(element.Date).getWeekNumber()) + "-" + (new Date(element.Date)).getFullYear();			
 			//$log.debug("weekToAdd typeof: " + typeof(weekToAdd) + " - value:", weekToAdd);	
 			var day = undefined;
+			
 			_.each(results, function(elem, idx, lst){
-				//var weekCheck = (new Date(elem.date).getWeekNumber()) + "_" + $filter('date')(new Date(elem.date), 'yyyy');	
-				//$log.debug("weekCheck typeof "+typeof(weekCheck)+" - value:" + weekCheck);	
-				//$log.debug("elem.date typeof "+typeof(elem.date)+" - value:" + elem.date);
-				$log.debug("Check match found for elem.date: "+elem.date+" e weekToAdd:" + weekToAdd);
-				if (elem.date == weekToAdd ){
+				//$log.debug("Check match found for weekToAdd:" + weekToAdd +" elem: ", elem );
+				if (elem.week === weekToAdd ){
 					$log.debug("Match found ");
 					day = elem;
-				}else
-					$log.debug("Match not found" );
+				}		
 			});
 			if (day){
 				// se esiste sommo valore

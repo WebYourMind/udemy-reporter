@@ -245,16 +245,16 @@ angular.module('myApp')
     /* Chart options */
     ReportSaleByWeekCtrl.options = { 
             chart: {
-                type: 'lineChart',
+                type: 'discreteBarChart',
                 height: 500,
                 margin : {
                     top: 20,
                     right: 20,
-                    bottom: 40,
+                    bottom: 50,
                     left: 55
                 },
-                x: function(d){  
-                	return d.week
+                x: function(d){                        
+                	return d.week;                
                 },
                 y: function(d){ 
                 	return d.total; 
@@ -267,10 +267,12 @@ angular.module('myApp')
                     tooltipHide: function(e){ console.log("tooltipHide"); }
                 },
                 xAxis: {
-                    axisLabel: 'Week'                
+                    axisLabel: 'Week'//,
+                    //axisLabelDistance: -5000          
                 },
                 yAxis: {
-                    axisLabel: 'Sales ($)'
+                    axisLabel: 'Sales ($)',
+                	axisLabelDistance: -10
                 },
                 callback: function(chart){
                     console.log("!!! lineChart callback !!!");
@@ -278,9 +280,10 @@ angular.module('myApp')
             },
             title: {
                 enable: true,
-                text: 'Sales by week'
+                text: 'Sales by Week of the Year'
             }
     };
+
 
     /* Chart data */
     ReportSaleByWeekCtrl.data = [{
