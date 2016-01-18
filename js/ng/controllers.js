@@ -245,7 +245,7 @@ angular.module('myApp')
     /* Chart options */
     ReportSaleByWeekCtrl.options = { 
             chart: {
-                type: 'discreteBarChart',
+                type: 'lineChart',
                 height: 500,
                 margin : {
                     top: 20,
@@ -253,10 +253,12 @@ angular.module('myApp')
                     bottom: 50,
                     left: 55
                 },
-                x: function(d){                        
-                	return d.week;                
+                x: function(d){                  	
+                	//$log.debug("Got this as X value: ", d);                   
+                	return d.date;                
                 },
                 y: function(d){ 
+                	//$log.debug("Got this as Y value: ", d);  
                 	return d.total; 
                 },
                 useInteractiveGuideline: true,
@@ -267,15 +269,13 @@ angular.module('myApp')
                     tooltipHide: function(e){ console.log("tooltipHide"); }
                 },
                 xAxis: {
-                    axisLabel: 'Week'//,
-                    //axisLabelDistance: -5000          
+                    axisLabel: 'Week'   
                 },
                 yAxis: {
-                    axisLabel: 'Sales ($)',
-                	axisLabelDistance: -10
+                    axisLabel: 'Sales ($)'
                 },
                 callback: function(chart){
-                    console.log("!!! lineChart callback !!!");
+                    //console.log("!!! lineChart callback !!!");
                 }
             },
             title: {
@@ -284,13 +284,10 @@ angular.module('myApp')
             }
     };
 
-
     /* Chart data */
     ReportSaleByWeekCtrl.data = [{
     					values: items,                     
-		                key: 'Revenue', //key  - the name of the series.
-		                color: '#ff7f0e',  //color - optional: choose your own line color.
-		                strokeWidth: 2
+		                key: 'Revenue'
                 		}];
 })
 
@@ -309,7 +306,7 @@ angular.module('myApp')
         	var newData = [];
             ReportSaleByDayOfWeekCtrl.courseList = [];
             _.each(ReportSaleByDayOfWeekCtrl.selection.ids, function(value, key, list){
-				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+				$log.debug("ReportSaleByDayOfWeekCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getTotalsByDayOfWeek(key, ReportSaleByDayOfWeekCtrl.range),                     
@@ -317,7 +314,7 @@ angular.module('myApp')
 	            	}); 
                     ReportSaleByDayOfWeekCtrl.courseList.push(key);
 		    	}//else{
-		    	//	$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByDayOfWeekCtrl.data);
+		    	//	$log.debug("ReportSaleByDayOfWeekCtrl current data is:", ReportSaleByDayOfWeekCtrl.data);
 		    	//}		    	
             });
 	    	ReportSaleByDayOfWeekCtrl.data = newData;            
@@ -404,7 +401,6 @@ angular.module('myApp')
                         }]; 
 })
 
-
 .controller('ReportSaleByHourOfDayController', function($scope, $log, ReportService, items, currentAuth){
 	$log.debug("ReportSaleByHourOfDayController creato. Items: ", items);
 	var ReportSaleByHourOfDayCtrl = this;
@@ -420,7 +416,7 @@ angular.module('myApp')
         	var newData = [];
             ReportSaleByHourOfDayCtrl.courseList = [];
             _.each(ReportSaleByHourOfDayCtrl.selection.ids, function(value, key, list){
-				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+				$log.debug("ReportSaleByDayOfWeekCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getTotalsByHourOfDay(key, ReportSaleByHourOfDayCtrl.range),                     
@@ -428,7 +424,7 @@ angular.module('myApp')
 	            	}); 
                     ReportSaleByHourOfDayCtrl.courseList.push(key);
 		    	}else{
-		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByHourOfDayCtrl.data);
+		    		$log.debug("ReportSaleByDayOfWeekCtrl current data is:", ReportSaleByHourOfDayCtrl.data);
 		    	}		    	
             });
 	    	ReportSaleByHourOfDayCtrl.data = newData;            
@@ -530,7 +526,7 @@ angular.module('myApp')
         	var newData = [];
             ReportSaleByPromotionCtrl.courseList = [];
             _.each(ReportSaleByPromotionCtrl.selection.ids, function(value, key, list){
-				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+				$log.debug("ReportSaleByPromotionCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getTotalsByPromotion(key, ReportSaleByPromotionCtrl.range),                     
@@ -538,7 +534,7 @@ angular.module('myApp')
 	            	}); 
                     ReportSaleByPromotionCtrl.courseList.push(key);
 		    	}else{
-		    		$log.debug("ReportSaleByDayCtrl current data is:", ReportSaleByPromotionCtrl.data);
+		    		$log.debug("ReportSaleByPromotionCtrl current data is:", ReportSaleByPromotionCtrl.data);
 		    	}		    	
             });
 	    	ReportSaleByPromotionCtrl.data = newData;            

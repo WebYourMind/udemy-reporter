@@ -179,7 +179,7 @@ angular.module('myApp')
 		return results;
 	}
 	
-	// Sum all sales group by WEEK
+	// Sum all sales group by WEEK of the YEAR
 	self.getTotalsByWeek = function(courseName, range){
 
 		$log.debug("Entering the ReportService.getTotalsByWeek");
@@ -188,19 +188,20 @@ angular.module('myApp')
 			records = FirebaseService.get();
 
 		// Filter by course name
-		records = self.filterByCourseName(angular.copy(records), courseName);
+		if (courseName)
+			records = self.filterByCourseName(angular.copy(records), courseName);
 		// Filter by date range
-		records = self.filterByDateRange(angular.copy(records), range);
+		if(range)
+			records = self.filterByDateRange(angular.copy(records), range);
 
 		_.each(records, function(element, index, list){			
-			var weekToAdd = (new Date(element.Date).getWeekNumber()) + "-" + (new Date(element.Date)).getFullYear();			
-			//$log.debug("weekToAdd typeof: " + typeof(weekToAdd) + " - value:", weekToAdd);	
-			var day = undefined;
+			var pad = '00',
+				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length),
+				day = undefined;
 			
 			_.each(results, function(elem, idx, lst){
 				//$log.debug("Check match found for weekToAdd:" + weekToAdd +" elem: ", elem );
 				if (elem.week === weekToAdd ){
-					$log.debug("Match found ");
 					day = elem;
 				}		
 			});
@@ -212,9 +213,10 @@ angular.module('myApp')
 				results.push({"week" : weekToAdd, "total" : parseFloat(element.YourRevenue)});
 			}
 		});
-
+		// sort by week
+		// TODO
 		$log.debug("ReportService.getTotalsByWeek  value:", results);
-		return results;
+		return _.sortBy(results, "week");
 	}
 	
 
