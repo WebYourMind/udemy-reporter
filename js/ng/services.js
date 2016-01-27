@@ -51,7 +51,7 @@ angular.module('myApp')
 					"Date"			: $filter('date')(new Date(element['Formatted Date'].replace(/"/g,"")), 'MM/dd/yyyy HH:mm:ss'),
 					"CustomerName"	: element['User Name'].replace(/"/g,""),
 					"Course"		: element['Course Name'].replace(/"/g,""),
-					"CouponCode"	: element['Coupon Ode'].replace(/"/g,""),
+					"CouponCode"	: element['Coupon Code'].replace(/"/g,""),
 					"Channel"		: element['Revenue Channel'].replace(/"/g,""),
 					"Platform"		: element.Vendor.replace(/"/g,""),
 					"PricePaid"		: element['Paid Price'].replace(/"/g,""),
