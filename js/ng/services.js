@@ -48,23 +48,27 @@ angular.module('myApp')
 		_.each(recs, function(element, index, list){
 			var currentTransactionId = element['Transaction Id'];
 			if (currentTransactionId > lastTransactionId){
-				records.$add({
-					"TransactionId" : element['Transaction Id'],
-					"Date"			: $filter('date')(new Date(element['Formatted Date'].replace(/"/g,"")), 'MM/dd/yyyy HH:mm:ss'),
-					"CustomerName"	: element['User Name'].replace(/"/g,""),
-					"Course"		: element['Course Name'].replace(/"/g,""),
-					"CouponCode"	: element['Coupon Code'].replace(/"/g,""),
-					"Channel"		: element['Revenue Channel'].replace(/"/g,""),
-					"Platform"		: element.Vendor.replace(/"/g,""),
-					"PricePaid"		: element['Paid Price'].replace(/"/g,""),
-					"Currency"		: element['Transaction Currency'].replace(/"/g,""),
-					"TaxAmount"		: element['Tax Amount'].replace(/"/g,""),
-					"NetAmount"		: element['Share Price'].replace(/"/g,""),
-					"YourRevenue"	: element['Instructor Share'].replace(/"/g,""), 
-					"TaxRate"		: element['Tax Rate'].replace(/"/g,""),
-					"ExchangeRate"	: element['Exchange Rate'].replace(/"/g,"")
-				});
-				addedRecords++;
+				try{
+					records.$add({
+						"TransactionId" : element['Transaction Id'],
+						"Date"			: $filter('date')(new Date(element['Formatted Date'].replace(/"/g,"")), 'MM/dd/yyyy HH:mm:ss'),
+						"CustomerName"	: element['User Name'].replace(/"/g,""),
+						"Course"		: element['Course Name'].replace(/"/g,""),
+						"CouponCode"	: element['Coupon Code'].replace(/"/g,""),
+						"Channel"		: element['Revenue Channel'].replace(/"/g,""),
+						"Platform"		: element.Vendor.replace(/"/g,""),
+						"PricePaid"		: element['Paid Price'].replace(/"/g,""),
+						"Currency"		: element['Transaction Currency'].replace(/"/g,""),
+						"TaxAmount"		: element['Tax Amount'].replace(/"/g,""),
+						"NetAmount"		: element['Share Price'].replace(/"/g,""),
+						"YourRevenue"	: element['Instructor Share'].replace(/"/g,""), 
+						"TaxRate"		: element['Tax Rate'].replace(/"/g,""),
+						"ExchangeRate"	: element['Exchange Rate'].replace(/"/g,"")
+					});
+					addedRecords++;
+			}catch(e){
+				$log.error("An exception raised: ", e);
+			}
 			}else{				
 				alreadyAddedRecords++;
 			}
@@ -76,7 +80,9 @@ angular.module('myApp')
 	self.get = function(){
 		if (self.records == undefined){
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
-			var ref = new Firebase(FBEndPoint+"/" + "sales" + "/" + self.uid);
+			var endPoint = FBEndPoint + self.uid + "/" + "sales/";
+			$log.debug("FirebaseService.get ", endPoint);
+			var ref = new Firebase(endPoint);
 			self.records = $firebaseArray(ref);			
 			return self.records;
 		}else {
