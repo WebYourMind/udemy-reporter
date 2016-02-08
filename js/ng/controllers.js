@@ -29,7 +29,7 @@ angular.module('myApp')
 	};
 }])
 
-.controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth ){
+.controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', 'ParserService', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth, ParserService ){
 	//$log.debug("CsvFileController creato");
     //$log.debug("CsvFileController currentAuth: ", currentAuth);
 
@@ -78,7 +78,20 @@ angular.module('myApp')
     CsvFileCtrl.save = function(){
     	CsvFileCtrl.enableSaveBtn = false;
 		CsvFileCtrl.savedRecords = FirebaseService.save(CsvFileCtrl.csvresult, CsvFileCtrl.currentAuth.uid);
-    }	 	
+    }	
+
+     	
+    ////
+    CsvFileCtrl.sections = [];
+    CsvFileCtrl.content = "";
+    CsvFileCtrl.showContent = function($fileContent){
+        CsvFileCtrl.content = $fileContent;
+    };
+
+    CsvFileCtrl.parseContent = function($fileContent){
+        CsvFileCtrl.content = $fileContent;
+        CsvFileCtrl.sections = ParserService.parse(CsvFileCtrl.content);
+    };
 }])
 
 .controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){

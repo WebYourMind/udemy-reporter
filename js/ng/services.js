@@ -111,7 +111,98 @@ angular.module('myApp')
 	}	
 	// Fine FACTORY
 	return self;	
-}]);	
+}])	
+
+.factory('ParserService', ['$log', '$filter', function($log, $filter){
+	var self = {};	
+
+	var sections = [
+		{"startLabel" : "Your total earnings", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Revenue Channel","Earnings"] },
+		{"startLabel" : "Your earnings by course", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Course Title","Earnings"] },
+		{"startLabel" : "Sales", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Transaction Id", 
+																					 "Formatted Date", 
+																					 "User Name",
+																					 "Course Name",
+																					 "Coupon Code",
+																					 "Revenue Channel",
+																					 "Vendor",
+																					 "Paid Price",
+																					 "Transaction Currency",
+																					 "Tax Amount",
+																					 "Store Fee",
+																					 "Share Price",
+																					 "Instructor Share",
+																					 "Tax Rate",
+																					 "Exchange Rate"] },
+		{"startLabel" : "Redemptions", 				"firstRow": "-1", "lastRow": "-1",	"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"] },
+		{"startLabel" : "Refunds",  				"firstRow": "-1", "lastRow": "-1",	"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"] }
+	];
+
+	self.parse = function(text){
+		var lines = text.split('\n'),
+			sectionNumber = sections.length,
+			currentSection = 0;
+
+		for(var line=0; line < lines.length; line++){
+			if (lines[line] == sections[0].startLabel){
+				//$log.debug("Found section " + sections[0].startLabel + " at line: " +line);
+				sections[0].firstRow = line;
+			}else if (lines[line] == sections[1].startLabel){
+				//$log.debug("Found section " + sections[1].startLabel + " at line: " +line);
+				sections[0].lastRow = line;
+				sections[1].firstRow = line;
+			}else if (lines[line] == sections[2].startLabel){
+				//$log.debug("Found section " + sections[2].startLabel + " at line: " +line);
+				sections[1].lastRow = line;
+				sections[2].firstRow = line;
+			}else if (lines[line] == sections[3].startLabel){
+				//$log.debug("Found section " + sections[3].startLabel + " at line: " +line);
+				sections[2].lastRow = line;
+				sections[3].firstRow = line;
+			}else if (lines[line] == sections[4].startLabel){
+				//$log.debug("Found section " + sections[4].startLabel + " at line: " +line);
+				sections[3].lastRow = line;
+				sections[4].firstRow = line;
+			}
+		}
+		sections[4].lastRow = line;	
+
+		for(line=0; line<sections.length; line++){
+			//$log.debug("Section [" + sections[line].startLabel + "] starts at line " + sections[line].firstRow + " and ends at line: " + sections[line].lastRow);
+			sections[line].data = _.compact(lines.slice(sections[line].firstRow + 2, sections[line].lastRow));
+			//$log.debug("Section data: ", sections[line].data);
+			$log.debug("---------------------------------------------------------------------------");
+			sections[line].json = self.getJson(sections[line]);			
+		}	
+		$log.debug("Risultato jasonizzazione: ", sections);	
+	}
+
+	self.getJson = function(section){
+		$log.debug("section.data.length: ", section.data.length);
+		var json = [],
+			table = section.data,
+			row  = [];
+
+		for(var i = 0; i< table.length; i++){
+			row.length = 0;
+			var tableRow = table[i];
+			var cells = tableRow.split(",");
+			$log.debug("la riga "+ i +"ma contiene " + cells.length + " colonne: ", cells);
+			for (var j = 0; j < section.columns.length; j++) {
+				$log.debug("section.columns.processing : " + j + " - NAME ["+section.columns[j]+"] - VALUE ["+cells[j]+"]");				
+			    row[section.columns[j]] = cells[j];
+			}
+			// Inserisco riga nell'array
+			json.push(row);
+			$log.debug("Row added to JSON", json);
+		}
+
+		return json;
+	}
+
+	// Fine FACTORY
+	return self;
+}])
 
 angular.module('myApp')
 .factory('ReportService', ['$log', '$filter', 'FirebaseService', function($log, $filter, FirebaseService){
