@@ -9,7 +9,8 @@ angular.module('myApp')
 
 .factory("UserAuthentication", ['$log', '$firebaseAuth', 'FBEndPoint', '$state', function($log, $firebaseAuth, FBEndPoint, $state) {
 	var self = {};
-	
+	//self.uid = undefined;
+
    	self.login = function(email, password, rememberme) {
 	   	$log.debug("UserAuthentication.login params: ", [email, password, rememberme]);
 	
@@ -21,6 +22,7 @@ angular.module('myApp')
 		  password: password
 		}).then(function(authData) {
 		  $log.debug("Logged in as:", authData);
+		  self.uid = authData.uid;
 		  $state.go("main.load-csv-file");
 		}).catch(function(error) {
 		  $log.debug("Authentication failed:", error);
@@ -28,14 +30,17 @@ angular.module('myApp')
 
     };
 
+    self.getUid = function(){
+    	return self.uid;
+    }
     // Factory END
     return self;
  }])
 
-.factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', function($http, $q, $log, $filter, $firebaseArray, FBEndPoint){
+.factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', 'UserAuthentication', function($http, $q, $log, $filter, $firebaseArray, FBEndPoint, UserAuthentication){
 	var self = {};
 	self.records = undefined;
-	self.uid = "";
+	//self.uid = undefined;
 
 	self.save = function(recs, uid){	
 		self.uid = uid;
@@ -77,11 +82,18 @@ angular.module('myApp')
 		return addedRecords;
 	}
 
-	self.get = function(){
+	self.get = function(uid){
+		$log.debug("FirebaseService.get parameter uid:", uid);
+		if (self.uid === undefined ){
+			$log.debug("FirebaseService.get uid is undefined:", self.uid);
+			self.uid = UserAuthentication.getUid();
+		}else{
+			$log.debug("FirebaseService.get uid is defined:", self.uid);
+		}
 		if (self.records == undefined){
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
 			var endPoint = FBEndPoint + self.uid + "/" + "sales/";
-			$log.debug("FirebaseService.get ", endPoint);
+			$log.debug("FirebaseService.get endPoint:", endPoint);
 			var ref = new Firebase(endPoint);
 			self.records = $firebaseArray(ref);			
 			return self.records;
