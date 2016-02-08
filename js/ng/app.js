@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3']);
 
-angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
-/*https://<YOUR FIREBASE APP>.firebaseio.com/ */
+angular.module('myApp').constant("FBEndPoint", "https://<YOUR FIREBASE APP>.firebaseio.com/");
+/* */
 
 
 angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
@@ -33,7 +33,19 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
             return Auth.$waitForAuth();
           }]
         }        
-      })         
+      })  
+      .state('main.logout', {
+        url: "logout.html", 
+        templateUrl: "pages/logout.html",
+        controller: 'LogoutController as LogoutCtrl',
+        resolve: {
+          // controller will not be loaded until $waitForAuth resolves
+          "currentAuth": ["Auth", function(Auth) {
+            // $waitForAuth returns a promise so the resolve waits for it to complete
+            return Auth.$waitForAuth();
+          }]
+        }        
+      })               
       .state('main.load-csv-file', {
         url: "load-csv.html", 
         templateUrl: "pages/upload-csv.html",
@@ -139,7 +151,7 @@ angular.module('myApp').run(function($log, $rootScope, $state, FirebaseService){
     }
   });
   
-  var records = FirebaseService.get();
-  $log.debug("App run records: ", records);
-  $log.debug("App run!!!");
+  //var records = FirebaseService.get();
+  //$log.debug("App run records: ", records);
+  $log.debug("App is running");
 });

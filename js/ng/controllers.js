@@ -9,6 +9,16 @@ angular.module('myApp')
     }
 }])
 
+.controller('LogoutController', ['$log', 'currentAuth', 'FBEndPoint',  function($log, currentAuth, FBEndPoint){
+    var LogoutCtrl = this;
+    LogoutCtrl.currentAuth = currentAuth;
+    LogoutCtrl.logout = function(){
+        var ref = new Firebase(FBEndPoint);
+        ref.unauth();
+    }
+}])
+
+
 .controller('NavigationController', ['$scope','$log', function($scope, $log){
 	$scope.item = 0;
 	$scope.changeTab = function(newItem){
@@ -26,6 +36,7 @@ angular.module('myApp')
 	var CsvFileCtrl = this;
 
     CsvFileCtrl.currentAuth = currentAuth;
+    $log.debug("Current uid:", CsvFileCtrl.currentAuth.uid);
 
 	CsvFileCtrl.csvcontent = "";
 	CsvFileCtrl.csvheader = true;
@@ -66,7 +77,7 @@ angular.module('myApp')
 
     CsvFileCtrl.save = function(){
     	CsvFileCtrl.enableSaveBtn = false;
-		CsvFileCtrl.savedRecords = FirebaseService.save(CsvFileCtrl.csvresult);
+		CsvFileCtrl.savedRecords = FirebaseService.save(CsvFileCtrl.csvresult, CsvFileCtrl.currentAuth.uid);
     }	 	
 }])
 

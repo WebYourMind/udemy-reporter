@@ -35,11 +35,13 @@ angular.module('myApp')
 .factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', function($http, $q, $log, $filter, $firebaseArray, FBEndPoint){
 	var self = {};
 	self.records = undefined;
-		
-	self.save = function(recs){	
+	self.uid = "";
+
+	self.save = function(recs, uid){	
+		self.uid = uid;
 		var addedRecords = 0,
 			alreadyAddedRecords = 0,
-			records = self.get(),		
+			records = self.get(uid),		
 			lastTransactionId = self.getLastTransactionId(records);
 
 		recs.reverse();
@@ -74,7 +76,7 @@ angular.module('myApp')
 	self.get = function(){
 		if (self.records == undefined){
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
-			var ref = new Firebase(FBEndPoint);
+			var ref = new Firebase(FBEndPoint+"/" + "sales" + "/" + self.uid);
 			self.records = $firebaseArray(ref);			
 			return self.records;
 		}else {
