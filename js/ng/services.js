@@ -90,7 +90,7 @@ angular.module('myApp')
 		}else{
 			$log.debug("FirebaseService.get uid is defined:", self.uid);
 		}
-		if (self.records == undefined){
+		if (self.records == undefined && self.uid != undefined){
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
 			var endPoint = FBEndPoint + self.uid + "/" + "sales/";
 			$log.debug("FirebaseService.get endPoint:", endPoint);
