@@ -111,7 +111,7 @@ angular.module('myApp')
 				//$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
-	    					values: ReportService.getTotalsByDay(key, ReportSaleByDayCtrl.range),                     
+	    					values: ReportService.getSaleTotals('ByDay', key, ReportSaleByDayCtrl.range),                     
 			                key: key
 	            	}); 
                     ReportSaleByDayCtrl.courseList.push(key);
@@ -131,7 +131,7 @@ angular.module('myApp')
             _.each(ReportSaleByDayCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByDayCtrl.range watch: ", [value, key]);
 	    		newData.push({
-    					values: ReportService.getTotalsByDay(value, ReportSaleByDayCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByDay', value, ReportSaleByDayCtrl.range),                     
 		                key: value
             	});                 
             });
@@ -231,7 +231,7 @@ angular.module('myApp')
             _.each(ReportSaleByWeekCtrl.selection.ids, function(value, key, list){
 		    	if (value){
 		    		newData.push({
-	    					values: ReportService.getTotalsByDay(key, ReportSaleByWeekCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByWeek', key, ReportSaleByWeekCtrl.range),                     
 			                key: key
 	            	}); 
                     ReportSaleByWeekCtrl.courseList.push(key);
@@ -248,7 +248,7 @@ angular.module('myApp')
             _.each(ReportSaleByWeekCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByWeekCtrl.range watch: ", [value, key]);
 	    		newData.push({
-    					values: ReportService.getTotalsByDay(value, ReportSaleByWeekCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByWeek', value, ReportSaleByWeekCtrl.range),                     
 		                key: value
             	});                 
             });
@@ -333,7 +333,7 @@ angular.module('myApp')
 				$log.debug("ReportSaleByDayOfWeekCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
-	    					values: ReportService.getTotalsByDayOfWeek(key, ReportSaleByDayOfWeekCtrl.range),                     
+	    					values: ReportService.getSaleTotals('ByDayOfWeek', key, ReportSaleByDayOfWeekCtrl.range),                     
 			                key: key
 	            	}); 
                     ReportSaleByDayOfWeekCtrl.courseList.push(key);
@@ -353,7 +353,7 @@ angular.module('myApp')
             _.each(ReportSaleByDayOfWeekCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByDayOfWeekCtrl.range watch: ", [value, key]);
 	    		newData.push({
-    					values: ReportService.getTotalsByDayOfWeek(value, ReportSaleByDayOfWeekCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByDayOfWeek', value, ReportSaleByDayOfWeekCtrl.range),                     
 		                key: value
             	});                 
             });
@@ -443,7 +443,7 @@ angular.module('myApp')
 				$log.debug("ReportSaleByDayOfWeekCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
-	    					values: ReportService.getTotalsByHourOfDay(key, ReportSaleByHourOfDayCtrl.range),                     
+	    					values: ReportService.getSaleTotals('ByHourOfDay', key, ReportSaleByHourOfDayCtrl.range),                     
 			                key: key
 	            	}); 
                     ReportSaleByHourOfDayCtrl.courseList.push(key);
@@ -463,7 +463,7 @@ angular.module('myApp')
             _.each(ReportSaleByHourOfDayCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByHourOfDayCtrl.range watch: ", [value, key]);
 	    		newData.push({
-    					values: ReportService.getTotalsByHourOfDay(value, ReportSaleByHourOfDayCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByHourOfDay', value, ReportSaleByHourOfDayCtrl.range),                     
 		                key: value
             	});                 
             });
@@ -553,7 +553,7 @@ angular.module('myApp')
 				$log.debug("ReportSaleByPromotionCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
-	    					values: ReportService.getTotalsByPromotion(key, ReportSaleByPromotionCtrl.range),                     
+	    					values: ReportService.getSaleTotals('ByPromotion', key, ReportSaleByPromotionCtrl.range),                     
 			                key: key
 	            	}); 
                     ReportSaleByPromotionCtrl.courseList.push(key);
@@ -573,7 +573,7 @@ angular.module('myApp')
             _.each(ReportSaleByPromotionCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByPromotionCtrl.range watch: ", [value, key]);
 	    		newData.push({
-    					values: ReportService.getTotalsByPromotion(value, ReportSaleByPromotionCtrl.range),                     
+    					values: ReportService.getSaleTotals('ByPromotion', value, ReportSaleByPromotionCtrl.range),                     
 		                key: value
             	});                 
             });

@@ -65,7 +65,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         controller: 'ReportSaleByDayController as ReportSaleByDayCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getTotalsByDay();
+            return ReportService.getSaleTotals('ByDay');
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
@@ -80,7 +80,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         controller: 'ReportSaleByWeekController as ReportSaleByWeekCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getTotalsByWeek();
+            return ReportService.getSaleTotals('ByWeek');
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
@@ -95,7 +95,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         controller: 'ReportSaleByDayOfWeekController as ReportSaleByDayOfWeekCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getTotalsByDayOfWeek();
+            return ReportService.getSaleTotals('ByDayOfWeek');
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
@@ -110,7 +110,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         controller: 'ReportSaleByHourOfDayController as ReportSaleByHourOfDayCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getTotalsByHourOfDay();
+            return ReportService.getSaleTotals('ByHourOfDay');
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
@@ -125,7 +125,7 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         controller: 'ReportSaleByPromotionController as ReportSaleByPromotionCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getTotalsByPromotion();
+            return ReportService.getSaleTotals('ByPromotion');
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
