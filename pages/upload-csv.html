@@ -82,22 +82,16 @@
 <div class="container">
     <h1>Select file</h1>
     <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
-    <!--
+    
+    <div ng-repeat="section in CsvFileCtrl.sections">
+        <h2>New Section</h2>
+        <pre>{{ section | json }}</pre>
+    </div> 
+
     <div>
         <h2>File content is:</h2>
         <pre>{{ CsvFileCtrl.content }}</pre>
     </div>
--->
-
-    <div ng-repeat="section in CsvFileCtrl.sections">
-        <h2>New Section</h2>
-        <pre>{{ section | json }}</pre>
-    </div>    
+   
 </div>
 
-
-
-
-<!--
-<pre>{{CsvFileCtrl.csvresult | json}}</pre>
--->

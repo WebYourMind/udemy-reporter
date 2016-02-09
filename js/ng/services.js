@@ -191,17 +191,17 @@ angular.module('myApp')
 			$log.debug("---------------------------------------------------------------------------");
 			sections[line].json = self.getJson(sections[line]);			
 		}	
-		$log.debug("Risultato jasonizzazione: ", sections);	
+		//$log.debug("Risultato jasonizzazione: ", sections);	
+		return sections;
 	}
 
 	self.getJson = function(section){
 		$log.debug("section.data.length: ", section.data.length);
 		var json = [],
 			table = section.data,
-			row  = [];
+			row  = {};
 
 		for(var i = 0; i< table.length; i++){
-			row.length = 0;
 			var tableRow = table[i];
 			var cells = tableRow.split(",");
 			$log.debug("la riga "+ i +"ma contiene " + cells.length + " colonne: ", cells);
@@ -211,7 +211,7 @@ angular.module('myApp')
 			}
 			// Inserisco riga nell'array
 			json.push(row);
-			$log.debug("Row added to JSON", json);
+			$log.debug("Row added to JSON", [row, json]);
 		}
 
 		return json;
