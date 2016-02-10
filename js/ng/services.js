@@ -134,8 +134,9 @@ angular.module('myApp')
 	var self = {};	
 
 	var sections = [
-		{"startLabel" : "Your total earnings", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Revenue Channel","Earnings"] },
-		{"startLabel" : "Your earnings by course", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Course Title","Earnings"] },
+		{"startLabel" : "Your total earnings", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Revenue Channel","Earnings"], "coursenameposition" : 0 },
+		{"startLabel" : "Your earnings by course", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Course Title","Earnings"], "coursenameposition" : 0  },
+		{"startLabel" : "Your promotion activity", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Coupon Code","Earnings"] },
 		{"startLabel" : "Sales", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Transaction Id", 
 																					 "Formatted Date", 
 																					 "User Name",
@@ -150,9 +151,9 @@ angular.module('myApp')
 																					 "Share Price",
 																					 "Instructor Share",
 																					 "Tax Rate",
-																					 "Exchange Rate"] },
-		{"startLabel" : "Redemptions", 				"firstRow": "-1", "lastRow": "-1",	"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"] },
-		{"startLabel" : "Refunds",  				"firstRow": "-1", "lastRow": "-1",	"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"] }
+																					 "Exchange Rate"], "coursenameposition" : 3  },
+		{"startLabel" : "Redemptions", 	"firstRow": "-1", "lastRow": "-1",	"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"], "coursenameposition" : 3  },
+		{"startLabel" : "Refunds",  "firstRow": "-1", "lastRow": "-1",	"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"], "coursenameposition" : 2  }
 	];
 
 	self.parse = function(text){
@@ -180,15 +181,19 @@ angular.module('myApp')
 				//$log.debug("Found section " + sections[4].startLabel + " at line: " +line);
 				sections[3].lastRow = line;
 				sections[4].firstRow = line;
+			}else if (lines[line] == sections[5].startLabel){
+				//$log.debug("Found section " + sections[5].startLabel + " at line: " +line);
+				sections[4].lastRow = line;
+				sections[5].firstRow = line;
 			}
 		}
-		sections[4].lastRow = line;	
+		sections[5].lastRow = line;	
 
 		for(line=0; line<sections.length; line++){
 			//$log.debug("Section [" + sections[line].startLabel + "] starts at line " + sections[line].firstRow + " and ends at line: " + sections[line].lastRow);
 			sections[line].data = _.compact(lines.slice(sections[line].firstRow + 2, sections[line].lastRow));
 			//$log.debug("Section data: ", sections[line].data);
-			$log.debug("---------------------------------------------------------------------------");
+			//$log.debug("---------------------------------------------------------------------------");
 			sections[line].json = self.getJson(sections[line]);			
 		}	
 		//$log.debug("Risultato jasonizzazione: ", sections);	
@@ -198,20 +203,37 @@ angular.module('myApp')
 	self.getJson = function(section){
 		$log.debug("section.data.length: ", section.data.length);
 		var json = [],
-			table = section.data,
-			row  = {};
+			table = section.data;
 
 		for(var i = 0; i< table.length; i++){
 			var tableRow = table[i];
-			var cells = tableRow.split(",");
-			$log.debug("la riga "+ i +"ma contiene " + cells.length + " colonne: ", cells);
-			for (var j = 0; j < section.columns.length; j++) {
-				$log.debug("section.columns.processing : " + j + " - NAME ["+section.columns[j]+"] - VALUE ["+cells[j]+"]");				
-			    row[section.columns[j]] = cells[j];
+
+			// Clean up from the crap
+			tableRow = tableRow.replace(/\r/g, "");
+			tableRow = tableRow.replace(/\"/g, "");
+			tableRow = tableRow.replace(/" /g, "\"");
+
+			// Split the row in cells
+			var cells = tableRow.split(","),			
+				obj = {};
+
+			// Check coherence between cardinality of columns and values
+			if (cells.length != section.columns.length){
+				$log.warn("Attention invalid number of cells ["+cells.length+"] vs ["+section.columns.length+"]");
+				var offset = cells.length - section.columns.length;
+				// Following insruction should be improved because at the moment it merges only 2 cells but they could be much more than 1
+				cells[section.coursenameposition] = cells[section.coursenameposition] +", " + cells[section.coursenameposition]+1 ;
+				// Remove the exceeding merged cells
+				cells = cells.slice(section.coursenameposition+1, offset);
+
 			}
-			// Inserisco riga nell'array
-			json.push(row);
-			$log.debug("Row added to JSON", [row, json]);
+			// Couple column names with values
+			for (var k = 0; k < section.columns.length;k++) {
+			   obj[section.columns[k]] = cells[k];
+			}
+
+			// The JSON.parse is required because JSON.stringify escapes doublequotes with backslash
+			json.push(JSON.parse(JSON.stringify(obj)));
 		}
 
 		return json;

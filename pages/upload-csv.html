@@ -84,7 +84,7 @@
     <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
     
     <div ng-repeat="section in CsvFileCtrl.sections">
-        <h2>New Section</h2>
+        <h2>Section "{{section.startLabel}}"</h2>
         <pre>{{ section | json }}</pre>
     </div> 
 
