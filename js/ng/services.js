@@ -134,26 +134,55 @@ angular.module('myApp')
 	var self = {};	
 
 	var sections = [
-		{"startLabel" : "Your total earnings", 		"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Revenue Channel","Earnings"], "coursenameposition" : 0 },
-		{"startLabel" : "Your earnings by course", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Course Title","Earnings"], "coursenameposition" : 0  },
-		{"startLabel" : "Your promotion activity", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Coupon Code","Earnings"] },
-		{"startLabel" : "Sales", 	"firstRow": "-1", "lastRow": "-1", 	"columns" : ["Transaction Id", 
-																					 "Formatted Date", 
-																					 "User Name",
-																					 "Course Name",
-																					 "Coupon Code",
-																					 "Revenue Channel",
-																					 "Vendor",
-																					 "Paid Price",
-																					 "Transaction Currency",
-																					 "Tax Amount",
-																					 "Store Fee",
-																					 "Share Price",
-																					 "Instructor Share",
-																					 "Tax Rate",
-																					 "Exchange Rate"], "coursenameposition" : 3  },
-		{"startLabel" : "Redemptions", 	"firstRow": "-1", "lastRow": "-1",	"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"], "coursenameposition" : 3  },
-		{"startLabel" : "Refunds",  "firstRow": "-1", "lastRow": "-1",	"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"], "coursenameposition" : 2  }
+		{	"startLabel" : "Your total earnings", 
+			"firstRow": "-1", 
+			"lastRow": "-1", 	
+			"columns" : ["Revenue Channel","Earnings"], 
+			"coursenameposition" : 0 
+		},{
+			"startLabel" : "Your earnings by course", 	
+			"firstRow": "-1", 
+			"lastRow": "-1", 	
+			"columns" : ["Course Title","Earnings"], 
+			"coursenameposition" : 0  
+		},{
+			"startLabel" : "Your promotion activity", 	
+			"firstRow": "-1", 
+			"lastRow": "-1", 	
+			"columns" : ["Coupon Code","Earnings"] 
+		},{
+			"startLabel" : "Sales", 
+			"firstRow": "-1", 
+			"lastRow": "-1", 	
+			"columns" : ["Transaction Id", 
+						 "Formatted Date", 
+						 "User Name",
+						 "Course Name",
+						 "Coupon Code",
+						 "Revenue Channel",
+						 "Vendor",
+						 "Paid Price",
+						 "Transaction Currency",
+						 "Tax Amount",
+						 "Store Fee",
+						 "Share Price",
+						 "Instructor Share",
+						 "Tax Rate",
+						 "Exchange Rate"], 
+			"coursenameposition" : 3  
+		},{	
+			"startLabel" : "Redemptions", 	
+			"firstRow": "-1", 
+			"lastRow": "-1",	
+			"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"], 
+			"coursenameposition" : 3  
+		},{
+			"startLabel" : "Refunds", 
+			"firstRow": "-1", 
+			"lastRow": "-1",	
+			"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"], 
+			"coursenameposition" : 2  
+		}
 	];
 
 	self.parse = function(text){
@@ -223,6 +252,7 @@ angular.module('myApp')
 				var offset = cells.length - section.columns.length;
 				// Following insruction should be improved because at the moment it merges only 2 cells but they could be much more than 1
 				cells[section.coursenameposition] = cells[section.coursenameposition] +", " + cells[section.coursenameposition]+1 ;
+				
 				// Remove the exceeding merged cells
 				cells = cells.slice(section.coursenameposition+1, offset);
 
