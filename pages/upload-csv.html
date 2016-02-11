@@ -84,8 +84,22 @@
     <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
     
     <div ng-repeat="section in CsvFileCtrl.sections">
-        <h2>Section "{{section.startLabel}}"</h2>
-        <pre>{{ section | json }}</pre>
+        <h2>{{section.startLabel}}</h2>
+        <table class="table table-striped">
+            <thead>
+                 <tr>
+                     <th ng-repeat="col in section.columns">{{col}}</th>
+                 </tr>               
+            </thead>
+            <tbody>
+                <tr ng-repeat="values in section.json">
+                    <td ng-repeat="colz in section.columns" >{{values[colz]}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--
+        <pre>{{ section.json | json }}</pre>
+        -->
     </div> 
 
     <div>

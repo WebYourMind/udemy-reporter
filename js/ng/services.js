@@ -140,16 +140,16 @@ angular.module('myApp')
 			"columns" : ["Revenue Channel","Earnings"], 
 			"coursenameposition" : 0 
 		},{
-			"startLabel" : "Your earnings by course", 	
-			"firstRow": "-1", 
-			"lastRow": "-1", 	
-			"columns" : ["Course Title","Earnings"], 
-			"coursenameposition" : 0  
-		},{
 			"startLabel" : "Your promotion activity", 	
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
-			"columns" : ["Coupon Code","Earnings"] 
+			"columns" : ["Coupon Code","Earnings"], 
+			"coursenameposition" : 0  
+		},{
+			"startLabel" : "Your earnings by course", 	
+			"firstRow": "-1", 
+			"lastRow": "-1", 	
+			"columns" : ["Course Title","Earnings"]
 		},{
 			"startLabel" : "Sales", 
 			"firstRow": "-1", 
@@ -186,46 +186,34 @@ angular.module('myApp')
 	];
 
 	self.parse = function(text){
-		var lines = text.split('\n'),
-			sectionNumber = sections.length,
-			currentSection = 0;
+		var lines = text.split('\n');
 
-		for(var line=0; line < lines.length; line++){
-			if (lines[line] == sections[0].startLabel){
-				//$log.debug("Found section " + sections[0].startLabel + " at line: " +line);
-				sections[0].firstRow = line;
-			}else if (lines[line] == sections[1].startLabel){
-				//$log.debug("Found section " + sections[1].startLabel + " at line: " +line);
-				sections[0].lastRow = line;
-				sections[1].firstRow = line;
-			}else if (lines[line] == sections[2].startLabel){
-				//$log.debug("Found section " + sections[2].startLabel + " at line: " +line);
-				sections[1].lastRow = line;
-				sections[2].firstRow = line;
-			}else if (lines[line] == sections[3].startLabel){
-				//$log.debug("Found section " + sections[3].startLabel + " at line: " +line);
-				sections[2].lastRow = line;
-				sections[3].firstRow = line;
-			}else if (lines[line] == sections[4].startLabel){
-				//$log.debug("Found section " + sections[4].startLabel + " at line: " +line);
-				sections[3].lastRow = line;
-				sections[4].firstRow = line;
-			}else if (lines[line] == sections[5].startLabel){
-				//$log.debug("Found section " + sections[5].startLabel + " at line: " +line);
-				sections[4].lastRow = line;
-				sections[5].firstRow = line;
+		var startLabels = ["Your total earnings", "Your earnings by course", "Your promotion activity", "Sales", "Redemptions", "Refunds"];
+		var line=0;
+
+		for(line=0; line < lines.length; line++){
+			if(_.contains(startLabels, lines[line])){
+				//$log.debug("Got label ["+ lines[line] +"] at line ["+ line +"]");
+				var section = _.findWhere(sections, { startLabel: lines[line] });				
+				section.firstRow = line;
+				//$log.debug("Set section ["+ section.startLabel +"] firstRow at line ["+ section.firstRow +"]");
 			}
 		}
-		sections[5].lastRow = line;	
+		// Set the last row of the last section
+		sections[sections.length-1].lastRow = line;	
 
-		for(line=0; line<sections.length; line++){
-			//$log.debug("Section [" + sections[line].startLabel + "] starts at line " + sections[line].firstRow + " and ends at line: " + sections[line].lastRow);
+		// set the last line. Exclude the last entry because value already set
+		for (var k=0; k<sections.length -1; k++) {
+			sections[k].lastRow = sections[k+1].firstRow;
+		  	// Debug
+		  	//$log.debug("Section start/end row: ", [sections[k].startLabel, sections[k].firstRow, sections[k].lastRow, sections[k+1].startLabel, sections[k+1].firstRow, sections[k+1].lastRow]);
+		}
+
+		// Couple column names with values
+		for(line=0; line<sections.length; line++){		
 			sections[line].data = _.compact(lines.slice(sections[line].firstRow + 2, sections[line].lastRow));
-			//$log.debug("Section data: ", sections[line].data);
-			//$log.debug("---------------------------------------------------------------------------");
 			sections[line].json = self.getJson(sections[line]);			
 		}	
-		//$log.debug("Risultato jasonizzazione: ", sections);	
 		return sections;
 	}
 
