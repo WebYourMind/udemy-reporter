@@ -149,7 +149,8 @@ angular.module('myApp')
 			"startLabel" : "Your earnings by course", 	
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
-			"columns" : ["Course Title","Earnings"]
+			"columns" : ["Course Title","Earnings"],
+			"coursenameposition" : 0  
 		},{
 			"startLabel" : "Sales", 
 			"firstRow": "-1", 
@@ -202,6 +203,11 @@ angular.module('myApp')
 		// Set the last row of the last section
 		sections[sections.length-1].lastRow = line;	
 
+		// Remove missing sections not present in the CSV file
+		sections = _.reject(sections, function(section){ 
+			return section.firstRow == -1; 
+		});
+
 		// set the last line. Exclude the last entry because value already set
 		for (var k=0; k<sections.length -1; k++) {
 			sections[k].lastRow = sections[k+1].firstRow;
@@ -218,7 +224,7 @@ angular.module('myApp')
 	}
 
 	self.getJson = function(section){
-		$log.debug("section.data.length: ", section.data.length);
+		//$log.debug("section.data.length: ", section.data.length);
 		var json = [],
 			table = section.data;
 
@@ -236,15 +242,17 @@ angular.module('myApp')
 
 			// Check coherence between cardinality of columns and values
 			if (cells.length != section.columns.length){
-				$log.warn("Attention invalid number of cells ["+cells.length+"] vs ["+section.columns.length+"]");
-				var offset = cells.length - section.columns.length;
-				// Following insruction should be improved because at the moment it merges only 2 cells but they could be much more than 1
-				cells[section.coursenameposition] = cells[section.coursenameposition] +", " + cells[section.coursenameposition]+1 ;
+				$log.warn("Attention invalid number of cells ["+cells.length+"] vs ["+section.columns.length+"] in ["+section.startLabel+ "]. ");
+				var numberOfCellToRemove = cells.length - section.columns.length;
 				
-				// Remove the exceeding merged cells
-				cells = cells.slice(section.coursenameposition+1, offset);
-
+				// Following insruction should be improved because at the moment it merges only 2 cells but they could be much more than 1
+				cells[section.coursenameposition] = cells[section.coursenameposition] +"," + cells[section.coursenameposition+1] ;
+				
+				// Remove the exceeding cells
+				var index = section.coursenameposition;
+				cells.splice(index+1, numberOfCellToRemove);
 			}
+
 			// Couple column names with values
 			for (var k = 0; k < section.columns.length;k++) {
 			   obj[section.columns[k]] = cells[k];
