@@ -1,6 +1,6 @@
 var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3']);
 
-angular.module('myApp').constant("FBEndPoint", "https://<YOUR FIREBASE APP>.firebaseio.com/");
+angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
 /* */
 
 
