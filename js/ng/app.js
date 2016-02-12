@@ -1,10 +1,7 @@
-var myApp = angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3']);
+angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3','ngMaterial'])
 
-angular.module('myApp').constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
-/* */
-
-
-angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
+.constant("FBEndPoint", "<YOUR_FIREBASE_URL>")
+.config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
   // Rimuovo hashtag dall'URL
   $locationProvider.html5Mode(true);  
@@ -139,9 +136,9 @@ angular.module('myApp').config(function ($logProvider, $httpProvider, $stateProv
         templateUrl: "pages/help.html",
         controller: 'HelpController as HelpCtrl'
       })  
-});
+})
 
-angular.module('myApp').run(function($log, $rootScope, $state, FirebaseService){
+.run(function($log, $rootScope, $state, FirebaseService){
 
   $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
     // We can catch the error thrown when the $requireAuth promise is rejected

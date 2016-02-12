@@ -6,8 +6,16 @@
                 <img class="profile-img" src="img/login-profile.png"
                     alt="">
                 <form class="form-signin">
-                <input type="text" class="form-control" placeholder="Email" required autofocus ng-model="LoginCtrl.email">
-                <input type="password" class="form-control" placeholder="Password" required ng-model="LoginCtrl.password">
+                
+                 <md-input-container class="md-block" flex-gt-sm>
+                       <label>Email</label>
+                       <input ng-model="LoginCtrl.email" required autofocus>
+                 </md-input-container>
+                 <md-input-container class="md-block" flex-gt-sm>
+                       <label>Password</label>
+                       <input type="password" ng-model="LoginCtrl.password" required >
+                 </md-input-container>
+           
                 <button class="btn btn-lg btn-primary btn-block" type="button" ng-click="LoginCtrl.login()">
                     Sign in</button>
                 <label class="checkbox pull-left">
