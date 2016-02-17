@@ -15,9 +15,9 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         templateUrl: "pages/main-wrapper.html"
       })                
       /// Working states
-      .state('main.splash', {
+      .state('main.home', {
         url: "", // URL e' vuoto perche' questa route e' il default per il parent state main
-        templateUrl: "pages/splash.html"
+        templateUrl: "pages/home.html"
       })   
       .state('main.login', {
         url: "login.html", 
@@ -33,13 +33,17 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })  
       .state('main.logout', {
         url: "logout.html", 
-        templateUrl: "pages/logout.html",
-        controller: 'LogoutController as LogoutCtrl',
+        //templateUrl: "pages/logout.html",
+        //controller: 'LogoutController as LogoutCtrl',
         resolve: {
+          "logout": ["FBEndPoint", function(FBEndPoint) {
+            var ref = new Firebase(FBEndPoint);
+            ref.unauth();
+          }],
           // controller will not be loaded until $waitForAuth resolves
           "currentAuth": ["Auth", function(Auth) {
             // $waitForAuth returns a promise so the resolve waits for it to complete
-            return Auth.$waitForAuth();
+            return Auth.$requireAuth();
           }]
         }        
       })               

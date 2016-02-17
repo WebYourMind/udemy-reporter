@@ -9,15 +9,6 @@ angular.module('myApp')
     }
 }])
 
-.controller('LogoutController', ['$log', 'currentAuth', 'FBEndPoint',  function($log, currentAuth, FBEndPoint){
-    var LogoutCtrl = this;
-    LogoutCtrl.currentAuth = currentAuth;
-    LogoutCtrl.logout = function(){
-        var ref = new Firebase(FBEndPoint);
-        ref.unauth();
-    }
-}])
-
 
 .controller('NavigationController', ['$scope','$log', function($scope, $log){
 	$scope.item = 0;
