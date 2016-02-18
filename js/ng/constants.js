@@ -1,0 +1,1 @@
+angular.module("myApp").constant("FBEndPoint", "https://wym-udemy-reporter.firebaseio.com/");
