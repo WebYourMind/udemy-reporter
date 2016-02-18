@@ -1,0 +1,1 @@
+angular.module("myApp").constant("FBEndPoint", "<YOUR FIREBASE APP>");
