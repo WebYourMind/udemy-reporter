@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" ng-controller="NavigationController">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -42,8 +42,8 @@
         </li>        
         <li ng-class="{'active':isActiveTab(10)}" ng-click="changeTab(10)"><a ui-sref="main.help"><i class="fa fa-question-circle"></i> Help</a></li>
         <li role="separator" class="divider"></li>
-        <li ng-class="{'active':isActiveTab(11)}" ng-click="changeTab(11)"><a ui-sref="main.login"><i class="fa fa-user"></i> Sign in</a></li>
-        <li ng-class="{'active':isActiveTab(12)}" ng-click="changeTab(12)"><a ui-sref="main.logout"><i class="fa fa-user"></i> Sign out</a></li>
+        <li ng-class="{'active':isActiveTab(11)}" ng-click="changeTab(11)" ng-hide="currentAuth.uid"><a ui-sref="main.login"><i class="fa fa-user"></i> Sign in</a></li>
+        <li ng-class="{'active':isActiveTab(12)}" ng-click="changeTab(12)" ng-show="currentAuth.uid"><a ui-sref="main.logout"><i class="fa fa-user"></i> Sign out</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

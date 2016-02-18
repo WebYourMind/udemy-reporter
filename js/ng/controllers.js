@@ -10,7 +10,7 @@ angular.module('myApp')
 }])
 
 
-.controller('NavigationController', ['$scope','$log', function($scope, $log){
+.controller('NavigationController', ['$scope','$log','Auth', function($scope, $log, Auth){
 	$scope.item = 0;
 	$scope.changeTab = function(newItem){
 		$scope.item = newItem;
@@ -18,6 +18,13 @@ angular.module('myApp')
 	$scope.isActiveTab = function(item){
 		return $scope.item === item;
 	};
+    $scope.Auth = Auth
+    $scope.Auth.$onAuth(function(result){
+        $scope.currentAuth = result;
+        console.log($scope.currentAuth)
+    })
+
+
 }])
 
 .controller('CsvFileController', ['$scope', '$http', '$log','NgTableParams', 'FirebaseService', 'currentAuth', 'ParserService', function($scope, $http, $log, NgTableParams, FirebaseService, currentAuth, ParserService ){

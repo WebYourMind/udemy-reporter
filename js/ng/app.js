@@ -11,13 +11,14 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       .state('main', {
         abstract: true, // necessario per rendere questo state non utilizabile senza uno state di default
         url: "/",
-        templateUrl: "pages/main-wrapper.html"
+        templateUrl: "pages/main-wrapper.html",
+        controller: 'NavigationController'
       })                
       /// Working states
       .state('main.home', {
         url: "", // URL e' vuoto perche' questa route e' il default per il parent state main
         templateUrl: "pages/home.html"
-      })   
+      })
       .state('main.login', {
         url: "login.html", 
         templateUrl: "pages/login.html",
