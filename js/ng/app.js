@@ -1,6 +1,5 @@
 angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3','ngMaterial'])
 
-.constant("FBEndPoint", "<YOUR_FIREBASE_URL>")
 .config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
   // Rimuovo hashtag dall'URL
