@@ -1,1 +1,0 @@
-angular.module('myApp').constant("FBEndPoint", "<YOUR_FIREBASE_URL>")
