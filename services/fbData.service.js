@@ -4,46 +4,6 @@ angular.module('myApp')
 	self.records = undefined;
 	//self.uid = undefined;
 
-	self.save = function(recs, uid){	
-		self.uid = uid;
-		var addedRecords = 0,
-			alreadyAddedRecords = 0,
-			records = self.get(uid),		
-			lastTransactionId = self.getLastTransactionId(records);
-
-		recs.reverse();
-		_.each(recs, function(element, index, list){
-			var currentTransactionId = element['Transaction Id'];
-			if (currentTransactionId > lastTransactionId){
-				try{
-					records.$add({
-						"TransactionId" : element['Transaction Id'],
-						"Date"			: $filter('date')(new Date(element['Formatted Date'].replace(/"/g,"")), 'MM/dd/yyyy HH:mm:ss'),
-						"CustomerName"	: element['User Name'].replace(/"/g,""),
-						"Course"		: element['Course Name'].replace(/"/g,""),
-						"CouponCode"	: element['Coupon Code'].replace(/"/g,""),
-						"Channel"		: element['Revenue Channel'].replace(/"/g,""),
-						"Platform"		: element.Vendor.replace(/"/g,""),
-						"PricePaid"		: element['Paid Price'].replace(/"/g,""),
-						"Currency"		: element['Transaction Currency'].replace(/"/g,""),
-						"TaxAmount"		: element['Tax Amount'].replace(/"/g,""),
-						"NetAmount"		: element['Share Price'].replace(/"/g,""),
-						"YourRevenue"	: element['Instructor Share'].replace(/"/g,""), 
-						"TaxRate"		: element['Tax Rate'].replace(/"/g,""),
-						"ExchangeRate"	: element['Exchange Rate'].replace(/"/g,"")
-					});
-					addedRecords++;
-			}catch(e){
-				$log.error("An exception raised: ", e);
-			}
-			}else{				
-				alreadyAddedRecords++;
-			}
-		});
-		$log.debug("FirebaseService.save loaded records ["+addedRecords+"]/discarded records (already processed) ["+alreadyAddedRecords+"]");
-		return addedRecords;
-	}
-
 	self.saveSections = function(sections, uid){	
 		_.each(sections, function(section, index, list){
 			$log.debug("FirebaseService.saveSections - Try to save section:", section.startLabel)
