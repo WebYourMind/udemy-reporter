@@ -11,7 +11,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       .state('main', {
         abstract: true, // necessario per rendere questo state non utilizabile senza uno state di default
         url: "/",
-        templateUrl: "pages/main-wrapper.html",
+        templateUrl: "navigation/main-wrapper.html",
         controller: 'NavigationController'
       })                
       /// Working states
@@ -21,7 +21,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })
       .state('main.login', {
         url: "login.html", 
-        templateUrl: "pages/login.html",
+        templateUrl: "login/login.html",
         controller: 'LoginController as LoginCtrl',
         resolve: {
           // controller will not be loaded until $waitForAuth resolves
@@ -49,7 +49,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })               
       .state('main.load-csv-file', {
         url: "load-csv.html", 
-        templateUrl: "pages/upload-csv.html",
+        templateUrl: "loadfile/upload-csv.html",
         controller: 'CsvFileController as CsvFileCtrl',
         resolve: {
           // controller will not be loaded until $requireAuth resolves
@@ -62,7 +62,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })
       .state('main.show-total-by-day-report', {
         url: "show-total-by-day-report.html", 
-        templateUrl: "pages/show-total-by-day-report.html",
+        templateUrl: "reports/show-total-by-day-report.html",
         controller: 'ReportSaleByDayController as ReportSaleByDayCtrl',
         resolve: {
           items : function(ReportService){
@@ -77,7 +77,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       }) 
       .state('main.show-total-by-week-report', {
         url: "show-total-by-week-report.html", 
-        templateUrl: "pages/show-total-by-week-report.html",
+        templateUrl: "reports/show-total-by-week-report.html",
         controller: 'ReportSaleByWeekController as ReportSaleByWeekCtrl',
         resolve: {
           items : function(ReportService){
@@ -92,7 +92,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })       
       .state('main.show-total-by-day-of-week-report', {
         url: "show-total-by-day-of-week-report.html", 
-        templateUrl: "pages/show-total-by-day-of-week-report.html",
+        templateUrl: "reports/show-total-by-day-of-week-report.html",
         controller: 'ReportSaleByDayOfWeekController as ReportSaleByDayOfWeekCtrl',
         resolve: {
           items : function(ReportService){
@@ -107,7 +107,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })         
       .state('main.show-total-by-hour-of-day-report', {
         url: "show-total-by-hour-of-day-report.html", 
-        templateUrl: "pages/show-total-by-hour-of-day-report.html",
+        templateUrl: "reports/show-total-by-hour-of-day-report.html",
         controller: 'ReportSaleByHourOfDayController as ReportSaleByHourOfDayCtrl',
         resolve: {
           items : function(ReportService){
@@ -122,7 +122,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       }) 
       .state('main.report-by-promotion', {
         url: "report-by-promotion.html", 
-        templateUrl: "pages/report-by-promotion.html",
+        templateUrl: "reports/report-by-promotion.html",
         controller: 'ReportSaleByPromotionController as ReportSaleByPromotionCtrl',
         resolve: {
           items : function(ReportService){

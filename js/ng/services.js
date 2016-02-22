@@ -1,21 +1,14 @@
 angular.module('myApp')
 
-// let's create a re-usable factory that generates the $firebaseAuth instance
-.factory("Auth", ['$firebaseAuth', 'FBEndPoint', function($firebaseAuth, FBEndPoint) {
-    var ref = new Firebase(FBEndPoint);
-    return $firebaseAuth(ref);
-  }
-]) 
 
-.factory("UserAuthentication", ['$log', '$firebaseAuth', 'FBEndPoint', '$state', function($log, $firebaseAuth, FBEndPoint, $state) {
+.factory("UserAuthentication", ['$log', '$firebaseAuth', 'FBEndPoint', '$state', 'Auth', function($log, $firebaseAuth, FBEndPoint, $state, Auth) {
 	var self = {};
 	//self.uid = undefined;
 
    	self.login = function(email, password, rememberme) {
 	   	$log.debug("UserAuthentication.login params: ", [email, password, rememberme]);
 	
-		var ref = new Firebase(FBEndPoint),
-    		auth = $firebaseAuth(ref);
+		var auth = Auth;
 
 		auth.$authWithPassword({
 		  email: email,
