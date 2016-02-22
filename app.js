@@ -1,4 +1,4 @@
-angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'ngTable', 'ngCsvImport',  'nvd3','ngMaterial'])
+angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'nvd3','ngMaterial'])
 
 .config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
