@@ -1,88 +1,18 @@
-<div class="row text-center">
-	<p style="float: left; margin-top: 8px;"><strong>Seleziona il file CSV: </strong></p>
-
-	<ng-csv-import 
-		style="float: left;"
-		content="CsvFileCtrl.csvcontent"
-	    header="CsvFileCtrl.csvheader"
-	    headerVisible="CsvFileCtrl.csvheaderVisible" 
-	    separator="CsvFileCtrl.csvseparator"
-	    result="CsvFileCtrl.csvresult"
-	    accept="CsvFileCtrl.csvaccept"
-	    separatorVisible="CsvFileCtrl.csvseparatorVisible">
-	</ng-csv-import>
-
-	<button type="button" 
-			class="btn btn-danger" 
-			ng-disabled="!CsvFileCtrl.enableSaveBtn"
-			ng-click="CsvFileCtrl.save()">
-			<i class="fa fa-floppy-o"></i>
-			Save
-	</button>
-
-    <div style="float: left; margin-top: 8px;">Record caricati: {{CsvFileCtrl.savedRecords}}</div>
-</div>
-<hr class="separator" />
-
-<table ng-show="CsvFileCtrl.showPreviewTable"
-	   ng-table="CsvFileCtrl.tableParams" 
-	   class="table table-bordered table-striped table-condensed table-hover csv-file-table" 
-	   style="font-size: 1.1rem;"
-	   show-filter="true">
-    <tr ng-repeat="sale in $data">
-        <td title="'Transaction Id'">
-        	{{sale['Transaction Id']}}
-        </td>
-        <td title="'Date'">
-        	{{sale['Formatted Date']}}
-        </td>  
-        <td title="'Customer Name'">
-        	{{sale['User Name']}}
-        </td> 
-        <td title="'Course'">
-        	{{sale['Course Name']}}
-        </td>  
-        <td title="'Coupon Code'">
-        	{{sale['Coupon Ode']}}
-        </td>                     
-        <td title="'Channel'">
-        	{{sale['Revenue Channel']}}
-        </td>   
-        <td title="'Platform'">
-        	{{sale.Vendor}}
-        </td> 
-        <td title="'Price Paid'">
-        	{{sale['Paid Price']}}
-        </td>                     
-        <td title="'Currency'">
-        	{{sale['Transaction Currency']}}
-        </td>   
-        <td title="'Tax Amount'">
-        	{{sale['Tax Amount']}}
-        </td>    
-        <td title="'Store Fee'">
-        	{{sale['Store Fee']}}
-        </td>      
-        <td title="'Net Amount(USD)'">
-        	{{sale['Share Price']}}
-        </td>      
-        <td title="'Your Revenue'">
-        	{{sale['Instructor Share']}}
-        </td>      
-        <td title="'Tax Rate'">
-        	{{sale['Tax Rate']}}
-        </td>      
-        <td title="'Exchange Rate'">
-        	{{sale['Exchange Rate']}}
-        </td>                                                            
-     </tr>
-</table>	    
-
-
-<div class="container">
-    <h1>Select file</h1>
-    <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
-    
+<div class="">
+    <div layout="row">
+        <div flex>
+        <label for="file-seletor" style="float: left; padding-right: 20px;">Select file</label>
+        <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
+        </div>
+        <button flex type="button" 
+                class="btn btn-danger"
+                name="file-seletor" 
+                ng-disabled="CsvFileCtrl.sections.length < 1"
+                ng-click="CsvFileCtrl.save()">
+                <i class="fa fa-floppy-o"></i>
+                Save
+        </button>   
+    </div> 
     <div ng-repeat="section in CsvFileCtrl.sections">
         <h2>{{::section.startLabel}} [{{::section.json.length}}]</h2>
         <table class="table table-striped table-condensed table-hover">
