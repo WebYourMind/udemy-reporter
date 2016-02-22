@@ -2,9 +2,9 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
 
 .config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
   /* Set up the routing system */
-  // Rimuovo hashtag dall'URL
+  // Removed url hash 
   $locationProvider.html5Mode(true);  
-  // For any unmatched url, redirect to /prj-urlobp-naptr
+  // For any unmatched url, redirect to /
   $urlRouterProvider.otherwise("/"); 
 
   $stateProvider
@@ -16,7 +16,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })                
       /// Working states
       .state('main.home', {
-        url: "", // URL e' vuoto perche' questa route e' il default per il parent state main
+        url: "", // parent state, therefore empty url
         templateUrl: "pages/home.html"
       })
       .state('main.login', {
@@ -32,9 +32,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         }        
       })  
       .state('main.logout', {
-        url: "logout.html", 
-        //templateUrl: "pages/logout.html",
-        //controller: 'LogoutController as LogoutCtrl',
+        url: "logout.html",      
         resolve: {
           "logout": ["FBEndPoint", function(FBEndPoint) {
             var ref = new Firebase(FBEndPoint);

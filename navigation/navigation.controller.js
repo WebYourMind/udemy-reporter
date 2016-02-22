@@ -1,5 +1,12 @@
-angular.module('myApp')
-.controller('NavigationController', ['$scope','$log','Auth', function($scope, $log, Auth){
+(function() {
+
+angular
+   .module('myApp')
+   .controller('NavigationController', NavigationController);
+
+/* @ngInject */ 
+function NavigationController($scope, $log, Auth){
+
 	$scope.item = 0;
 	$scope.changeTab = function(newItem){
 		$scope.item = newItem;
@@ -12,4 +19,6 @@ angular.module('myApp')
         $scope.currentAuth = result;
         console.log($scope.currentAuth);
     })
- }])
+ }
+
+})();
