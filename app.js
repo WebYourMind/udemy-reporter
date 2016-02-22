@@ -21,7 +21,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })
       .state('main.login', {
         url: "login.html", 
-        templateUrl: "login/login.html",
+        templateUrl: "authentication/login.html",
         controller: 'LoginController as LoginCtrl',
         resolve: {
           // controller will not be loaded until $waitForAuth resolves
@@ -137,8 +137,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
       })   
       .state('main.help', {
         url: "help.html", 
-        templateUrl: "pages/help.html",
-        controller: 'HelpController as HelpCtrl'
+        template: "TBD"    
       })  
 })
 

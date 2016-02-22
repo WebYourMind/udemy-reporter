@@ -14,9 +14,6 @@
         <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">       
         <link rel="stylesheet" href="css/main.css">
 
-        <link rel="stylesheet" type="text/css" href="lib/datepicker/css/base.css" />
-        <link rel="stylesheet" type="text/css" href="lib/datepicker/css/clean.css" /> 
-
         <base href="/">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -57,17 +54,27 @@
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js" charset="utf-8"></script>
 
         <!-- Udemy Reporter -->
-        <script src="js/ng/app.js" charset="utf-8"></script>
+        <script src="app.js" charset="utf-8"></script>
         <script src="js/ng/constants.js" charset="utf-8"></script>
-        
-        <script src="js/ng/directives.js" charset="utf-8"></script>
-        <!-- Controllers -->
-        <script src="js/ng/controllers.js" charset="utf-8"></script>
-        <script src="login/login.controller.js"></script>
+        <!-- Directives -->       
+        <script src="components/date-picker.directive.js"></script>
+        <script src="components/course-picker.directive.js"></script>
+        <script src="components/read-file.directive.js"></script>
+        <!-- Controllers -->      
+        <script src="authentication/login.controller.js"></script>
         <script src="navigation/navigation.controller.js"></script>
-        <!-- Services -->
-        <script src="js/ng/services.js" charset="utf-8"></script>
+        <script src="reports/sls-day.controller.js"></script>
+        <script src="reports/sls-hour-day.controller.js"></script>
+        <script src="reports/sls-week.controller.js"></script>
+        <script src="reports/sls-day-of-week.controller.js"></script>
+        <script src="reports/sls-promotion.controller.js"></script>
+
+        <!-- Services -->      
         <script src="services/fbAuth.service.js"></script>
+        <script src="services/auth.service.js"></script>
+        <script src="services/fbData.service.js"></script>
+        <script src="services/report.service.js"></script>
+        <script src="services/parser.service.js"></script>
         <!-- Load File / CSV Upload --> 
         <script  src="loadfile/csvfile.controller.js"></script>
     </body>
