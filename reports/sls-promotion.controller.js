@@ -1,7 +1,11 @@
-angular.module('myApp')
+(function() {
 
-
-.controller('ReportSaleByPromotionController', function($scope, $log, ReportService, items, currentAuth){
+angular
+    .module('myApp')
+    .controller('ReportSaleByPromotionController', ReportSaleByPromotionController);
+    
+/* @ngInject */ 
+function ReportSaleByPromotionController($scope, $log, ReportService, items, currentAuth){
     $log.debug("ReportSaleByPromotionController creato. Items: ", items);
     var ReportSaleByPromotionCtrl = this;
     ReportSaleByPromotionCtrl.items = items;
@@ -109,4 +113,5 @@ angular.module('myApp')
                         values: items,                     
                         key: 'Revenue' //key  - the name of the series.
                         }]; 
-})
+}
+})();

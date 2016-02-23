@@ -1,6 +1,10 @@
-angular.module('myApp')
+(function() {
+angular
+  .module('myApp')
+  .controller('ReportSaleByDayOfWeekController', ReportSaleByDayOfWeekController);
 
-.controller('ReportSaleByDayOfWeekController', function($scope, $log, ReportService, items, currentAuth){
+/* @ngInject */ 
+  function ReportSaleByDayOfWeekController($scope, $log, ReportService, items, currentAuth){
     //$log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
     var ReportSaleByDayOfWeekCtrl = this;
     ReportSaleByDayOfWeekCtrl.items = items;
@@ -108,4 +112,5 @@ angular.module('myApp')
                         strokeWidth: 2//,
                         //classed: 'dashed'
                         }]; 
-})
+}
+})();

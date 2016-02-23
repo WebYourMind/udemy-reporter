@@ -1,4 +1,11 @@
-angular.module('myApp').controller('CsvFileController', ['$log', 'FirebaseService', 'currentAuth', 'ParserService', function($log, FirebaseService, currentAuth, ParserService ){	
+(function() {
+
+angular
+    .module('myApp')
+    .controller('CsvFileController', CsvFileController);
+    
+/* @ngInject */ 
+ function CsvFileController($log, FirebaseService, currentAuth, ParserService ){	
 
 	var CsvFileCtrl = this
 
@@ -24,4 +31,5 @@ angular.module('myApp').controller('CsvFileController', ['$log', 'FirebaseServic
     	$log.debug("CsvFileCtrl.save")  
     	FirebaseService.saveSections(CsvFileCtrl.sections, CsvFileCtrl.currentAuth.uid)
     }
-}])
+}
+})();

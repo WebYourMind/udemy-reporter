@@ -1,6 +1,11 @@
-angular.module('myApp')
+(function() {
 
-.controller('ReportSaleByDayController', function($scope, $log, ReportService, items, currentAuth){
+angular
+  .module('myApp')
+  .controller('ReportSaleByDayController', ReportSaleByDayController);
+
+/* @ngInject */ 
+function ReportSaleByDayController($scope, $log, ReportService, items, currentAuth){
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
 
@@ -119,4 +124,5 @@ angular.module('myApp')
 		                strokeWidth: 2//,
 		                //classed: 'dashed'
                 		}];
-})
+} 
+})();

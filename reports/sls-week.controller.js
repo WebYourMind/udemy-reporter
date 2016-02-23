@@ -1,6 +1,10 @@
-angular.module('myApp')
-
-.controller('ReportSaleByWeekController', function($scope, $log, ReportService, items, currentAuth){
+(function() {
+angular
+    .module('myApp')
+    .controller('ReportSaleByWeekController', ReportSaleByWeekController);
+    
+/* @ngInject */ 
+    function ReportSaleByWeekController($scope, $log, ReportService, items, currentAuth){
 	var ReportSaleByWeekCtrl = this;
 	ReportSaleByWeekCtrl.items = items;
 
@@ -98,4 +102,5 @@ angular.module('myApp')
     					values: items,                     
 		                key: 'Revenue'
                 		}];
-})
+}
+})();
