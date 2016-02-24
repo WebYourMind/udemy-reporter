@@ -160,8 +160,19 @@ angular.module('myApp')
 		return _.sortBy(results, "hour");
 	};
 	
+	self.getPromotions = function(){
+		var results = [],
+			records = FirebaseService.get('yourpromotionactivity');
+		records.$loaded().then(function(){
+			$log.debug("ReportService.getPromotions $loaded");
+			results = self.ByPromotion(records);
+			$rootScope.$emit( "ByPromotion", results );
+			return results;				
+		})
+	}
+
 	self.ByPromotion = function(records){
-		$log.debug("ReportService.getTotalsByPromotion called");
+		$log.debug("ReportService.ByPromotion called");
 		var results = [];	
 		_.each(records, function(element, index, list){
 			var couponCode = element['Coupon Code'];
@@ -169,16 +180,6 @@ angular.module('myApp')
 		});
 		return _.sortBy(results, "promotion");
 	};
-
-	self.getPromotions = function(){
-		var results = [],
-			records = FirebaseService.get('yourpromotionactivity');
-		records.$loaded().then(function(){
-			results = self.ByPromotion(records);
-			$rootScope.$emit( "yourpromotionactivity", results );
-			return results;				
-		})
-	}
 
 	// Fine FACTORY
 	return self;	

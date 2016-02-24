@@ -23,7 +23,7 @@ angular.module('myApp')
 	}
 
 	self.get = function(section){
-		if (section === undefined ){
+		if (section == undefined ){
 			section = 'sales';
 		}
 		$log.debug("FirebaseService.get section is:", section);

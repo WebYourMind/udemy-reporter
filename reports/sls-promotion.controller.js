@@ -5,9 +5,22 @@ angular
     .controller('ReportSaleByPromotionController', ReportSaleByPromotionController);
     
 /* @ngInject */ 
-function ReportSaleByPromotionController($scope, $log, ReportService, items, currentAuth){
+function ReportSaleByPromotionController($scope, $log, ReportService, items, currentAuth, $rootScope){
     $log.debug("ReportSaleByPromotionController creato. Items: ", items);
     var ReportSaleByPromotionCtrl = this;
+
+    if ( ReportSaleByPromotionCtrl.items == undefined )
+        ReportSaleByPromotionCtrl.items = [];
+
+    $rootScope.$on("ByPromotion", function(event, args){
+        ReportSaleByPromotionCtrl.items = args;
+        ReportSaleByPromotionCtrl.data = [{
+            values: args,                     
+            key: 'Revenue' //key  - the name of the series.
+        }];
+
+    });
+
     ReportSaleByPromotionCtrl.items = items;
     ReportSaleByPromotionCtrl.selection = {};
     ReportSaleByPromotionCtrl.range = {};
@@ -22,7 +35,7 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
                 $log.debug("ReportSaleByPromotionCtrl.selection.ids - selected courses:", [value, key]);
                 if (value){
                     newData.push({
-                            values: ReportService.getSaleTotals('ByPromotion', key, ReportSaleByPromotionCtrl.range),                     
+                            values: ReportService.getPromotions(), //ReportService.getSaleTotals('ByPromotion', key, ReportSaleByPromotionCtrl.range),                     
                             key: key
                     }); 
                     ReportSaleByPromotionCtrl.courseList.push(key);
@@ -34,7 +47,6 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
         }
     });
 
-
     var dateRangeListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.range', function(newValue, oldValue) {
         if (newValue){      
             $log.debug("ReportSaleByPromotionCtrl.range watch: ", newValue);
@@ -43,7 +55,7 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
             _.each(ReportSaleByPromotionCtrl.courseList, function(value, key, list){
                 $log.debug("ReportSaleByPromotionCtrl.range watch: ", [value, key]);
                 newData.push({
-                        values: ReportService.getSaleTotals('ByPromotion', value, ReportSaleByPromotionCtrl.range),                     
+                        values: ReportService.getPromotions(), //ReportService.getSaleTotals('ByPromotion', value, ReportSaleByPromotionCtrl.range),                     
                         key: value
                 });                 
             });
