@@ -23,58 +23,6 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
 
     ReportSaleByPromotionCtrl.items = items;
     ReportSaleByPromotionCtrl.selection = {};
-    ReportSaleByPromotionCtrl.range = {};
-    ReportSaleByPromotionCtrl.courseList = ['All'];
-
-    var courseNameListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.selection.ids', function(newValue, oldValue) {
-        if (newValue){
-            ReportSaleByPromotionCtrl.data = [];
-            var newData = [];
-            ReportSaleByPromotionCtrl.courseList = [];
-            _.each(ReportSaleByPromotionCtrl.selection.ids, function(value, key, list){
-                $log.debug("ReportSaleByPromotionCtrl.selection.ids - selected courses:", [value, key]);
-                if (value){
-                    newData.push({
-                            values: ReportService.getPromotions(), //ReportService.getSaleTotals('ByPromotion', key, ReportSaleByPromotionCtrl.range),                     
-                            key: key
-                    }); 
-                    ReportSaleByPromotionCtrl.courseList.push(key);
-                }else{
-                    $log.debug("ReportSaleByPromotionCtrl current data is:", ReportSaleByPromotionCtrl.data);
-                }               
-            });
-            ReportSaleByPromotionCtrl.data = newData;            
-        }
-    });
-
-    var dateRangeListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.range', function(newValue, oldValue) {
-        if (newValue){      
-            $log.debug("ReportSaleByPromotionCtrl.range watch: ", newValue);
-            ReportSaleByPromotionCtrl.data = [];
-            var newData = [];           
-            _.each(ReportSaleByPromotionCtrl.courseList, function(value, key, list){
-                $log.debug("ReportSaleByPromotionCtrl.range watch: ", [value, key]);
-                newData.push({
-                        values: ReportService.getPromotions(), //ReportService.getSaleTotals('ByPromotion', value, ReportSaleByPromotionCtrl.range),                     
-                        key: value
-                });                 
-            });
-            ReportSaleByPromotionCtrl.data = newData; 
-        }else{
-            $log.debug("ReportSaleByPromotionCtrl.range watch- no newval");                                 
-        }
-    });
-
-    // Clean up on exit
-    $scope.$on("$destroy", function() {
-        if (courseNameListener) {
-            courseNameListener();
-        }
-        if (dateRangeListener) {
-            dateRangeListener();
-        }        
-    });
-
 
     /* Chart options */
     ReportSaleByPromotionCtrl.options = { 
@@ -117,7 +65,6 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
                 text: 'Sales by Your Promotion'
             }
     };
-
 
     /* Chart data */
     ReportSaleByPromotionCtrl.data = [{
