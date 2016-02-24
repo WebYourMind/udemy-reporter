@@ -23,7 +23,7 @@ angular.module('myApp')
 	}
 
 	self.get = function(section){
-		if (section == undefined ){
+		if (section === undefined ){
 			section = 'sales';
 		}
 		$log.debug("FirebaseService.get section is:", section);
@@ -60,18 +60,18 @@ angular.module('myApp')
 	}
 
 	self.getCourseList = function(){
-		var records = self.get(),	
+		var records = self.get('sales'),	
 			courses = [],
 			finalCourses = [];
 		finalCourses.push({"name": 'All', "value" : 'All'});
 		_.each(records, function(element, index, list){
-			if (_.indexOf(courses, element.Course)<0){
-				courses.push(element.Course);				
-				finalCourses.push({"name": element.Course, "value" : element.Course});
+			if (_.indexOf(courses, element['Course Name'])<0){
+				courses.push(element['Course Name']);				
+				finalCourses.push({"name": element['Course Name'], "value" : element['Course Name']});
 			}
 		});
 		return finalCourses;
 	}	
-	// Fine FACTORY
+	// FACTORY END
 	return self;	
 }])	

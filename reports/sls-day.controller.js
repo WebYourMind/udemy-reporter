@@ -9,7 +9,7 @@ function ReportSaleByDayController($scope, $rootScope, $log, ReportService, item
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
 
-    if ( ReportSaleByDayCtrl.items == undefined )
+    if ( ReportSaleByDayCtrl.items === undefined )
         ReportSaleByDayCtrl.items = [];
 
     $rootScope.$on("ByDay", function(event, args){

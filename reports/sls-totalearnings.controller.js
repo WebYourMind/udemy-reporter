@@ -10,7 +10,7 @@ function ReportTotalEarningsController($scope, $log, ReportService, items, curre
     var ReportTotalEarningsCtrl = this;
     
     ReportTotalEarningsCtrl.items = items;
-    if ( ReportTotalEarningsCtrl.items == undefined )
+    if ( ReportTotalEarningsCtrl.items === undefined )
         ReportTotalEarningsCtrl.items = ReportService.getTotalEarnings();
 
     $rootScope.$on("TotalEarnings", function(event, args){

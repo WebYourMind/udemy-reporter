@@ -10,7 +10,7 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
     var ReportSaleByPromotionCtrl = this;
     
     ReportSaleByPromotionCtrl.items = items;
-    if ( ReportSaleByPromotionCtrl.items == undefined )
+    if ( ReportSaleByPromotionCtrl.items === undefined )
         ReportSaleByPromotionCtrl.items = ReportService.getPromotions();
 
     $rootScope.$on("ByPromotion", function(event, args){
