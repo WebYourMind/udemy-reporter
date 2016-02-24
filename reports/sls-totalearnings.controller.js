@@ -6,7 +6,7 @@ angular
     
 /* @ngInject */ 
 function ReportTotalEarningsController($scope, $log, ReportService, items, currentAuth, $rootScope){
-    $log.debug("ReportTotalEarningsController creato. Items: ", items);
+    $log.debug("ReportTotalEarningsController created. Items: ", items);
     var ReportTotalEarningsCtrl = this;
     
     ReportTotalEarningsCtrl.items = items;
