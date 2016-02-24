@@ -95,7 +95,7 @@ angular.module('myApp')
 
 		_.each(records, function(element, index, list){			
 			var pad = '00',
-				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length),
+				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length);
 				//day = undefined;
 			
 			_.each(results, function(elem, idx, lst){
