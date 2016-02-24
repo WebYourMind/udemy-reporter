@@ -1,6 +1,6 @@
 
 angular.module('myApp')
-.factory('ReportService', ['$log', '$filter', 'FirebaseService', function($log, $filter, FirebaseService){
+.factory('ReportService', ['$log', '$filter', '$rootScope', 'FirebaseService', function($log, $filter, $rootScope, FirebaseService){
 	var self = {};	
 
 	self.filterByCourseName = function(records, courseName){
@@ -39,28 +39,30 @@ angular.module('myApp')
 
 	self.getSaleTotals = function(reportName, courseName, range){
 		var results = [],
-			records = FirebaseService.get();
-
+			records = FirebaseService.get('sales');
+		
 		// Filter by course name
-		records = self.filterByCourseName(angular.copy(records), courseName);
+		//records = self.filterByCourseName(angular.copy(records), courseName);
 		// Filter by date range
-		records = self.filterByDateRange(angular.copy(records), range);	
-
-		if (reportName == 'ByDay'){
-			results = self.ByDay(records);
-		}else if(reportName == 'ByWeek'){
-			results = self.ByWeek(records);
-		}else if(reportName == 'ByDayOfWeek'){
-			results = self.ByDayOfWeek(records);
-		}else if(reportName == 'ByHourOfDay'){
-			results = self.ByHourOfDay(records);
-		}else if(reportName == 'ByPromotion'){
-			results = self.ByPromotion(records);
-		}else{
-			$log.error("Report ["+reportName+"] not yet implemented");
-		}
-
-		return results;
+		//records = self.filterByDateRange(angular.copy(records), range);	
+		records.$loaded().then(function(){
+			if (reportName == 'ByDay'){
+				results = self.ByDay(records);
+			}else if(reportName == 'ByWeek'){
+				results = self.ByWeek(records);
+			}else if(reportName == 'ByDayOfWeek'){
+				results = self.ByDayOfWeek(records);
+			}else if(reportName == 'ByHourOfDay'){
+				results = self.ByHourOfDay(records);
+			}else if(reportName == 'ByPromotion'){
+				results = self.ByPromotion(records);
+			}else{
+				$log.error("Report ["+reportName+"] not yet implemented");
+			}
+			$rootScope.$emit( reportName, results );
+			return results;	
+				
+		})
 	}
 
 	// Sum all sales group by DAY
@@ -69,7 +71,7 @@ angular.module('myApp')
 
 		_.each(records, function(element, index, list){
 			// trovo record con data uguale a element.Date
-			var dayToAdd = $filter('date')(new Date(element.Date), 'dd/MM/yyyy');			
+			var dayToAdd = $filter('date')(new Date(element["Formatted Date"]), 'dd/MM/yyyy');			
 			var day = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.date == dayToAdd ){
@@ -78,10 +80,10 @@ angular.module('myApp')
 			});
 			if (day){
 				// se esiste sommo valore
-				day.total = day.total + parseFloat(element.YourRevenue);
+				day.total = day.total + parseFloat(element["Instructor Share"]);
 			}else{
 				// se non esiste inserisco il nuovo valore
-				results.push({"date" : dayToAdd, "total" : parseFloat(element.YourRevenue)});
+				results.push({"date" : dayToAdd, "total" : parseFloat(element["Instructor Share"])});
 			}
 		});
 		return results;
@@ -162,25 +164,21 @@ angular.module('myApp')
 		$log.debug("ReportService.getTotalsByPromotion called");
 		var results = [];	
 		_.each(records, function(element, index, list){
-			// trovo record con ora uguale a element.Date	
-			var promotionCode = undefined;
-			if (element.Channel == 'instructor'){
-				var couponCode = element.CouponCode;
-				//$log.debug("element is an instructor sale: ", couponCode);
-				// se esiste sommo il valore
-				var promo = _.findWhere(results, {promotion: couponCode});
-				if (promo){
-					// Promo esiste, sommo il totale
-					promo.total = promo.total + parseFloat(element.YourRevenue);
-					promo.cardinality = promo.cardinality +1;
-				}else{
-					// Promo non esiste, inserisco
-					results.push({"promotion" : couponCode, "total" : parseFloat(element.YourRevenue), cardinality: 1});
-				}
-			}
+			var couponCode = element['Coupon Code'];
+			results.push({"promotion" : element['Coupon Code'], "total" : parseFloat(element.Earnings), cardinality: 1});
 		});
 		return _.sortBy(results, "promotion");
 	};
+
+	self.getPromotions = function(){
+		var results = [],
+			records = FirebaseService.get('yourpromotionactivity');
+		records.$loaded().then(function(){
+			results = self.ByPromotion(records);
+			$rootScope.$emit( "yourpromotionactivity", results );
+			return results;				
+		})
+	}
 
 	// Fine FACTORY
 	return self;	

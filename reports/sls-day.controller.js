@@ -5,10 +5,24 @@ angular
   .controller('ReportSaleByDayController', ReportSaleByDayController);
 
 /* @ngInject */ 
-function ReportSaleByDayController($scope, $log, ReportService, items, currentAuth){
+function ReportSaleByDayController($scope, $rootScope, $log, ReportService, items, currentAuth){
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
 
+    if ( ReportSaleByDayCtrl.items == undefined )
+        ReportSaleByDayCtrl.items = [];
+
+    $rootScope.$on("ByDay", function(event, args){
+        ReportSaleByDayCtrl.items = args;
+        ReportSaleByDayCtrl.data = [{
+            values: args,                     
+            key: 'Revenue', //key  - the name of the series.
+            color: '#ff7f0e',  //color - optional: choose your own line color.
+            strokeWidth: 2//,
+            //classed: 'dashed'
+        }];
+
+    });
     ReportSaleByDayCtrl.selection = {};
 	ReportSaleByDayCtrl.range = {};
     ReportSaleByDayCtrl.courseList = ['All'];
@@ -61,7 +75,7 @@ function ReportSaleByDayController($scope, $log, ReportService, items, currentAu
             dateRangeListener();
         }        
     });
-
+    
     /* Chart options */
     ReportSaleByDayCtrl.options = { 
             chart: {
@@ -74,11 +88,11 @@ function ReportSaleByDayController($scope, $log, ReportService, items, currentAu
                     left: 55
                 },
                 x: function(d){        
-                	var parts = d.date.split('/');             
+                    var parts = d.date.split('/');             
                     return new Date(parts[2], parts[1]-1, parts[0]);  
                 },
                 y: function(d){ 
-                	return d.total; 
+                    return d.total; 
                 },
                 useInteractiveGuideline: true,
                 dispatch: {
@@ -90,16 +104,16 @@ function ReportSaleByDayController($scope, $log, ReportService, items, currentAu
                 xAxis: {
                     axisLabel: 'Date',
                     tickFormat: function(d){
-                    	//console.log("This is the date: ", d);
-                    	//console.log("This is the date type: ", typeof(d));
-                    	if (typeof(d) == 'number'){                    		
-                    		var retVal = d3.time.format('%d/%m/%y')(new Date(d))
-							//console.log("Entering the number option ", retVal);
-							return retVal;
-                    	}else{
-                    		//console.log("Entering the OTHER option ");
-                    		return d;
-                    	}
+                        //console.log("This is the date: ", d);
+                        //console.log("This is the date type: ", typeof(d));
+                        if (typeof(d) == 'number'){                         
+                            var retVal = d3.time.format('%d/%m/%y')(new Date(d))
+                            //console.log("Entering the number option ", retVal);
+                            return retVal;
+                        }else{
+                            //console.log("Entering the OTHER option ");
+                            return d;
+                        }
                     }                    
                 },
                 yAxis: {
@@ -118,11 +132,12 @@ function ReportSaleByDayController($scope, $log, ReportService, items, currentAu
 
     /* Chart data */
     ReportSaleByDayCtrl.data = [{
-    					values: items,                     
-		                key: 'Revenue', //key  - the name of the series.
-		                color: '#ff7f0e',  //color - optional: choose your own line color.
-		                strokeWidth: 2//,
-		                //classed: 'dashed'
-                		}];
+		values: ReportSaleByDayCtrl.items,                     
+        key: 'Revenue', //key  - the name of the series.
+        color: '#ff7f0e',  //color - optional: choose your own line color.
+        strokeWidth: 2//,
+        //classed: 'dashed'
+	}];
+
 } 
 })();
