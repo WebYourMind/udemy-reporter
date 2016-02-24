@@ -181,6 +181,26 @@ angular.module('myApp')
 		return _.sortBy(results, "promotion");
 	};
 
+	self.getEarinigsByCourse = function(){
+		var results = [],
+			records = FirebaseService.get('yourearningsbycourse');
+		records.$loaded().then(function(){
+			$log.debug("ReportService.getEarinigsByCourse $loaded");
+			results = self.ByCourse(records);
+			$rootScope.$emit( "ByCourse", results );
+			return results;				
+		})
+	}
+
+	self.ByCourse = function(records){
+		$log.debug("ReportService.ByCourse called");
+		var results = [];	
+		_.each(records, function(element, index, list){
+			var couponCode = element['Course Title'];
+			results.push({"coursetitle" : element['Course Title'], "total" : parseFloat(element.Earnings), cardinality: 1});
+		});
+		return _.sortBy(results, "coursetitle");
+	};
 	// Fine FACTORY
 	return self;	
 }]);

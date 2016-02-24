@@ -130,6 +130,21 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
           }]          
         }
       })   
+      .state('main.report-by-course', {
+        url: "report-by-course.html", 
+        templateUrl: "reports/report-by-course.html",
+        controller: 'ReportSaleByCourseController as ReportSaleByCourseCtrl',
+        resolve: {
+          items : function(ReportService){
+            return ReportService.getEarinigsByCourse();
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+          }]          
+        }
+      })        
       .state('main.help', {
         url: "help.html", 
         template: "TBD"    
