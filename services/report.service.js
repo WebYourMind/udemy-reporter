@@ -160,6 +160,7 @@ angular.module('myApp')
 		return _.sortBy(results, "hour");
 	};
 	
+	// Handle the Promotion report
 	self.getPromotions = function(){
 		var results = [],
 			records = FirebaseService.get('yourpromotionactivity');
@@ -181,6 +182,7 @@ angular.module('myApp')
 		return _.sortBy(results, "promotion");
 	};
 
+	// Handle the Earnings by course report
 	self.getEarinigsByCourse = function(){
 		var results = [],
 			records = FirebaseService.get('yourearningsbycourse');
