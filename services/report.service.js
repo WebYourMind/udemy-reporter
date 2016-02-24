@@ -120,7 +120,7 @@ angular.module('myApp')
 		var results = [];	
 		_.each(records, function(element, index, list){
 			// trovo record con ora uguale a element.Date
-			var hourToAdd = $filter('date')(new Date(element.Date), 'EEEE');			
+			var hourToAdd = $filter('date')(new Date(element["Formatted Date"]), 'EEEE');			
 			var day = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.day == hourToAdd ){
@@ -129,10 +129,10 @@ angular.module('myApp')
 			});
 			if (day){
 				// se esiste sommo valore
-				day.total = day.total + parseFloat(element.YourRevenue);
+				day.total = day.total + parseFloat(element["Instructor Share"]);
 			}else{
 				// se non esiste inserisco il nuovo valore
-				results.push({"day" : hourToAdd, "total" : parseFloat(element.YourRevenue)});
+				results.push({"day" : hourToAdd, "total" : parseFloat(element["Instructor Share"])});
 			}
 		});	
 		return _.sortBy(results, "total");
@@ -205,18 +205,18 @@ angular.module('myApp')
 	};
 
 	// Handle the Total Earnings report
-	self.getTotalEarinigs = function(){
+	self.getTotalEarnings = function(){
 		var results = [],
 			records = FirebaseService.get('yourtotalearnings');
 		records.$loaded().then(function(){
 			$log.debug("ReportService.getTotalEarinigs $loaded");
-			results = self.ByTotalEarnigs(records);
+			results = self.ByTotalEarnings(records);
 			$rootScope.$emit( "TotalEarnings", results );
 			return true;				
 		})
 	}
 
-	self.ByTotalEarnigs = function(records){
+	self.ByTotalEarnings = function(records){
 		$log.debug("ReportService.TotalEarinigs called");
 		var results = [];	
 		_.each(records, function(element, index, list){

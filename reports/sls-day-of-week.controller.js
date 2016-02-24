@@ -4,11 +4,22 @@ angular
   .controller('ReportSaleByDayOfWeekController', ReportSaleByDayOfWeekController);
 
 /* @ngInject */ 
-  function ReportSaleByDayOfWeekController($scope, $log, ReportService, items, currentAuth){
+  function ReportSaleByDayOfWeekController($scope, $log, ReportService, items, currentAuth, $rootScope){
     //$log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
     var ReportSaleByDayOfWeekCtrl = this;
     ReportSaleByDayOfWeekCtrl.items = items;
+    
+    $rootScope.$on("ByDayOfWeek", function(event, args){
+        ReportSaleByDayOfWeekCtrl.items = args;
+        ReportSaleByDayOfWeekCtrl.data = [{
+            values: args,                     
+            key: 'Revenue', //key  - the name of the series.
+            color: '#ff7f0e',  //color - optional: choose your own line color.
+            strokeWidth: 2//,
+            //classed: 'dashed'
+        }];
 
+    });
     ReportSaleByDayOfWeekCtrl.selection = {};
 	ReportSaleByDayOfWeekCtrl.range = {};
     ReportSaleByDayOfWeekCtrl.courseList = ['All'];
