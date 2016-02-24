@@ -8,9 +8,10 @@ angular
 function ReportSaleByPromotionController($scope, $log, ReportService, items, currentAuth, $rootScope){
     $log.debug("ReportSaleByPromotionController creato. Items: ", items);
     var ReportSaleByPromotionCtrl = this;
-
+    
+    ReportSaleByPromotionCtrl.items = items;
     if ( ReportSaleByPromotionCtrl.items == undefined )
-        ReportSaleByPromotionCtrl.items = [];
+        ReportSaleByPromotionCtrl.items = ReportService.getPromotions();
 
     $rootScope.$on("ByPromotion", function(event, args){
         ReportSaleByPromotionCtrl.items = args;
@@ -20,9 +21,8 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
         }];
 
     });
-
-    ReportSaleByPromotionCtrl.items = items;
-    ReportSaleByPromotionCtrl.selection = {};
+    
+    //ReportSaleByPromotionCtrl.selection = {};
 
     /* Chart options */
     ReportSaleByPromotionCtrl.options = { 
