@@ -144,7 +144,22 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
             return Auth.$requireAuth();
           }]          
         }
-      })        
+      })   
+      .state('main.report-total-earnings', {
+        url: "report-total-earnings.html", 
+        templateUrl: "reports/report-total-earnings.html",
+        controller: 'ReportTotalEarningsController as ReportTotalEarningsCtrl',
+        resolve: {
+          items : function(ReportService){
+            return ReportService.getTotalEarinigs();
+          },
+          "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+          }]          
+        }
+      })             
       .state('main.help', {
         url: "help.html", 
         template: "TBD"    

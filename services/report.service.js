@@ -203,6 +203,27 @@ angular.module('myApp')
 		});
 		return _.sortBy(results, "coursetitle");
 	};
+
+	// Handle the Total Earnings report
+	self.getTotalEarinigs = function(){
+		var results = [],
+			records = FirebaseService.get('yourtotalearnings');
+		records.$loaded().then(function(){
+			$log.debug("ReportService.getTotalEarinigs $loaded");
+			results = self.ByTotalEarnigs(records);
+			$rootScope.$emit( "TotalEarnings", results );
+			return true;				
+		})
+	}
+
+	self.ByTotalEarnigs = function(records){
+		$log.debug("ReportService.TotalEarinigs called");
+		var results = [];	
+		_.each(records, function(element, index, list){
+			results.push({"revenuechannel" : element['Revenue Channel'], "total" : parseFloat(element.Earnings), cardinality: 1});
+		});
+		return _.sortBy(results, "revenuechannel");
+	};	
 	// Fine FACTORY
 	return self;	
 }]);
