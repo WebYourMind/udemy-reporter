@@ -20,29 +20,26 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         templateUrl: "pages/home.html"
       })
       .state('main.login', {
-        url: "login.html", 
-        templateUrl: "authentication/login.html",
-        controller: 'LoginController as LoginCtrl',
-        resolve: {
-          // controller will not be loaded until $waitForAuth resolves
-          "currentAuth": ["Auth", function(Auth) {
-            // $waitForAuth returns a promise so the resolve waits for it to complete
-            return Auth.$waitForAuth();
-          }]
-        }        
-      })  
+              url: "login.html",            
+              onEnter: function($mdDialog) {
+                  $mdDialog.show({
+                      templateUrl: 'authentication/login-material.html',
+                      controller:"LoginController as LoginCtrl"                    
+
+                  });
+              },
+
+                   
+          })       
+      
       .state('main.logout', {
         url: "logout.html",      
         resolve: {
           "logout": ["FBEndPoint", function(FBEndPoint) {
             var ref = new Firebase(FBEndPoint);
             ref.unauth();
-          }],
-          // controller will not be loaded until $waitForAuth resolves
-          "currentAuth": ["Auth", function(Auth) {
-            // $waitForAuth returns a promise so the resolve waits for it to complete
-            return Auth.$requireAuth();
           }]
+     
         }        
       })               
       .state('main.load-csv-file', {

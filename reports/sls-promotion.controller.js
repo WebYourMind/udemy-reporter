@@ -9,8 +9,6 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
     $log.debug("ReportSaleByPromotionController creato. Items: ", items);
     var ReportSaleByPromotionCtrl = this;
     ReportSaleByPromotionCtrl.items = items;
-
-
     ReportSaleByPromotionCtrl.selection = {};
     ReportSaleByPromotionCtrl.range = {};
     ReportSaleByPromotionCtrl.courseList = ['All'];
@@ -35,6 +33,7 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
             ReportSaleByPromotionCtrl.data = newData;            
         }
     });
+
 
     var dateRangeListener = $scope.$watchCollection('ReportSaleByPromotionCtrl.range', function(newValue, oldValue) {
         if (newValue){      

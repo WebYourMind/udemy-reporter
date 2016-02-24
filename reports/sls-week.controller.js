@@ -1,4 +1,4 @@
-(function() {
+(function(angular, undefined) {
 angular
     .module('myApp')
     .controller('ReportSaleByWeekController', ReportSaleByWeekController);
@@ -103,4 +103,4 @@ angular
 		                key: 'Revenue'
                 		}];
 }
-})();
+})(angular);

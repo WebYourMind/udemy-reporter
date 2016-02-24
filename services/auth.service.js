@@ -7,15 +7,17 @@ angular.module('myApp').factory("UserAuthentication", ['$log', '$firebaseAuth', 
 	
 		var auth = Auth;
 
-		auth.$authWithPassword({
+	return auth.$authWithPassword({
 		  email: email,
 		  password: password
 		}).then(function(authData) {
 		  $log.debug("Logged in as:", authData);
-		  self.uid = authData.uid;
-		  $state.go("main.load-csv-file");
+		  self.uid = authData.uid;		  
+		  return authData;
 		}).catch(function(error) {
 		  $log.debug("Authentication failed:", error);
+		  // not returning specific error, as firebase is not consistent with the error formatting
+		  return {error: true, message: 'Invalid Username or Password'};
 		});
 
     };
