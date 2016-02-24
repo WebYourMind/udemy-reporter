@@ -24,7 +24,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
               onEnter: function($mdDialog) {
                   $mdDialog.show({
                       templateUrl: 'authentication/login-material.html',
-                      controller:"LoginController as LoginCtrl"                    
+                      controller:"LoginController as LoginCtrl"          
 
                   });
               },
