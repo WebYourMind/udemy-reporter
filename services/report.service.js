@@ -72,7 +72,7 @@ angular.module('myApp')
 		_.each(records, function(element, index, list){
 			// trovo record con data uguale a element.Date
 			var dayToAdd = $filter('date')(new Date(element["Formatted Date"]), 'dd/MM/yyyy');			
-			//var day = undefined;
+			var day;// = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.date == dayToAdd ){
 					day = elem;
@@ -95,8 +95,8 @@ angular.module('myApp')
 
 		_.each(records, function(element, index, list){			
 			var pad = '00',
-				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length);
-				//day = undefined;
+				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length),
+				day;// = undefined;
 			
 			_.each(results, function(elem, idx, lst){
 				//$log.debug("Check match found for weekToAdd:" + weekToAdd +" elem: ", elem );
@@ -121,7 +121,7 @@ angular.module('myApp')
 		_.each(records, function(element, index, list){
 			// trovo record con ora uguale a element.Date
 			var hourToAdd = $filter('date')(new Date(element["Formatted Date"]), 'EEEE');			
-			//var day = undefined;
+			var day;// = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.day == hourToAdd ){
 					day = elem;
@@ -143,7 +143,7 @@ angular.module('myApp')
 		_.each(records, function(element, index, list){
 			// trovo record con ora uguale a element.Date
 			var hourToAdd = $filter('date')(new Date(element.Date), 'HH');			
-			//var day = undefined;
+			var day;// = undefined;
 			_.each(results, function(elem, idx, lst){
 				if (elem.hour == hourToAdd ){
 					day = elem;
