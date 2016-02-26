@@ -8,6 +8,7 @@ angular
 function ReportSaleByCourseController($scope, $log, ReportService, items, currentAuth, $rootScope){
     $log.debug("ReportSaleByCourseController creato. Items: ", items);
     var ReportSaleByCourseCtrl = this;
+    ReportSaleByCourseCtrl.showSpinner = true
     
     ReportSaleByCourseCtrl.items = items;
     if ( ReportSaleByCourseCtrl.items === undefined )
@@ -15,6 +16,7 @@ function ReportSaleByCourseController($scope, $log, ReportService, items, curren
 
     $rootScope.$on("ByCourse", function(event, args){
         ReportSaleByCourseCtrl.items = args;
+        ReportSaleByCourseCtrl.showSpinner = false
         ReportSaleByCourseCtrl.data = [{
             values: args,                     
             key: 'Revenue' 
@@ -26,7 +28,7 @@ function ReportSaleByCourseController($scope, $log, ReportService, items, curren
     ReportSaleByCourseCtrl.options = { 
             chart: {
                 type: 'discreteBarChart',
-                height: 500,
+                height: 550,
                 margin : {
                     top: 20,
                     right: 20,

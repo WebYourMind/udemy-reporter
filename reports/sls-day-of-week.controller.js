@@ -8,9 +8,10 @@ angular
     //$log.debug("ReportSaleByDayOfWeekController creato. Items: ", items);
     var ReportSaleByDayOfWeekCtrl = this;
     ReportSaleByDayOfWeekCtrl.items = items;
-    
+    ReportSaleByDayOfWeekCtrl.showSpinner = true
     $rootScope.$on("ByDayOfWeek", function(event, args){
         ReportSaleByDayOfWeekCtrl.items = args;
+        ReportSaleByDayOfWeekCtrl.showSpinner = false
         ReportSaleByDayOfWeekCtrl.data = [{
             values: args,                     
             key: 'Revenue', //key  - the name of the series.

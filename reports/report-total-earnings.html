@@ -1,1 +1,9 @@
-<nvd3 options="ReportTotalEarningsCtrl.options" data="ReportTotalEarningsCtrl.data" config="{deepWatchData: true}"></nvd3>
+ <div ng-show="ReportTotalEarningsCtrl.showSpinner" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+ </div>
+<nvd3 
+	ng-if="!ReportTotalEarningsCtrl.showSpinner"
+	options="ReportTotalEarningsCtrl.options" 
+	data="ReportTotalEarningsCtrl.data" 
+	config="{deepWatchData: true}">
+</nvd3>

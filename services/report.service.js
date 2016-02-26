@@ -208,8 +208,13 @@ angular.module('myApp')
 		$log.debug("ReportService.ByCourse called");
 		var results = [];	
 		_.each(records, function(element, index, list){
-			var couponCode = element['Course Title'];
-			results.push({"coursetitle" : element['Course Title'], "total" : parseFloat(element.Earnings), cardinality: 1});
+			var courseTitle = element['Course Title'];
+			var rec = _.find(results, function(rec1){ return rec1.coursetitle === courseTitle; });
+			if ( rec == undefined ){
+				results.push({"coursetitle" : courseTitle, "total" : parseFloat(element.Earnings), cardinality: 1});
+			}else{
+				rec.total = rec.total + parseFloat(element.Earnings);
+			}
 		});
 		return _.sortBy(results, "coursetitle");
 	};
@@ -230,7 +235,13 @@ angular.module('myApp')
 		$log.debug("ReportService.TotalEarinigs called");
 		var results = [];	
 		_.each(records, function(element, index, list){
-			results.push({"revenuechannel" : element['Revenue Channel'], "total" : parseFloat(element.Earnings), cardinality: 1});
+			var revenueChannel = element['Revenue Channel'];
+			var rec = _.find(results, function(rec1){ return rec1.revenuechannel === revenueChannel; });
+			if (rec == undefined){
+				results.push({"revenuechannel" : revenueChannel, "total" : parseFloat(element.Earnings), cardinality: 1});
+			}else{
+				rec.total = rec.total + parseFloat(element.Earnings);
+			}
 		});
 		return _.sortBy(results, "revenuechannel");
 	};	

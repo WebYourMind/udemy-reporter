@@ -8,13 +8,15 @@ angular
 function ReportTotalEarningsController($scope, $log, ReportService, items, currentAuth, $rootScope){
     $log.debug("ReportTotalEarningsController created. Items: ", items);
     var ReportTotalEarningsCtrl = this;
-    
+    ReportTotalEarningsCtrl.showSpinner = true
+
     ReportTotalEarningsCtrl.items = items;
     if ( ReportTotalEarningsCtrl.items === undefined )
         ReportTotalEarningsCtrl.items = ReportService.getTotalEarnings();
 
     $rootScope.$on("TotalEarnings", function(event, args){
         ReportTotalEarningsCtrl.items = args;
+        ReportTotalEarningsCtrl.showSpinner = false
         ReportTotalEarningsCtrl.data = [{
             values: args,                     
             key: 'Revenue' 
