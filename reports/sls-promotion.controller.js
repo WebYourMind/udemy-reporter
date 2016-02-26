@@ -8,13 +8,14 @@ angular
 function ReportSaleByPromotionController($scope, $log, ReportService, items, currentAuth, $rootScope){
     $log.debug("ReportSaleByPromotionController creato. Items: ", items);
     var ReportSaleByPromotionCtrl = this;
-    
+    ReportSaleByPromotionCtrl.showSpinner = true
     ReportSaleByPromotionCtrl.items = items;
     if ( ReportSaleByPromotionCtrl.items === undefined )
         ReportSaleByPromotionCtrl.items = ReportService.getPromotions();
 
     $rootScope.$on("ByPromotion", function(event, args){
         ReportSaleByPromotionCtrl.items = args;
+        ReportSaleByPromotionCtrl.showSpinner = false
         ReportSaleByPromotionCtrl.data = [{
             values: args,                     
             key: 'Revenue' //key  - the name of the series.
@@ -50,7 +51,7 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
                 },
                 xAxis: {
                     axisLabel: 'Promotion',
-                    rotateLabels: 45
+                    rotateLabels: 75
                     //axisLabelDistance: -5000          
                 },
                 yAxis: {

@@ -3,4 +3,11 @@
   <div class="col col-lg-6" wym-datepicker range="ReportSaleByDayCtrl.range"></div> 
 </div>
 
-<nvd3 options="ReportSaleByDayCtrl.options" data="ReportSaleByDayCtrl.data"></nvd3>
+ <div ng-show="ReportSaleByDayCtrl.showSpinner" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+<nvd3 	ng-if="!ReportSaleByDayCtrl.showSpinner" 
+		options="ReportSaleByDayCtrl.options" 
+		data="ReportSaleByDayCtrl.data">
+</nvd3>

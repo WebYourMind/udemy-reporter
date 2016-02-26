@@ -188,8 +188,6 @@ angular.module('myApp')
 			}else{
 				rec.total = rec.total + parseFloat(element.Earnings);
 			}
-
-			results.push({"promotion" : couponCode, "total" : parseFloat(element.Earnings), cardinality: 1});
 		});
 		return _.sortBy(results, "promotion");
 	};

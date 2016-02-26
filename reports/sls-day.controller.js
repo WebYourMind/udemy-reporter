@@ -8,7 +8,7 @@ angular
 function ReportSaleByDayController($scope, $rootScope, $log, ReportService, items, currentAuth){
 	var ReportSaleByDayCtrl = this;
 	ReportSaleByDayCtrl.items = items;
-
+    ReportSaleByDayCtrl.showSpinner = true
     if ( ReportSaleByDayCtrl.items === undefined )
         ReportSaleByDayCtrl.items = [];
 
@@ -21,7 +21,7 @@ function ReportSaleByDayController($scope, $rootScope, $log, ReportService, item
             strokeWidth: 2//,
             //classed: 'dashed'
         }];
-
+        ReportSaleByDayCtrl.showSpinner = false
     });
     ReportSaleByDayCtrl.selection = {};
 	ReportSaleByDayCtrl.range = {};

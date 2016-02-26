@@ -1,1 +1,10 @@
-<nvd3 options="ReportSaleByPromotionCtrl.options" data="ReportSaleByPromotionCtrl.data" config="{deepWatchData: true}"></nvd3>
+ <div ng-show="ReportSaleByPromotionCtrl.showSpinner" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+ </div>
+
+<nvd3 
+	ng-if="!ReportSaleByPromotionCtrl.showSpinner" 
+	options="ReportSaleByPromotionCtrl.options" 
+	data="ReportSaleByPromotionCtrl.data" 
+	config="{deepWatchData: true}">
+</nvd3>
