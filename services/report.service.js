@@ -81,11 +81,16 @@ angular.module('myApp')
 			if (day){
 				// se esiste sommo valore
 				day.total = day.total + parseFloat(element["Instructor Share"]);
-			}else{
+			}else{				
+				//var tmp = dayToAdd.split('/')
+				var orderByDate = $filter('date')(new Date(element["Formatted Date"]), 'yyyyMMdd');	//tmp[2] + (tmp[1].length == 1 ? '0' + tmp[1] : tmp[1]) + (tmp[0].length == 1 ?  '0' + tmp[0] : tmp[0]);
 				// se non esiste inserisco il nuovo valore
-				results.push({"date" : dayToAdd, "total" : parseFloat(element["Instructor Share"])});
+				results.push({	"date" : dayToAdd, 
+								"orderByDate" : orderByDate,
+								"total" : parseFloat(element["Instructor Share"])});
 			}
 		});
+		results = _.sortBy(results, "orderByDate");
 		return results;
 	}
 
@@ -177,7 +182,14 @@ angular.module('myApp')
 		var results = [];	
 		_.each(records, function(element, index, list){
 			var couponCode = element['Coupon Code'];
-			results.push({"promotion" : element['Coupon Code'], "total" : parseFloat(element.Earnings), cardinality: 1});
+			var rec = _.find(results, function(rec){ return rec.promotion === couponCode; });
+			if ( rec == undefined ){
+				results.push({"promotion" : couponCode, "total" : parseFloat(element.Earnings), cardinality: 1});
+			}else{
+				rec.total = rec.total + parseFloat(element.Earnings);
+			}
+
+			results.push({"promotion" : couponCode, "total" : parseFloat(element.Earnings), cardinality: 1});
 		});
 		return _.sortBy(results, "promotion");
 	};
