@@ -28,11 +28,11 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
     ReportSaleByPromotionCtrl.options = { 
             chart: {
                 type: 'discreteBarChart',
-                height: 500,
+                height: 600,
                 margin : {
                     top: 20,
                     right: 20,
-                    bottom: 50,
+                    bottom: 150,
                     left: 55
                 },
                 x: function(d){                        
@@ -49,7 +49,8 @@ function ReportSaleByPromotionController($scope, $log, ReportService, items, cur
                     tooltipHide: function(e){ console.log("tooltipHide"); }
                 },
                 xAxis: {
-                    axisLabel: 'Promotion'//,
+                    axisLabel: 'Promotion',
+                    rotateLabels: 45
                     //axisLabelDistance: -5000          
                 },
                 yAxis: {
