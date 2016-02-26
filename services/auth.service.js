@@ -10,6 +10,8 @@ angular.module('myApp').factory("UserAuthentication", ['$log', '$firebaseAuth', 
 	return auth.$authWithPassword({
 		  email: email,
 		  password: password
+		},{
+		 rememberme : rememberme 
 		}).then(function(authData) {
 		  $log.debug("Logged in as:", authData);
 		  self.uid = authData.uid;		  
