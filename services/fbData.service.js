@@ -1,5 +1,6 @@
 angular.module('myApp')
-.factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', 'UserAuthentication', function($http, $q, $log, $filter, $firebaseArray, FBEndPoint, UserAuthentication){
+.factory('FirebaseService', ['$http', '$q', '$log', '$filter', '$firebaseArray', 'FBEndPoint', 'Auth', 
+					function($http, $q, $log, $filter, $firebaseArray, FBEndPoint, Auth){
 	var self = {};
 	self.records = undefined;
 	//self.uid = undefined;
@@ -29,11 +30,7 @@ angular.module('myApp')
 		$log.debug("FirebaseService.get section is:", section);
 		
 		if (self.uid === undefined ){
-			$log.debug("FirebaseService.get uid is undefined:", self.uid);
-			self.uid = UserAuthentication.getUid();
-			$log.debug("FirebaseService.get get the uid:", self.uid);
-		}else{
-			$log.debug("FirebaseService.get uid is defined:", self.uid);
+			self.uid = Auth.$getAuth().uid;
 		}
 
 		//if (self.records == undefined && self.uid != undefined){
