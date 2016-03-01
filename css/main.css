@@ -107,3 +107,9 @@ table.csv-files-table tbody{
 .accordion-toggle {
     cursor: pointer;
 }
+
+/* MENU */
+
+.report-menu {
+    margin: inherit!important;
+}

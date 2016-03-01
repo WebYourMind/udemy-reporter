@@ -1,11 +1,13 @@
 angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.bootstrap', 'nvd3','ngMaterial'])
 
-.config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider){
+.config(function ($logProvider, $httpProvider, $stateProvider, $urlRouterProvider, $locationProvider, $mdIconProvider){
   /* Set up the routing system */
   // Removed url hash 
   $locationProvider.html5Mode(true);  
   // For any unmatched url, redirect to /
-  $urlRouterProvider.otherwise("/"); 
+  $urlRouterProvider.otherwise("/");
+
+  $mdIconProvider.fontSet('fa', 'fontawesome');
 
   $stateProvider
       .state('main', {

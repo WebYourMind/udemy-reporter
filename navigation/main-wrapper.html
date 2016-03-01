@@ -8,46 +8,71 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Udemy Reporter</a>
+      <!-- <a class="navbar-brand" href="#">Udemy Reporter</a> -->
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li ng-class="{'active':isActiveTab(0)}" ng-click="changeTab(0)">
-          <a ui-sref="main.home"><i class="fa fa-home"></i> Home<span class="sr-only">(current)</span></a>
-        </li>
-        <li ng-class="{'active':isActiveTab(1)}" ng-click="changeTab(1)">
-          <a ui-sref="main.load-csv-file"><i class="fa fa-spinner"></i> Load File</a>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
-            <i class="fa fa-line-chart"></i> Reports<span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li ng-class="{'active':isActiveTab(2)}" ng-click="changeTab(2)"><a ui-sref="main.show-total-by-day-report">Total by Day</a></li>
-            <li ng-class="{'active':isActiveTab(3)}" ng-click="changeTab(3)"><a ui-sref="main.show-total-by-week-report">Total by Week</a></li>
-            <li ng-class="{'active':isActiveTab(4)}" ng-click="changeTab(4)"><a ui-sref="main.show-total-by-day-of-week-report">Total by Day of Week</a></li>
-            <!--
-            <li><a ui-sref="main.show-total-by-hour-of-day-report">Total by Hour of the Day</a></li>
-            -->
-            <li><a ui-sref="main.report-by-promotion">Revenue by Promotion</a></li>            
-            <li><a ui-sref="main.report-by-course">Earnings by Course</a></li>  
-            <li><a ui-sref="main.report-total-earnings">Total Earnings</a></li> 
-            <!--
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-            -->
-          </ul>
-        </li>        
-        <li ng-class="{'active':isActiveTab(10)}" ng-click="changeTab(10)"><a ui-sref="main.help"><i class="fa fa-question-circle"></i> Help</a></li>
-        <li role="separator" class="divider"></li>
-        <li ng-class="{'active':isActiveTab(11)}" ng-click="changeTab(11)" ng-hide="currentAuth.uid"><a ui-sref="main.login"><i class="fa fa-user"></i> Sign in</a></li>
-        <li ng-class="{'active':isActiveTab(12)}" ng-click="changeTab(12)" ng-show="currentAuth.uid"><a ui-sref="main.logout"><i class="fa fa-user"></i> Sign out</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
+      <md-content>
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Home" ui-sref="main.home">
+              <md-icon md-font-set="fa" md-font-icon="fa-home" class="fa fa-2x fa-inverse"></md-icon>
+            </md-button>
+            <md-button aria-label="Load File" ui-sref="main.load-csv-file">
+              <i class="fa fa-spinner"></i> Load File
+            </md-button>
+            <md-menu class="report-menu">
+              <md-button aria-label="Reports" ng-click="$mdOpenMenu()">
+                  <i class="fa fa-line-chart"></i> Reports
+              </md-button>
+              <md-menu-content>
+                <md-menu-item>
+                  <md-button ui-sref="main.show-total-by-day-report">
+                    Total by Day
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ui-sref="main.show-total-by-week-report">
+                    Total by Week
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ui-sref="main.show-total-by-day-of-week-report">
+                    Total by Day of Week
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ui-sref="main.report-by-promotion">
+                    Revenue by Promotion
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ui-sref="main.report-by-course">
+                    Earnings by Course
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ui-sref="main.report-total-earnings">
+                    Total Earnings
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+            <md-button aria-label="Reports" ui-sref="main.help">
+                <i class="fa fa-question-circle"></i> Help
+            </md-button>
+            <md-button aria-label="Reports" ui-sref="main.login" ng-hide="currentAuth.uid">
+                <i class="fa fa-user"></i> Sign in
+            </md-button>
+            <md-button aria-label="Reports" ui-sref="main.logout" ng-show="currentAuth.uid">
+                <i class="fa fa-user"></i> Sign out
+            </md-button>
+          </div>
+        </md-toolbar>
+      </md-content>
+    </div>
+
   </div><!-- /.container-fluid -->
 </nav>
 
