@@ -2,5 +2,7 @@
   <div class="col col-lg-6" course-picker selection="ReportSaleByWeekCtrl.selection"></div> 
   <div class="col col-lg-6" wym-datepicker range="ReportSaleByWeekCtrl.range"></div> 
 </div>
-
-<nvd3 options="ReportSaleByWeekCtrl.options" data="ReportSaleByWeekCtrl.data"></nvd3>
+ <div ng-show="ReportSaleByWeekCtrl.showSpinner" layout="row" layout-sm="column" layout-align="space-around">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+<nvd3 ng-if="!ReportSaleByWeekCtrl.showSpinner"  options="ReportSaleByWeekCtrl.options" data="ReportSaleByWeekCtrl.data"></nvd3>

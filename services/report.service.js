@@ -100,25 +100,26 @@ angular.module('myApp')
 
 		_.each(records, function(element, index, list){			
 			var pad = '00',
-				weekToAdd = (new Date(element.Date)).getFullYear() + "-" + (pad + (new Date(element.Date).getWeekNumber())).slice(-pad.length),
-				day;// = undefined;
+				weekToAdd = (new Date(element["Formatted Date"])).getFullYear()  
+							+ (pad + (new Date(element["Formatted Date"]).getWeekNumber())).slice(-pad.length),
+				week;// = undefined;
 			
 			_.each(results, function(elem, idx, lst){
 				//$log.debug("Check match found for weekToAdd:" + weekToAdd +" elem: ", elem );
 				if (elem.week === weekToAdd ){
-					day = elem;
+					week = elem;
 				}		
 			});
-			if (day){
+			if (week){
 				// se esiste sommo valore
-				day.total = day.total + parseFloat(element.YourRevenue);
+				week.total = week.total + parseFloat(element["Instructor Share"]);
 			}else{
 				// se non esiste inserisco il nuovo valore
-				results.push({"week" : weekToAdd, "total" : parseFloat(element.YourRevenue)});
+				results.push({"week" : weekToAdd, "total" : parseFloat(element["Instructor Share"])});
 			}
 		});
 		$log.debug("ReportService.getTotalsByWeek  value:", results);
-		return _.sortBy(results, "week");
+		//return _.sortBy(results, "week");
 	}
 
 	self.ByDayOfWeek = function(records){

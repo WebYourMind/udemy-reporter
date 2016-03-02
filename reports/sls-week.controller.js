@@ -4,14 +4,28 @@ angular
     .controller('ReportSaleByWeekController', ReportSaleByWeekController);
     
 /* @ngInject */ 
-    function ReportSaleByWeekController($scope, $log, ReportService, items, currentAuth){
+    function ReportSaleByWeekController($scope, $log, $rootScope, ReportService, items, currentAuth){
 	var ReportSaleByWeekCtrl = this;
 	ReportSaleByWeekCtrl.items = items;
+
+    ReportSaleByWeekCtrl.showSpinner = true
+    if ( ReportSaleByWeekCtrl.items === undefined )
+        ReportSaleByWeekCtrl.items = [];
+
+    $rootScope.$on("ByWeek", function(event, args){
+        $log.debug('ByWeek called');
+        ReportSaleByWeekCtrl.items = args;
+        ReportSaleByWeekCtrl.data = [{
+            values: args,                     
+            key: 'Revenue'
+        }];
+        ReportSaleByWeekCtrl.showSpinner = false
+    });
 
     ReportSaleByWeekCtrl.selection = {};
 	ReportSaleByWeekCtrl.range = {};
     ReportSaleByWeekCtrl.courseList = ['All'];
-
+/*
     var courseNameListener = $scope.$watchCollection('ReportSaleByWeekCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
         	ReportSaleByWeekCtrl.data = [];
@@ -54,7 +68,7 @@ angular
             dateRangeListener();
         }        
     });
-
+*/
     /* Chart options */
     ReportSaleByWeekCtrl.options = { 
             chart: {
@@ -67,8 +81,8 @@ angular
                     left: 55
                 },
                 x: function(d){                  	
-                	//$log.debug("Got this as X value: ", d);                   
-                	return d.date;                
+                	$log.debug("Got this as X value: ", d);                   
+                	return d.week;                
                 },
                 y: function(d){ 
                 	//$log.debug("Got this as Y value: ", d);  
