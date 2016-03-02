@@ -1,80 +1,78 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <!-- <a class="navbar-brand" href="#">Udemy Reporter</a> -->
-    </div>
+<nav class="layout-xl">
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <md-content>
-        <md-toolbar>
-          <div class="md-toolbar-tools">
-            <md-button class="md-icon-button" aria-label="Home" ui-sref="main.home">
-              <md-icon md-font-set="fa" md-font-icon="fa-home" class="fa fa-2x fa-inverse"></md-icon>
-            </md-button>
-            <md-button aria-label="Load File" ui-sref="main.load-csv-file">
-              <i class="fa fa-spinner"></i> Load File
-            </md-button>
-            <md-menu class="report-menu">
-              <md-button aria-label="Reports" ng-click="$mdOpenMenu()">
-                  <i class="fa fa-line-chart"></i> Reports
-              </md-button>
-              <md-menu-content>
-                <md-menu-item>
-                  <md-button ui-sref="main.show-total-by-day-report">
-                    Total by Day
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button ui-sref="main.show-total-by-week-report">
-                    Total by Week
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button ui-sref="main.show-total-by-day-of-week-report">
-                    Total by Day of Week
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button ui-sref="main.report-by-promotion">
-                    Revenue by Promotion
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button ui-sref="main.report-by-course">
-                    Earnings by Course
-                  </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                  <md-button ui-sref="main.report-total-earnings">
-                    Total Earnings
-                  </md-button>
-                </md-menu-item>
-              </md-menu-content>
-            </md-menu>
-            <md-button aria-label="Reports" ui-sref="main.help">
-                <i class="fa fa-question-circle"></i> Help
-            </md-button>
-            <md-button aria-label="Reports" ui-sref="main.login" ng-hide="currentAuth.uid">
-                <i class="fa fa-user"></i> Sign in
-            </md-button>
-            <md-button aria-label="Reports" ui-sref="main.logout" ng-show="currentAuth.uid">
-                <i class="fa fa-user"></i> Sign out
-            </md-button>
-          </div>
-        </md-toolbar>
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <md-toolbar class="bckg-nav">
+      <md-content class="navbar-toggle collapsed">
+        <md-button class="md-icon-button" aria-label="Toggle navigation" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <md-icon md-font-set="fa" md-font-icon="fa-bars" class="fa fa-2x fa-inverse"></md-icon>
+        </md-button>
       </md-content>
-    </div>
+    </md-toolbar>
+  </div>
 
-  </div><!-- /.container-fluid -->
-</nav>
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <md-content class="collapse navbar-collapse no-padding" id="bs-example-navbar-collapse-1">
+    <md-toolbar class="bckg-nav">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button btn-menu md-cornered" aria-label="Home" ui-sref="main.home">
+          <md-icon md-font-set="fa" md-font-icon="fa-home" class="fa fa-2x fa-inverse"></md-icon>
+        </md-button>
+        <md-button class="btn-menu md-cornered" aria-label="Load File" ui-sref="main.load-csv-file">
+          <i class="fa fa-spinner"></i> Load File
+        </md-button>
+        <md-menu class="report-menu">
+          <md-button class="btn-menu md-cornered" aria-label="Reports" ng-click="$mdOpenMenu()">
+              <i class="fa fa-line-chart"></i> Reports
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.show-total-by-day-report">
+                Total by Day
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.show-total-by-week-report">
+                Total by Week
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.show-total-by-day-of-week-report">
+                Total by Day of Week
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.report-by-promotion">
+                Revenue by Promotion
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.report-by-course">
+                Earnings by Course
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button class="btn-menu md-cornered" ui-sref="main.report-total-earnings">
+                Total Earnings
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <md-button class="btn-menu md-cornered" aria-label="Help" ui-sref="main.help">
+            <i class="fa fa-question-circle"></i> Help
+        </md-button>
+        <md-button class="btn-menu md-cornered" aria-label="Sign in" ui-sref="main.login" ng-hide="currentAuth.uid">
+            <i class="fa fa-user"></i> Sign in
+        </md-button>
+        <md-button class="btn-menu md-cornered" aria-label="Sign out" ui-sref="main.logout" ng-show="currentAuth.uid">
+            <i class="fa fa-user"></i> Sign out
+        </md-button>
+        <span flex></span>
+        <md-button class="btn-menu md-cornered" aria-label="Udemy Reporter" ui-sref="main.home">Udemy Reporter</md-button>
+      </div>
+    </md-toolbar>
+  </md-content>
+</nav><!-- /.container-fluid -->
 
 
 <div ui-view></div>	

@@ -110,6 +110,27 @@ table.csv-files-table tbody{
 
 /* MENU */
 
+.bckg-nav:not(.md-menu-toolbar) {
+    background-color: rgb(23,170,28) ;
+    color: rgba(255,255,255,1);
+}
 .report-menu {
     margin: inherit!important;
+}
+.no-padding{
+    padding: 0!important;
+}
+.btn-menu{
+    height: 64px;
+    line-height: 64px;
+}
+.btn-menu:hover,
+.btn-menu:not([disabled]):hover{
+    background: rgba(255,255,255,0.2)!important;
+}
+
+/* CARD HOME */
+
+.card-home{
+    background: rgba(204,204,204,0.2);
 }
