@@ -7,25 +7,26 @@ angular
     function ReportSaleByWeekController($scope, $log, $rootScope, ReportService, items, currentAuth){
 	var ReportSaleByWeekCtrl = this;
 	ReportSaleByWeekCtrl.items = items;
-
     ReportSaleByWeekCtrl.showSpinner = true
+    
     if ( ReportSaleByWeekCtrl.items === undefined )
         ReportSaleByWeekCtrl.items = [];
 
-    $rootScope.$on("ByWeek", function(event, args){
-        $log.debug('ByWeek called', args);
+    $rootScope.$on("ByWeek", function(event, args){           
         ReportSaleByWeekCtrl.items = args;
+        console.log("ByWeek event catched", args)
         ReportSaleByWeekCtrl.data = [{
             values: args,                     
             key: 'Revenue'
         }];
-        ReportSaleByWeekCtrl.showSpinner = false
+        ReportSaleByWeekCtrl.showSpinner = false;    
     });
 
     ReportSaleByWeekCtrl.selection = {};
 	ReportSaleByWeekCtrl.range = {};
     ReportSaleByWeekCtrl.courseList = ['All'];
-/*
+
+
     var courseNameListener = $scope.$watchCollection('ReportSaleByWeekCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
         	ReportSaleByWeekCtrl.data = [];
@@ -68,7 +69,7 @@ angular
             dateRangeListener();
         }        
     });
-*/
+
     /* Chart options */
     ReportSaleByWeekCtrl.options = { 
             chart: {
