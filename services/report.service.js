@@ -119,7 +119,7 @@ angular.module('myApp')
 			}
 		});
 		$log.debug("ReportService.getTotalsByWeek  value:", results);
-		//return _.sortBy(results, "week");
+		return _.sortBy(results, "week");
 	}
 
 	self.ByDayOfWeek = function(records){

@@ -13,7 +13,7 @@ angular
         ReportSaleByWeekCtrl.items = [];
 
     $rootScope.$on("ByWeek", function(event, args){
-        $log.debug('ByWeek called');
+        $log.debug('ByWeek called', args);
         ReportSaleByWeekCtrl.items = args;
         ReportSaleByWeekCtrl.data = [{
             values: args,                     
@@ -72,7 +72,7 @@ angular
     /* Chart options */
     ReportSaleByWeekCtrl.options = { 
             chart: {
-                type: 'lineChart',
+                type: 'discreteBarChart',
                 height: 500,
                 margin : {
                     top: 20,
@@ -80,12 +80,10 @@ angular
                     bottom: 50,
                     left: 55
                 },
-                x: function(d){                  	
-                	$log.debug("Got this as X value: ", d);                   
+                x: function(d){                  	                	
                 	return d.week;                
                 },
-                y: function(d){ 
-                	//$log.debug("Got this as Y value: ", d);  
+                y: function(d){                 	
                 	return d.total; 
                 },
                 useInteractiveGuideline: true,
@@ -96,7 +94,7 @@ angular
                     tooltipHide: function(e){ console.log("tooltipHide"); }
                 },
                 xAxis: {
-                    axisLabel: 'Week'   
+                    axisLabel: 'Week'
                 },
                 yAxis: {
                     axisLabel: 'Sales ($)'
@@ -113,7 +111,7 @@ angular
 
     /* Chart data */
     ReportSaleByWeekCtrl.data = [{
-    					values: items,                     
+    					values: ReportSaleByWeekCtrl.items,                     
 		                key: 'Revenue'
                 		}];
 }
