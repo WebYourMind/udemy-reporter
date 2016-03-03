@@ -7,8 +7,12 @@ angular
 /* @ngInject */ 
 function ReportSaleByDayController($scope, $rootScope, $log, ReportService, items, currentAuth){
 	var ReportSaleByDayCtrl = this;
-	ReportSaleByDayCtrl.items = items;
     ReportSaleByDayCtrl.showSpinner = true
+    ReportSaleByDayCtrl.selection = {};
+    ReportSaleByDayCtrl.range = {};
+    ReportSaleByDayCtrl.courseList = ['All'];    
+	ReportSaleByDayCtrl.items = items; //ReportService.getSaleTotals('ByDay');
+    
     if ( ReportSaleByDayCtrl.items === undefined )
         ReportSaleByDayCtrl.items = [];
 
@@ -21,11 +25,9 @@ function ReportSaleByDayController($scope, $rootScope, $log, ReportService, item
             strokeWidth: 2//,
             //classed: 'dashed'
         }];
+        ReportSaleByDayCtrl.courses = ReportService.getCourseList();
         ReportSaleByDayCtrl.showSpinner = false
     });
-    ReportSaleByDayCtrl.selection = {};
-	ReportSaleByDayCtrl.range = {};
-    ReportSaleByDayCtrl.courseList = ['All'];
 
     var courseNameListener = $scope.$watchCollection('ReportSaleByDayCtrl.selection.ids', function(newValue, oldValue) {
         if (newValue){
@@ -33,7 +35,7 @@ function ReportSaleByDayController($scope, $rootScope, $log, ReportService, item
         	var newData = [];
             ReportSaleByDayCtrl.courseList = [];
             _.each(ReportSaleByDayCtrl.selection.ids, function(value, key, list){
-				//$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
+				$log.debug("ReportSaleByDayCtrl.selection.ids - selected courses:", [value, key]);
 		    	if (value){
 		    		newData.push({
 	    					values: ReportService.getSaleTotals('ByDay', key, ReportSaleByDayCtrl.range),                     

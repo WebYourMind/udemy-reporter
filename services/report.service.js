@@ -2,6 +2,30 @@
 angular.module('myApp')
 .factory('ReportService', ['$log', '$filter', '$rootScope', 'FirebaseService', function($log, $filter, $rootScope, FirebaseService){
 	var self = {};	
+	self.courseList = [];
+	
+
+
+	// Get the courses list 
+	// Attention: At the moment the function works with sales firebase branch only	
+	self.getCourseList = function(){
+		return self.courseList;
+	}
+	// Prepare the courses list 
+	// @param records The sales firebase object
+	// Attention: At the moment the function works with sales firebase branch only	
+	self.filterCourseList = function(records){	
+		var	courses = [],
+			finalCourses = [];
+		finalCourses.push({"name": 'All', "value" : 'All'});
+		_.each(records, function(element, index, list){
+			if (_.indexOf(courses, element['Course Name'])<0){
+				courses.push(element['Course Name']);				
+				finalCourses.push({"name": element['Course Name'], "value" : element['Course Name']});
+			}
+		});
+		self.courseList = finalCourses;
+	}	
 
 	self.filterByCourseName = function(records, courseName){
 		if(courseName && courseName != 'All'){
@@ -40,12 +64,12 @@ angular.module('myApp')
 	self.getSaleTotals = function(reportName, courseName, range){
 		var results = [],
 			records = FirebaseService.get('sales');
-		
-		// Filter by course name
-		//records = self.filterByCourseName(angular.copy(records), courseName);
-		// Filter by date range
-		//records = self.filterByDateRange(angular.copy(records), range);	
+			
 		records.$loaded().then(function(){
+			// Filter by course name
+			//records = self.filterByCourseName(angular.copy(records), courseName);
+			// Filter by date range
+			//records = self.filterByDateRange(angular.copy(records), range);
 			switch (reportName){
 				case 'ByDay':
 					results = self.ByDay(records);
@@ -62,6 +86,9 @@ angular.module('myApp')
 				default:
 					$log.error("Report ["+reportName+"] not yet implemented");
 			}
+			if (self.courseList.length == 0)
+				self.filterCourseList(records);
+
 			$rootScope.$emit( reportName, results );
 			return results;					
 		})

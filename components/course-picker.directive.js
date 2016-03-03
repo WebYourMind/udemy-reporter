@@ -1,15 +1,17 @@
 angular.module('myApp')
 
-.directive('coursePicker', ['FirebaseService', '$log', function(FirebaseService, $log) {
+.directive('coursePicker', ['$log', function($log) {
 	var directive = this;
 	directive = {
 		restrict:'AE',
 		templateUrl: "components/course-picker.tpl.html",
         scope: {
-            selection: '=selection'
+            selection: '=selection',
+            courses: '=courses'
         },
         link: function (scope, elem, attrs) {
-        	scope.courses = FirebaseService.getCourseList();
+        	//console.log('coursePicker: ', [scope, elem, attrs])
+        	//scope.courses = FirebaseService.getCourseList();        	
         }
 	}
 
