@@ -110,25 +110,32 @@ table.csv-files-table tbody{
 
 /* MENU */
 
-.width100pc{
-    width: 100%;
-}
-.height100pc{
-    height: 100%;
+.bckg-user{
+    background-color: rgb(56,119,123)!important;
+    color: rgba(255,255,255,1);   
 }
 .bckg-nav:not(.md-menu-toolbar) {
-    background-color: rgb(23,170,28) ;
+    background-color: rgb(90,169,174);
     color: rgba(255,255,255,1);
+}
+.icon-sidebar{
+    width: 17px;
+    height: 17px;
+}
+.icon-h-auto{
+    height: auto!important;
 }
 .icon-home{
     height: 17px;
 }
-/*.report-menu {
-    margin: inherit!important;
-}*/
-md-toolbar.bckg-nav .btn-menu{
+.toolbarH .btn-menu{
     height: 64px;
     line-height: 64px;
+}
+.btn-menu{
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 16px;
 }
 .btn-menu:hover,
 .btn-menu:not([disabled]):hover{
@@ -140,9 +147,28 @@ md-toolbar.bckg-nav .btn-menu{
     color: #fff!important;
     background: #FF735C!important;
 }
+.title-menu,
+.title-menu md-icon{
+    /*background: rgba(84,158,163,1)!important;*/
+    color: #ccc!important;
+    text-transform: uppercase;
+}
+.sub-liv{
+    padding-left: 30px;
+}
+.email-user{
+    font-size: 17px;
+}
 
 /* CARD HOME */
 
 .card-home{
     background: rgba(204,204,204,0.2);
+}
+
+/* CARD HOME */
+
+body{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
 }
