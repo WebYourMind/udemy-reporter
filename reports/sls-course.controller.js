@@ -12,7 +12,7 @@ function ReportSaleByCourseController($scope, $log, ReportService, items, curren
     
     ReportSaleByCourseCtrl.items = items;
     if ( ReportSaleByCourseCtrl.items === undefined )
-        ReportSaleByCourseCtrl.items = ReportService.getEarinigsByCourse();
+        ReportSaleByCourseCtrl.items = ReportService.getEarningsByCourse();
 
     $rootScope.$on("ByCourse", function(event, args){
         ReportSaleByCourseCtrl.items = args;

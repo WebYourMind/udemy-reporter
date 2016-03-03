@@ -5,7 +5,7 @@ angular.module('myApp')
 
 	self.filterByCourseName = function(records, courseName){
 		if(courseName && courseName != 'All'){
-			records = _.filter(records, function(elem){ return elem.Course == courseName});
+			records = _.filter(records, function(elem){ return elem['Course Name'] == courseName});
 		}
 		return records;
 	}
@@ -46,22 +46,24 @@ angular.module('myApp')
 		// Filter by date range
 		//records = self.filterByDateRange(angular.copy(records), range);	
 		records.$loaded().then(function(){
-			if (reportName == 'ByDay'){
-				results = self.ByDay(records);
-			}else if(reportName == 'ByWeek'){
-				results = self.ByWeek(records);
-			}else if(reportName == 'ByDayOfWeek'){
-				results = self.ByDayOfWeek(records);
-			}else if(reportName == 'ByHourOfDay'){
-				results = self.ByHourOfDay(records);
-			}else if(reportName == 'ByPromotion'){
-				results = self.ByPromotion(records);
-			}else{
-				$log.error("Report ["+reportName+"] not yet implemented");
+			switch (reportName){
+				case 'ByDay':
+					results = self.ByDay(records);
+					break;
+				case 'ByWeek':
+					results = self.ByWeek(records);
+					break;
+				case 'ByDayOfWeek':
+					results = self.ByDayOfWeek(records);
+					break;
+				case 'ByPromotion':
+					results = self.ByPromotion(records);
+					break;
+				default:
+					$log.error("Report ["+reportName+"] not yet implemented");
 			}
 			$rootScope.$emit( reportName, results );
-			return results;	
-				
+			return results;					
 		})
 	}
 
@@ -116,8 +118,7 @@ angular.module('myApp')
 				// se non esiste inserisco il nuovo valore
 				results.push({"week" : weekToAdd, "total" : parseFloat(element["Instructor Share"])});
 			}
-		});
-		$log.debug("ReportService.getTotalsByWeek  value:", results);
+		});		
 		return _.sortBy(results, "week");
 	}
 
@@ -193,11 +194,11 @@ angular.module('myApp')
 	};
 
 	// Handle the Earnings by course report
-	self.getEarinigsByCourse = function(){
+	self.getEarningsByCourse = function(){
 		var results = [],
 			records = FirebaseService.get('yourearningsbycourse');
 		records.$loaded().then(function(){
-			$log.debug("ReportService.getEarinigsByCourse $loaded");
+			$log.debug("ReportService.getEarningsByCourse $loaded");
 			results = self.ByCourse(records);
 			$rootScope.$emit( "ByCourse", results );
 			return results;				

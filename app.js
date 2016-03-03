@@ -138,7 +138,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         controller: 'ReportSaleByCourseController as ReportSaleByCourseCtrl',
         resolve: {
           items : function(ReportService){
-            return ReportService.getEarinigsByCourse();
+            return ReportService.getEarningsByCourse();
           },
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
