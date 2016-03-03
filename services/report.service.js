@@ -98,11 +98,10 @@ angular.module('myApp')
 	self.ByWeek = function(records){
 		var results = [];
 
-		_.each(records, function(element, index, list){			
-			var pad = '00',
-				weekToAdd = (new Date(element["Formatted Date"])).getFullYear()  
-							+ (pad + (new Date(element["Formatted Date"]).getWeekNumber())).slice(-pad.length),
-				week;// = undefined;
+		_.each(records, function(element, index, list){
+		            
+           var weekToAdd = ($filter('date')(new Date(element["Formatted Date"]),'yyyyww')),
+			week;// = undefined;
 			
 			_.each(results, function(elem, idx, lst){
 				//$log.debug("Check match found for weekToAdd:" + weekToAdd +" elem: ", elem );
