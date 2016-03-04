@@ -5,16 +5,18 @@ angular
   .controller('ReportSaleByDayController', ReportSaleByDayController);
 
 /* @ngInject */ 
-function ReportSaleByDayController($scope, $rootScope, $log, ReportService, items, currentAuth){
+function ReportSaleByDayController($scope, $rootScope, $log, ReportService, currentAuth){
 	var ReportSaleByDayCtrl = this;
     ReportSaleByDayCtrl.showSpinner = true
     ReportSaleByDayCtrl.selection = {};
     ReportSaleByDayCtrl.range = {};
-    ReportSaleByDayCtrl.courseList = ['All'];    
-	ReportSaleByDayCtrl.items = items; //ReportService.getSaleTotals('ByDay');
-    
-    if ( ReportSaleByDayCtrl.items === undefined )
+    ReportSaleByDayCtrl.courseList = ['All'];      
+
+    if ( typeof ReportSaleByDayCtrl.items === 'undefined' ){
+      
+        ReportSaleByDayCtrl.items;
         ReportSaleByDayCtrl.items = [];
+    }
 
     $rootScope.$on("ByDay", function(event, args){
         ReportSaleByDayCtrl.items = args;

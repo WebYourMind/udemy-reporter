@@ -27,7 +27,7 @@ angular.module('myApp')
 		if (section === undefined ){
 			section = 'sales';
 		}
-		$log.debug("FirebaseService.get section is:", section);
+		console.log("FirebaseService.get section is:", section);
 		
 		if (self.uid === undefined ){
 			self.uid = Auth.$getAuth().uid;

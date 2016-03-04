@@ -5,14 +5,16 @@ angular
     .controller('ReportTotalEarningsController', ReportTotalEarningsController);
     
 /* @ngInject */ 
-function ReportTotalEarningsController($scope, $log, ReportService, items, currentAuth, $rootScope){
-    $log.debug("ReportTotalEarningsController created. Items: ", items);
-    var ReportTotalEarningsCtrl = this;
-    ReportTotalEarningsCtrl.showSpinner = true
-
-    ReportTotalEarningsCtrl.items = items;
-    if ( ReportTotalEarningsCtrl.items === undefined )
+function ReportTotalEarningsController($scope, $log, ReportService, currentAuth, $rootScope){
+    
+    var ReportTotalEarningsCtrl = this;     
+    ReportTotalEarningsCtrl.showSpinner = true;
+   
+    if ( typeof ReportTotalEarningsCtrl.items  == 'undefined' ) {
+      
+        ReportTotalEarningsCtrl.items;
         ReportTotalEarningsCtrl.items = ReportService.getTotalEarnings();
+    }
 
     $rootScope.$on("TotalEarnings", function(event, args){
         ReportTotalEarningsCtrl.items = args;
@@ -67,7 +69,7 @@ function ReportTotalEarningsController($scope, $log, ReportService, items, curre
 
     /* Chart data */
     ReportTotalEarningsCtrl.data = [{
-                        values: items,                     
+                        values: ReportTotalEarningsCtrl.items,                     
                         key: 'Revenue' //key  - the name of the series.
                         }]; 
 }

@@ -61,10 +61,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         url: "show-total-by-day-report.html", 
         templateUrl: "reports/show-total-by-day-report.html",
         controller: 'ReportSaleByDayController as ReportSaleByDayCtrl',
-        resolve: {
-          items : function(ReportService){
-            return ReportService.getSaleTotals('ByDay');
-          },
+        resolve: {        
           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
             // If the promise is rejected, it will throw a $stateChangeError
@@ -137,14 +134,15 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         templateUrl: "reports/report-by-course.html",
         controller: 'ReportSaleByCourseController as ReportSaleByCourseCtrl',
         resolve: {
-          items : function(ReportService){
-            return ReportService.getEarningsByCourse();
-          },
-          "currentAuth": ["Auth", function(Auth) {
+            "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
             // If the promise is rejected, it will throw a $stateChangeError 
             return Auth.$requireAuth();
-          }]          
+          }],
+          items : function(ReportService){
+            return ReportService.getEarningsByCourse();
+          }
+             
         }
       })   
       .state('main.report-total-earnings', {
@@ -152,14 +150,12 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
         templateUrl: "reports/report-total-earnings.html",
         controller: 'ReportTotalEarningsController as ReportTotalEarningsCtrl',
         resolve: {
-          items : function(ReportService){
-            return ReportService.getTotalEarnings();
-          },
-          "currentAuth": ["Auth", function(Auth) {
+           "currentAuth": ["Auth", function(Auth) {
             // $requireAuth returns a promise so the resolve waits for it to complete
             // If the promise is rejected, it will throw a $stateChangeError 
             return Auth.$requireAuth();
-          }]          
+          }]
+         
         }
       })             
       .state('main.help', {
@@ -173,8 +169,10 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
   $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
     // We can catch the error thrown when the $requireAuth promise is rejected
     // and redirect the user back to the home page
+    console.info('error ', error)
     if (error === "AUTH_REQUIRED") {
-      $state.go("main.login");
+      console.info('auth required')
+      $state.go("main.login", {},{reload:true});
     }
   });
   

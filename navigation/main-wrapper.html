@@ -69,7 +69,7 @@
           <md-icon md-font-set="fa" md-font-icon="fa-bars" class="fa fa-1x fa-inverse icon-home"></md-icon>
           Menu
         </md-button>
-        <md-button class="btn-menu md-cornered" aria-label="Sign in" ui-sref="main.login" ng-hide="currentAuth.uid">
+        <md-button class="btn-menu md-cornered" aria-label="Sign in" ui-sref="main.login" ui-sref-opts="{reload: true}" ng-hide="currentAuth.uid">
             <i class="fa fa-user"></i> Sign in
         </md-button>
         <md-button class="btn-menu md-cornered" aria-label="Sign out" ui-sref="main.logout" ng-show="currentAuth.uid">
