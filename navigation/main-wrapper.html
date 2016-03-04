@@ -1,20 +1,24 @@
 <div layout="column" flex ng-cloak>
   <section layout="row" flex>
 
-    <!-- menu sidenav left -->
+   <!-- menu sidenav left -->
    <md-sidenav class="md-sidenav-left md-whiteframe-z2 bckg-nav" flex md-component-id="left" class="md-sidenav-left">
+
+    <!-- user profile -->
     <md-toolbar class="md-tall md-hue-2 bckg-user">
       <span flex></span>
       <div layout="column" class="md-toolbar-tools-bottom inset">
         <md-item>
-          <md-button class="md-fab md-primary md-hue-2" aria-label="Profile" ng-disabled="true">
-            <md-icon md-font-set="fa" md-font-icon="fa-user" class="fa fa-3x fa-user icon-h-auto" ></md-icon>
+          <md-button class="md-fab md-primary md-hue-2 img-profile" aria-label="Profile" ng-disabled="true">
+            <img src="{{currentAuth.password.profileImageURL}}" alt="">
           </md-button>
         </md-item>
         <span></span>
-        <div class="email-user">email@domainname.com</div>
+        <div class="email-user">{{currentAuth.password.email}}</div>
       </div>
     </md-toolbar>
+
+    <!-- menu sidenav left / first level -->
     <md-toolbar class="bckg-nav">
       <md-button class="btn-menu md-cornered" aria-label="Home" ui-sref="main.home" ng-class="{'active':isActiveTab(0)}" ng-click="changeTab(0)">
         <md-icon md-font-set="fa" md-font-icon="fa-home" class="fa fa-1x fa-inverse icon-sidebar"></md-icon>
@@ -29,6 +33,8 @@
         <md-icon md-font-set="fa" md-font-icon="fa-bar-chart" class="fa fa-1x fa-inverse icon-sidebar"></md-icon>
         Reports
       </md-subheader>
+
+      <!-- menu sidenav left / second level -->
       <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.show-total-by-day-report" ng-class="{'active':isActiveTab(21)}" ng-click="changeTab(21)">
         Total by Day
       </md-button>

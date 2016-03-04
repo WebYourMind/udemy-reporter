@@ -24,7 +24,6 @@ function NavigationController($scope, $log, Auth, $mdSidenav){
     $scope.Auth = Auth
     $scope.Auth.$onAuth(function(result){
         $scope.currentAuth = result;
-        console.log($scope.currentAuth);
     })
  }
 
