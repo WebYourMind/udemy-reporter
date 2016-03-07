@@ -3,7 +3,7 @@ angular.module('myApp')
 .factory('ParserService', ['$log', '$filter', function($log, $filter){
 	var self = {};	
 
-	var sections = [
+	var _sections = [
 		{	"startLabel" : "Your total earnings", 
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
@@ -58,14 +58,15 @@ angular.module('myApp')
 
 	self.parse = function(text){
 		var lines = text.split('\n');
-
+		var sections = angular.copy(_sections)
 		var startLabels = ["Your total earnings", "Your earnings by course", "Your promotion activity", "Sales", "Redemptions", "Refunds"];
 		var line=0;
 
+		console.log("text=", text);
+
 		for(line=0; line < lines.length; line++){
 			if(_.contains(startLabels, lines[line])){
-				//$log.debug("Got label ["+ lines[line] +"] at line ["+ line +"]");
-				var section = _.findWhere(sections, { startLabel: lines[line] });				
+				var section = _.findWhere(sections, { startLabel: lines[line] });			
 				section.firstRow = line;
 				//$log.debug("Set section ["+ section.startLabel +"] firstRow at line ["+ section.firstRow +"]");
 			}
