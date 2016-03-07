@@ -9,7 +9,8 @@ angular.module('myApp')
  
       element.on('change', function(onChangeEvent) {
         var reader = new FileReader();
- 
+        
+         scope.CsvFileCtrl.selectedFile = element.context.files[0].name;
         reader.onload = function(onLoadEvent) {
           scope.$apply(function() {
             fn(scope, {$fileContent:onLoadEvent.target.result});

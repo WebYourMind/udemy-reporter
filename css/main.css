@@ -213,17 +213,15 @@ table.csv-files-table tbody{
 .image-folder img{
     width: 60%;
 }
-#file-input{
-    display: inline-block!important; 
-}
-#file-input::-webkit-file-upload-button{
-    visibility: hidden;
-    padding: 0;
-    margin: auto;
-}
+
+
 .btn-save{
     background: rgba(255, 134, 131, 1);
 }
 .btn-save:not([disabled]):hover{
     background: rgba(239, 96, 92, 1)!important;
+}
+
+input[type="file"] {
+    display: none;
 }

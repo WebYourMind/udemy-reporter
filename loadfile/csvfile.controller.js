@@ -14,6 +14,7 @@ angular
 
     CsvFileCtrl.sections = []
     CsvFileCtrl.content = ""
+    CsvFileCtrl.selectedFile;
 
     // 
     //CsvFileCtrl.showContent = function($fileContent){

@@ -7,8 +7,9 @@
             </label>
         </div>
         <p>Select your data file <label for="file-input" class="select-link color-primary-3">browse</label></p>
-        <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" id="file-input" />
-        <h3>Suported formats</h3>
+        <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" accept=".csv" id="file-input" />
+        <span> {{CsvFileCtrl.selectedFile}}</span>
+        <h3>Supported formats</h3>
         <p>CSV</p>
         <md-button aria-label="Select" name="file-seletor" ng-hide="CsvFileCtrl.sections.length < 1" ng-click="CsvFileCtrl.save()" class="no-padding no-margin btn-save">
             save
