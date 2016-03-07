@@ -1,19 +1,21 @@
-<div class="">
-    <div layout="row">
-        <div flex>
-        <label for="file-seletor" style="float: left; padding-right: 20px;">Select file</label>
-        <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" />
+<h1 class="title-page">Upload Report</h1>
+<md-content layout-xs="column" layout="row" layout-wrap>
+    <div class="bkgr-load">
+        <div class="image-folder">
+            <label for="file-input">
+                <img src="/img/upload-black.png" alt="">
+            </label>
         </div>
-        <button flex type="button" 
-                class="btn btn-danger"
-                name="file-seletor" 
-                ng-disabled="CsvFileCtrl.sections.length < 1"
-                ng-click="CsvFileCtrl.save()">
-                <i class="fa fa-floppy-o"></i>
-                Save
-        </button>   
-    </div> 
-    <div ng-repeat="section in CsvFileCtrl.sections">
+        <p>Select your data file <label for="file-input" class="select-link color-primary-3">browse</label></p>
+        <input type="file" on-read-file="CsvFileCtrl.parseContent($fileContent)" id="file-input" />
+        <h3>Suported formats</h3>
+        <p>CSV</p>
+        <md-button aria-label="Select" name="file-seletor" ng-hide="CsvFileCtrl.sections.length < 1" ng-click="CsvFileCtrl.save()" class="no-padding no-margin btn-save">
+            save
+        </md-button>
+    </div>
+</md-content>
+<md-list ng-repeat="section in CsvFileCtrl.sections">
         <h2>{{::section.startLabel}} [{{::section.json.length}}]</h2>
         <table class="table table-striped table-condensed table-hover">
             <thead>
@@ -26,7 +28,5 @@
                     <td ng-repeat="colz in section.columns" >{{::values[colz]}}</td>
                 </tr>
             </tbody>
-        </table>
-    </div> 
-</div>
-
+        </table>   
+</md-list>
