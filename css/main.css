@@ -31,18 +31,21 @@ h4{
 
 /*  COLOR BUTTON */
 
-.btn-bkgr-color{
-    background: rgba(255,135,113, 1)!important;
+.md-button.btn-bkgr-color,
+.md-button.btn-bkgr-color.md-focused,
+.md-button.md-hue-2.md-fab.btn-bkgr-color{
+    background: rgba(255,135,113, 1);
     color: rgba(255, 255, 255, 1);
 }
-.btn-bkgr-color:not([disabled]):hover{
-    background: rgba(239, 96, 92, 1)!important;
+.md-button.btn-bkgr-color:not([disabled]):hover,
+.md-button.md-fab.btn-bkgr-color:not([disabled]):hover{
+    background: rgba(239, 96, 92, 1);
 }
 
 /* MENU SIDENAV AND TOOLBAR */
 
-.bckg-user{
-    background:rgba(33,123,127,1)!important;
+ .md-hue-2.bckg-user:not(.md-menu-toolbar){
+    background:rgba(33,123,127,1);
     color:rgba(255,255,255,1);   
 }
 .bckg-nav:not(.md-menu-toolbar){
@@ -54,7 +57,7 @@ h4{
     height:17px;
 }
 .icon-h-auto{
-    height:auto!important;
+    height:auto;
 }
 .icon-home{
     height:17px;
@@ -68,19 +71,19 @@ h4{
     text-transform:capitalize;
     font-size:16px;
 }
-.btn-menu:hover,
-.btn-menu:not([disabled]):hover{
+.md-button.btn-menu:hover,
+.md-button.btn-menu:not([disabled]):hover{
     color: rgba(255, 255, 255, 1);
-    background:rgba(255,255,255,0.2)!important;
+    background:rgba(255,255,255,0.2);
 }
-.active,
-.active:not([disabled]):hover{
-    color: rgba(255, 255, 255, 1)!important;
-    background:rgba(239, 96, 92,1);!important;
+.md-button.active,
+.md-button.active:not([disabled]):hover{
+    color: rgba(255, 255, 255, 1);
+    background:rgba(239, 96, 92,1);
 }
 .title-menu,
 .title-menu md-icon{
-    color: rgba(204, 204, 204, 1);!important;
+    color: rgba(204, 204, 204, 1);
     text-transform:uppercase;
 }
 .sub-liv{
@@ -215,11 +218,9 @@ h4{
     display: none;
 }
 .table-report .collapse.in{
-    display: table!important;
+    display: table;
 }
-.table-report table{
-    /*border: 1px solid rgba(221, 221, 221,1);*/
-}
+
 .table-report table th,
 .table-report table td{
     border-right: 1px solid rgba(221, 221, 221,1)
