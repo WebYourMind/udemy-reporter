@@ -1,38 +1,37 @@
 <md-dialog aria-label="Login Dialog">
-    <md-toolbar> 
+    <md-toolbar class="bckg-nav"> 
         <div class="md-toolbar-tools">
         
-          <span> SIGN IN TO LOGIN REPORTER </span>
-      
-        <span flex></span>
+            <span> SIGN IN TO LOGIN REPORTER </span>
+          
+            <span flex></span>
         
-      </div>
+        </div>
     </md-toolbar>  
     <md-dialog-content>     
                   
-                    <div class="account-wall">
-                        <img class="profile-img" src="img/login-profile.png"
-                            alt=""/>
-                            <form class="form-signin">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>
-                                        Email
-                                    </label>
-                                    <input ng-model="LoginCtrl.email" required autofocus/>
-                                </md-input-container>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>
-                                        Password
-                                    </label>
-                                    <input type="password" ng-model="LoginCtrl.password" required />
-                                </md-input-container>
-                            </form>
-                    </div>
-                               
+        <div class="account-wall">
+            <img class="profile-img" src="img/login-profile.png" alt=""/>
+            <form class="form-signin">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>
+                        Email
+                    </label>
+                    <input ng-model="LoginCtrl.email" required autofocus ng-keypress="$event.keyCode == 13 && LoginCtrl.login()"/>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>
+                        Password
+                    </label>
+                    <input type="password" ng-model="LoginCtrl.password" required ng-keypress="$event.keyCode == 13 && LoginCtrl.login()" />
+                </md-input-container>
+            </form>
+        </div>
+                   
     </md-dialog-content>
     <md-dialog-actions>
-            <md-button class="" type="button" ng-click="LoginCtrl.login()">
-                Sign in
-            </md-button>           
+        <md-button class="btn-bkgr-color" type="button" ng-click="LoginCtrl.login()">
+            Sign in
+        </md-button>           
     </md-dialog-actions>
-    </md-dialog>
+</md-dialog>
