@@ -7,13 +7,13 @@ angular.module('myApp')
 		{	"startLabel" : "Your total earnings", 
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
-			"columns" : ["Revenue Channel","Earnings"], 
+			//"columns" : ["Revenue Channel","Earnings"], 
 			"coursenameposition" : 0 
 		},{
 			"startLabel" : "Your promotion activity", 	
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
-			"columns" : ["Coupon Code","Earnings"], 
+			//"columns" : ["Coupon Code","Earnings"], 
 			"coursenameposition" : 0  
 		},{
 			"startLabel" : "Your earnings by course", 	
@@ -25,7 +25,7 @@ angular.module('myApp')
 			"startLabel" : "Sales", 
 			"firstRow": "-1", 
 			"lastRow": "-1", 	
-			"columns" : ["Transaction Id", 
+			/*"columns" : ["Transaction Id", 
 						 "Formatted Date", 
 						 "User Name",
 						 "Course Name",
@@ -39,19 +39,19 @@ angular.module('myApp')
 						 "Share Price",
 						 "Instructor Share",
 						 "Tax Rate",
-						 "Exchange Rate"], 
+						 "Exchange Rate"], */
 			"coursenameposition" : 3  
 		},{	
 			"startLabel" : "Redemptions", 	
 			"firstRow": "-1", 
 			"lastRow": "-1",	
-			"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"], 
+			//"columns" : ["Split Id","Transaction Date","User Name","Course Name","Coupon Code"], 
 			"coursenameposition" : 3  
 		},{
 			"startLabel" : "Refunds", 
 			"firstRow": "-1", 
 			"lastRow": "-1",	
-			"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"], 
+			//"columns" : ["Refund Date","User Name","Course Name","Refund Amount","Instructor Refund Amount"], 
 			"coursenameposition" : 2  
 		}
 	];
@@ -62,15 +62,24 @@ angular.module('myApp')
 		var startLabels = ["Your total earnings", "Your earnings by course", "Your promotion activity", "Sales", "Redemptions", "Refunds"];
 		var line=0;
 
-		console.log("text=", text);
-
 		for(line=0; line < lines.length; line++){
 			if(_.contains(startLabels, lines[line])){
-				var section = _.findWhere(sections, { startLabel: lines[line] });			
-				section.firstRow = line;
-				//$log.debug("Set section ["+ section.startLabel +"] firstRow at line ["+ section.firstRow +"]");
+				// following two lines of code seems conflicting, but at the moment 
+				// we cannot eliminate the _sections template so we still have to find
+				// the section because of "coursenameposition" field is still required
+
+				// get the section object
+				var section = _.findWhere(sections, { startLabel: lines[line] });
+				section.startLabel = lines[line];	
+
+				// set the column names by parsing the headers line	
+				section.columns = self.getColumnsArray(lines[line+1]);
+
+				section.firstRow = line;	
+				section.lastRow = -1;		
 			}
 		}
+
 		// Set the last row of the last section
 		sections[sections.length-1].lastRow = line;	
 
@@ -82,8 +91,6 @@ angular.module('myApp')
 		// set the last line. Exclude the last entry because value already set
 		for (var k=0; k<sections.length -1; k++) {
 			sections[k].lastRow = sections[k+1].firstRow;
-		  	// Debug
-		  	//$log.debug("Section start/end row: ", [sections[k].startLabel, sections[k].firstRow, sections[k].lastRow, sections[k+1].startLabel, sections[k+1].firstRow, sections[k+1].lastRow]);
 		}
 
 		// Couple column names with values
@@ -134,6 +141,11 @@ angular.module('myApp')
 		}
 
 		return json;
+	}
+
+	self.getColumnsArray = function(headers){		
+		var columns = headers.split(",");
+		return columns;
 	}
 
 	// Fine FACTORY
