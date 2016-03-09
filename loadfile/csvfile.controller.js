@@ -7,30 +7,31 @@ angular
 /* @ngInject */ 
  function CsvFileController($log, FirebaseService, currentAuth, ParserService ){	
 
-	var CsvFileCtrl = this
+	var vm = this;
 
-    CsvFileCtrl.currentAuth = currentAuth
-    //$log.debug("Current uid:", CsvFileCtrl.currentAuth.uid);
+    vm.currentAuth = currentAuth;
+    //$log.debug("Current uid:", vm.currentAuth.uid);
 
-    CsvFileCtrl.sections = []
-    CsvFileCtrl.content = ""
-    CsvFileCtrl.selectedFile;
-
-    // 
-    //CsvFileCtrl.showContent = function($fileContent){
-     //   CsvFileCtrl.content = $fileContent
-    //};
+    vm.sections = [];
+    vm.content = "";
+    vm.selectedFile;
+    vm.predicate = "";
 
     // Read the CSV file content
-    CsvFileCtrl.parseContent = function($fileContent){
-        CsvFileCtrl.content = $fileContent
-        CsvFileCtrl.sections = ParserService.parse(CsvFileCtrl.content)
+    vm.parseContent = function($fileContent){
+        vm.content = $fileContent;
+        vm.sections = ParserService.parse(vm.content);
     };
 
+    vm.order = function(predicate) {
+        console.log (' Updating order for predicate = ',predicate);
+     vm.reverse = (vm.predicate === predicate) ? !vm.reverse : false;
+     vm.predicate = predicate;
+    }
     // Send the data to Firebase backend
-    CsvFileCtrl.save = function(){
-    	$log.debug("CsvFileCtrl.save")  
-    	FirebaseService.saveSections(CsvFileCtrl.sections, CsvFileCtrl.currentAuth.uid)
+    vm.save = function(){
+    	$log.debug("vm.save");  
+    	FirebaseService.saveSections(vm.sections, vm.currentAuth.uid);
     }
 }
 })();
