@@ -35,6 +35,7 @@
       </md-subheader>
 
       <!-- menu sidenav left / second level -->
+      <!--
       <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.show-total-by-day-report" ng-class="{'active':isActiveTab(21)}" ng-click="changeTab(21)">
         Total by Day
       </md-button>
@@ -53,6 +54,25 @@
       <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-total-earnings" ng-class="{'active':isActiveTab(26)}" ng-click="changeTab(26)">
         Total Earnings
       </md-button>
+      -->
+      <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-daily-earnings" ng-class="{'active':isActiveTab(27)}" ng-click="changeTab(27)">
+        Daily Earnings
+      </md-button>
+      <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-promotion-earnings" ng-class="{'active':isActiveTab(28)}" ng-click="changeTab(28)">
+        Promotion earnings
+      </md-button> 
+     <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-week-of-the-year-earnings" ng-class="{'active':isActiveTab(32)}" ng-click="changeTab(32)">
+        Week earnings
+      </md-button>       
+      <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-day-of-the-week-earnings" ng-class="{'active':isActiveTab(29)}" ng-click="changeTab(29)">
+        Day of the Week earnings
+      </md-button>   
+      <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-channel-earnings" ng-class="{'active':isActiveTab(30)}" ng-click="changeTab(30)">
+        Channel earnings
+      </md-button>   
+      <md-button class="btn-menu sub-liv md-cornered" ui-sref="main.report-course-title-earnings" ng-class="{'active':isActiveTab(31)}" ng-click="changeTab(31)">
+        Course Name earnings
+      </md-button>                             
       <md-button class="btn-menu md-cornered" aria-label="Help" ui-sref="main.help" ng-class="{'active':isActiveTab(3)}" ng-click="changeTab(3)">
           <md-icon md-font-set="fa" md-font-icon="fa-question-circle" class="fa fa-1x fa-inverse icon-sidebar"></md-icon>
           Help

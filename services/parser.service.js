@@ -59,18 +59,13 @@ angular.module('myApp')
 	self.parse = function(text){
 		var lines = text.split('\n');
 		var sections = angular.copy(_sections)
-		var startLabels = ["Your total earnings", "Your earnings by course", "Your promotion activity", "Sales", "Redemptions", "Refunds"];
+		var startLabels = ["Your total earnings", "Your promotion activity", "Your earnings by course", "Sales", "Redemptions", "Refunds"];
 		var line=0;
 
 		for(line=0; line < lines.length; line++){
 			if(_.contains(startLabels, lines[line])){
-				// following two lines of code seems conflicting, but at the moment 
-				// we cannot eliminate the _sections template so we still have to find
-				// the section because of "coursenameposition" field is still required
-
 				// get the section object
 				var section = _.findWhere(sections, { startLabel: lines[line] });
-				section.startLabel = lines[line];	
 
 				// set the column names by parsing the headers line	
 				section.columns = self.getColumnsArray(lines[line+1]);
@@ -94,15 +89,31 @@ angular.module('myApp')
 		}
 
 		// Couple column names with values
-		for(line=0; line<sections.length; line++){		
-			sections[line].data = _.compact(lines.slice(sections[line].firstRow + 2, sections[line].lastRow));
-			sections[line].json = self.getJson(sections[line]);			
+		for(sectionIndex=0; sectionIndex < sections.length; sectionIndex++){		
+			var dataFromFile =_.compact(lines.slice(sections[sectionIndex].firstRow + 1, sections[sectionIndex].lastRow ))
+			//console.debug("dataFromFile: typeof before ("+typeof dataFromFile+") - values:", dataFromFile);
+
+			// Recreate a single string from the Array items, using the newline separator
+			dataFromFile = dataFromFile.join("\n");
+			var papaParsed = Papa.parse(dataFromFile, 
+										{
+											header: true, 
+											newline: "\n",
+											//dynamicTyping: true,
+											skipEmptyLines: true
+										});
+
+			papaParsed = papaParsed.data;
+			//sections[sectionIndex].data = _.compact(lines.slice(sections[sectionIndex].firstRow + 2, sections[sectionIndex].lastRow));			
+			sections[sectionIndex].json = papaParsed;			
 		}	
+
+		console.debug("sections:", sections);
 		return sections;
 	}
-
+/*
 	self.getJson = function(section){
-		//$log.debug("section.data.length: ", section.data.length);
+		$log.debug("section.data: ", section.data);
 		var json = [],
 			table = section.data;
 
@@ -142,7 +153,7 @@ angular.module('myApp')
 
 		return json;
 	}
-
+*/
 	self.getColumnsArray = function(headers){		
 		var columns = headers.split(",");
 		return columns;

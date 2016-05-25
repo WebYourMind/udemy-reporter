@@ -57,6 +57,7 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
           }]
         }        
       })
+      /*
       .state('main.show-total-by-day-report', {
         url: "show-total-by-day-report.html", 
         templateUrl: "reports/show-total-by-day-report.html",
@@ -157,11 +158,91 @@ angular.module('myApp', ['firebase','ngSanitize', 'ngAnimate', 'ui.router', 'ui.
           }]
          
         }
-      })             
+      })     */
+////////////////
+      .state('main.report-daily-earnings', {
+        url: "report-daily-earnings.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "DailyEarnings", "reportLabel": "Daily Earnings", "reportType": "line"}; }
+        }
+      }) 
+      .state('main.report-promotion-earnings', {
+        url: "report-promotion-earnings.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "PromotionEarnings", "reportLabel": "Promotion Earnings", "reportType": "bar"}; }
+        }
+      })
+      .state('main.report-day-of-the-week-earnings', {
+        url: "report-day-of-the-week-earnings.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "DayOfTheWeekEarnings", "reportLabel": "Day Of The Week Earnings", "reportType": "bar"}; }
+        }
+      })
+      .state('main.report-channel-earnings', {
+        url: "report-channel-earnings.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "ChannelEarnings", "reportLabel": "Channel Earnings", "reportType": "bar"}; }
+        }
+      }) 
+      .state('main.report-course-title-earnings', {
+        url: "report-course-title.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "CourseTitleEarnings", "reportLabel": "Course Title Earnings", "reportType": "bar"}; }
+        }
+      })  
+      .state('main.report-week-of-the-year-earnings', {
+        url: "report-week-of-the-year-title.html", 
+        templateUrl: "reports/report-base.html",
+        controller: 'ReportController as ReportCtrl',
+        resolve: {
+           "currentAuth": ["Auth", function(Auth) {
+            // $requireAuth returns a promise so the resolve waits for it to complete
+            // If the promise is rejected, it will throw a $stateChangeError 
+            return Auth.$requireAuth();
+            }],            
+            "params" : function(){ return {"reportName": "WeekOfTheYearEarnings", "reportLabel": "Week Of The Year Earnings", "reportType": "bar"}; }
+        }
+      })                 
+///////////////
       .state('main.help', {
         url: "help.html", 
         template: "TBD"    
-      })  
+      }) ;
 })
 
 .run(function($log, $rootScope, $state, FirebaseService){

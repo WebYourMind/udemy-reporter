@@ -7,7 +7,7 @@ angular.module('myApp')
 
 	self.saveSections = function(sections, uid){	
 		_.each(sections, function(section, index, list){
-			$log.debug("FirebaseService.saveSections - Try to save section:", section.startLabel)
+			console.debug("FirebaseService.saveSections - Try to save section:", [uid, section])
 			self.saveSection(section, uid)
 		})
 	}
@@ -18,8 +18,25 @@ angular.module('myApp')
 		//$log.debug("FirebaseService.saveSection - saving section: ", [sectionName, section.json])
 		var records = self.get(sectionName)
 		_.each(section.json, function(rec, index, list){
+			console.debug("parsing record:", rec);
+			var recordToAdd = angular.copy(rec);
+			// 
+			var keys = _.keys(recordToAdd);
+			var values = _.values(recordToAdd);
+			console.debug('keys/values', [keys,values]);
+			recordToAdd = [];
+			for(var i=0;i<keys.length; i++){
+				recordToAdd[keys[i].replace(/ /g, '').toLowerCase()] = values[i];
+			}
+			console.debug("new recordToAdd array:", recordToAdd);
+			recordToAdd = JSON.stringify(recordToAdd);
+			console.debug("new recordToAdd:", recordToAdd);
 			// add to the firebase 
-			records.$add(rec)
+			try{
+				records.$add(recordToAdd);
+			}catch(e){
+				console.error("Exception parsing record:", [recordToAdd, e]);
+			}
 		})
 	}
 
@@ -37,7 +54,8 @@ angular.module('myApp')
 			//$log.debug("FirebaseService.get [self.records] is undefined: get the values");
 			var endPoint = FBEndPoint;
 			var ref = new Firebase(endPoint);
-			self.records = $firebaseArray(ref.child(self.uid).child(section));			
+			self.records = $firebaseArray(ref.child(self.uid).child(section));		
+			console.log("FirebaseService.get got records:", self.records);	
 			return self.records;
 		//}else {
 			//$log.debug("FirebaseService.get [self.records] is defined: use the values");

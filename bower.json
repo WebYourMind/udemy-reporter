@@ -7,7 +7,7 @@
     "Stefano Rossetti <stefano@webyourmind.com>",
     "Alessandro Russo <alex@webyourmind.com>"
   ],
-  "license": "MIT",
+  "license": "WTFPL",
   "homepage": "",
   "private": true,
   "ignore": [
@@ -31,7 +31,8 @@
     "angular-ui-router": "^0.2.18",
     "angular-bootstrap": "^1.1.2",
     "font-awesome": "^4.5.0",
-    "angular-material": "^1.0.5"
+    "angular-material": "^1.0.5",
+    "papaparse": "^4.1.2"
   },
   "resolutions": {
     "angular": "1.5.0"

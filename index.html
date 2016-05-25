@@ -6,13 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>Udemy Reporter</title>
+        <!-- build:css css/vendor.min.css -->
         <!-- Bootstrap -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css">
+        <!--<link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css">-->
         <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css">   
         <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">       
+        <!-- endbuild -->
+        <!-- build:css css/app.min.css -->
         <link rel="stylesheet" href="css/main.css">
+        <!-- endbuild -->
+        
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300&subset=latin,latin-ext' type='text/css'>
 
         <base href="/">
@@ -23,12 +28,18 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOV//8Dlf//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA5X//wOV//8AAAAAAAAAAAAAAAAAAAAAAAAAPwAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDlf//A5X//wAAAAAAAAAAAAAAOQOV//8Dlf//AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgOV//8Dlf//AAAAOQOV//8Dlf//A5X//wOV//8AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA5X//wOV//8Dlf//AAAABgAAAAADlf//A5X//wAAAAEAAAAAA5X//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIDlf//AAAAAgAAAAAAAAAAAAAAAQOV//8Dlf//A5X//wOV//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARA5X//wOV//8Dlf//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQA5X//wOV//8Dlf//A5X//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA//8AAJ//AADP/wAA5z8AAPIfAAD4zQAA/eEAAP/xAAD/4QAA//8AAP//AAD//wAA//8AAA==" rel="icon" type="image/x-icon" />
+
+
+
     </head>
     <body>
         <!-- MAIN CONTENT START -->
         <div flex ui-view></div>
         <!-- MAIN CONTENT END -->
-        
+        <!-- BOWER COMPONENTS -->
+        <!-- build:js scripts/vendor.min.js -->
         <!-- Libraries -->
         <script src="bower_components/jquery/dist/jquery.min.js" charset="utf-8"></script>
 
@@ -52,7 +63,10 @@
         <script src="bower_components/nvd3/build/nv.d3.js" charset="utf-8"></script>
         <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js" charset="utf-8"></script>
 
+         <script src="bower_components/papaparse/papaparse.js" charset="utf-8"></script>
+        <!-- endbuild -->
         <!-- Udemy Reporter -->
+        <!-- build:js scripts/app.min.js -->
         <script src="app.js" charset="utf-8"></script>
         <script src="js/ng/constants.js" charset="utf-8"></script>
         <!-- Directives -->       
@@ -69,6 +83,7 @@
         <script src="reports/sls-promotion.controller.js"></script>
         <script src="reports/sls-course.controller.js"></script>
         <script src="reports/sls-totalearnings.controller.js"></script>
+        <script src="reports/report.controller.js"></script>
 
         <!-- Services -->      
         <script src="services/fbAuth.service.js"></script>
@@ -78,5 +93,6 @@
         <script src="services/parser.service.js"></script>
         <!-- Load File / CSV Upload --> 
         <script  src="loadfile/csvfile.controller.js"></script>
+        <!-- endbuild -->
     </body>
 </html>
