@@ -256,7 +256,7 @@ table.csv-files-table tbody{
 
 
 /* Charts */
-body {
+.axis {
   font: 10px sans-serif;
 }
 
@@ -265,10 +265,6 @@ body {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  /*display: none;*/
 }
 
 /* Line chart */
@@ -285,5 +281,5 @@ body {
 }
 
 .bar text {
-  fill: #fff;
+  fill: #000;
 }

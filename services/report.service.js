@@ -14,6 +14,7 @@ angular.module('myApp')
 	// Prepare the courses list 
 	// @param records The sales firebase object
 	// Attention: At the moment the function works with sales firebase branch only	
+	/*
 	self.filterCourseList = function(records){	
 		var	courses = [],
 			finalCourses = [];
@@ -289,10 +290,7 @@ angular.module('myApp')
 		return results;
 	};
 
-
-	//////////////////////////////////////
-	/// Metodi sperimentali 
-	//////////////////////////////////////
+*/
 
 	/**
 	 * Given the report name returns the database section containings the required data. Used to properly retrive data from Firebase
@@ -555,7 +553,7 @@ angular.module('myApp')
 	    	width = dimensions.width,
 	    	height = dimensions.height,
 	    	dataset = _data;
-		var barPadding = 1; 
+		//var barPadding = 1; 
 
 		console.log("drawBarChart data: ", _data);    
 		/*
@@ -602,10 +600,14 @@ angular.module('myApp')
 
 		var x = d3.scale.ordinal().rangeRoundBands([0, width], 0.05);
 		var y = d3.scale.linear().range([height, 0]);
+
+		x.domain(dataset.map(function(d) { return d.x; }));
+	  	y.domain([0, d3.max(dataset, function(d) { return d.y; })]);
+
 		var xAxis = d3.svg.axis()
 		    .scale(x)
 		    .orient("bottom")
-		    .tickFormat(d3.time.format("%Y-%m"));
+		    .tickFormat(function(d, i){ return d.x; });
 		var yAxis = d3.svg.axis()
 		    .scale(y)
 		    .orient("left")
@@ -618,16 +620,11 @@ angular.module('myApp')
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
 		dataset.forEach	(function(data, index){
-			console.log("data:", data);
-			
-	  		//x.domain(data.map(function(d) { return d.x; }));
-		  	//y.domain([0, d3.max(data, function(d) { return d.y; })]);
-
 		  	svg.append("g")
 	      		.attr("class", "x axis")
 		      	.attr("transform", "translate(0," + height + ")")
 		      	.call(xAxis)
-		    	.selectAll("text")
+		      .selectAll("text")
 		      	.style("text-anchor", "end")
 		      	.attr("dx", "-.8em")
 		      	.attr("dy", "-.55em")
@@ -636,7 +633,7 @@ angular.module('myApp')
 		  	svg.append("g")
 		      	.attr("class", "y axis")
 		      	.call(yAxis)
-		    	.append("text")
+		      .append("text")
 		      	.attr("transform", "rotate(-90)")
 		      	.attr("y", 6)
 		      	.attr("dy", ".71em")
@@ -647,7 +644,7 @@ angular.module('myApp')
 		      	.data(data)
 		    	.enter().append("rect")
 		      	.style("fill", "steelblue")
-		      	.attr("x", function(d) { return x(d.x); })
+		      	.attr("x", function(d) { return x(d.x); }) 
 		      	.attr("width", x.rangeBand())
 		      	.attr("y", function(d) { return y(d.y); })
 		      	.attr("height", function(d) { return height - y(d.y); });
@@ -680,7 +677,7 @@ angular.module('myApp')
             
             // Prepare the D3 object
             var w = Math.round(Math.max(document.documentElement.clientWidth, window.innerWidth || 0)*0.98);
-            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-200;
+            var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
             //console.log("Width [%s] height [%s]",w,h);
             var margin = {top: 20, right: 20, bottom: 30, left: 50},
                 width = w - margin.left - margin.right,
